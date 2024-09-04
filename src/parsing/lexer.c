@@ -6,37 +6,13 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 16:14:24 by nandrian          #+#    #+#             */
-/*   Updated: 2024/09/02 16:52:51 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/09/04 15:01:49 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-char *get_all_args(int ac, char **av)
-{
-	char	*str;
-	int 	i;
-
-	i = 1;
-	str = NULL;
-	while (i < ac)
-	{
-		str = ft_strjoin(str, av[i]);
-		str = ft_strjoin(str, "*");
-		i++;
-	}
-	return (str);
-}
-
-char **split_arg(char *args)
-{
-	char **str;
-
-	str = ft_split(args, '*');
-	return (str);
-}
-
-int is_command(char *str)
+int args_isalpha(char *str)
 {
 	int	i;
 
@@ -48,4 +24,32 @@ int is_command(char *str)
 		i++;
 	}
 	return (1);
+}
+
+char	*get_all_args(int ac, char **av)
+{
+	char	*str;
+	int 	i;
+
+	i = 1;
+	if (!args_isalpha(av[COMMAND]))
+	{
+		printf("invalid command\n");
+		exit(1);
+	}
+	while (i < ac)
+	{
+		str = ft_strjoin(str, av[i]);
+		str = ft_strjoin(str, "*");
+		i++;
+	}
+	return (str);
+}
+
+char	**split_arg(char *args)
+{
+	char **str;
+
+	str = ft_split(args, '*');
+	return (str);
 }
