@@ -16,6 +16,14 @@
 # include <signal.h>
 # include <stdio.h>
 # include <libft.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+
+# define NC		"\e[0m"
+# define YELLOW	"\e[1;33m"
+# define RED	"\e[31m"
+# define GREEN	"\e[1;32m"
+# define CYAN	"\e[1;36m"
 
 typedef enum e_type
 {

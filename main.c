@@ -12,16 +12,16 @@
 
 #include <minishell.h>
 
-int	main(int ac, char **av)
+int	main()
 {
 	char *str;
 	char **split;
 
-	if (ac == 5)
+	while (1)
 	{
-		str = get_all_args(ac, av);
-		split = split_arg(str);
-		printf("%s\n", split[TEXT]);
+		str = readline(">  ");
+		split = ft_split(str, ' ');
+		add_history(str);
 	}
 	return (0);
 }
