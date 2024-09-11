@@ -25,6 +25,13 @@
 # define GREEN	"\e[1;32m"
 # define CYAN	"\e[1;36m"
 
+typedef struct s_lexer
+{
+	char *str;
+	struct s_lexer *next;
+}	t_lexer;
+
+
 typedef enum e_type
 {
 	COMMAND,
