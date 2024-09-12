@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:32:07 by nandrian          #+#    #+#             */
-/*   Updated: 2024/09/04 14:38:15 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/09/12 16:48:53 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,6 @@ typedef enum e_type
 char *get_all_args(int ac, char **av);
 char **split_arg(char *args);
 int args_isalpha(char *str);
+int	check_redirection(char *str);
 
 #endif
