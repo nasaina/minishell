@@ -12,6 +12,8 @@ INC_LIBFT = -I libft/
 
 LIBFT = libft/libft.a
 
+SRC_SIG = $(addprefix src/signals/, handle_signals.c)
+
 SRC_PARS = $(addprefix src/parser/, is_space.c)
 
 SRC_ERR = $(addprefix src/errors/, error.c)
@@ -21,6 +23,8 @@ SRC_EXEC = $(addprefix src/executor/, execute.c)
 SRC_LEX = $(addprefix src/lexer/, lexer.c)
 
 MAIN = main.c
+
+OBJ_SIG = $(SRC_SIG:%.c=$(OBJ_DIR)/%.o)
 
 OBJ_PARS = $(SRC_PARS:%.c=$(OBJ_DIR)/%.o)
 
@@ -32,7 +36,7 @@ OBJ_LEX = $(SRC_LEX:%.c=$(OBJ_DIR)/%.o)
 
 OBJ_MAIN = $(MAIN:%.c=$(OBJ_DIR)/%.o)
 
-OBJS = $(OBJ_EXEC) $(OBJ_PARS) $(OBJ_LEX) $(OBJ_ERR) $(OBJ_MAIN)
+OBJS = $(OBJ_EXEC) $(OBJ_PARS) $(OBJ_LEX) $(OBJ_ERR) $(OBJ_SIG) $(OBJ_MAIN)
 
 all : $(NAME)
 

@@ -1,33 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   handle_signals.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: maandria <maandria@student.42antanana      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/04 14:38:26 by nandrian          #+#    #+#             */
-/*   Updated: 2024/09/13 16:52:12 by maandria         ###   ########.fr       */
+/*   Created: 2024/09/13 16:31:27 by maandria          #+#    #+#             */
+/*   Updated: 2024/09/13 17:09:29 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-#include <signal.h>
 
-int	main(void)
+void	handle_sigint(int sig)
 {
-	char	*str;
-	char	**split;
+	(void)sig;
+	printf("^C");
+	exit(0);
+}
 
-	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, handle_sigquit);
-	while (1)
+void	handle_sigquit(int sig)
+{
+	(void)sig;
+	printf("Signal SIGQUIT recu");
+}
+
+int		handle_eof(char *str)
+{
+	if (str == NULL || !ft_strncmp(str, "exit", 6))
 	{
-		str = readline(">  ");
-		if (handle_eof(str))
-			break ;
-		split = ft_split(str, ' ');
-		check_redirection(str);
-		add_history(str);
+		printf("exit\n");
+		return (1);
 	}
 	return (0);
 }
