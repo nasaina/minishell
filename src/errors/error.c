@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 16:47:47 by nandrian          #+#    #+#             */
-/*   Updated: 2024/09/12 16:48:37 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/09/13 15:01:17 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ int	check_redirection(char *str)
 	int	i;
 
 	i = 0;
+	if (!str)
+		return (0);
 	if (is_brace(str))
 	{
 		printf("Syntax error\n");

@@ -18,7 +18,9 @@ SRC_ERR = $(addprefix src/errors/, error.c)
 
 SRC_EXEC = $(addprefix src/executor/, execute.c)
 
-SRC_LEX = $(addprefix src/lexer/, lexer.c)
+SRC_LEX = $(addprefix src/lexer/, lexer.c get_chunks.c)
+
+SRC_UTILS = $(addprefix src/utils/, lst_utils.c free_lst.c)
 
 MAIN = main.c
 
@@ -30,9 +32,11 @@ OBJ_EXEC = $(SRC_EXEC:%.c=$(OBJ_DIR)/%.o)
 
 OBJ_LEX = $(SRC_LEX:%.c=$(OBJ_DIR)/%.o)
 
+OBJ_UTILS = $(SRC_UTILS:%.c=$(OBJ_DIR)/%.o)
+
 OBJ_MAIN = $(MAIN:%.c=$(OBJ_DIR)/%.o)
 
-OBJS = $(OBJ_EXEC) $(OBJ_PARS) $(OBJ_LEX) $(OBJ_ERR) $(OBJ_MAIN)
+OBJS = $(OBJ_EXEC) $(OBJ_PARS) $(OBJ_UTILS) $(OBJ_LEX) $(OBJ_ERR) $(OBJ_MAIN)
 
 all : $(NAME)
 
