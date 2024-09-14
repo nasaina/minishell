@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 10:35:17 by nandrian          #+#    #+#             */
-/*   Updated: 2024/09/13 14:44:48 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/09/14 17:06:58 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ void	add_chunks_back(t_chunk **args, char *str, t_type type)
 		tmp->next = element;
 	}
 	else
-		*args = element;	
+		*args = element;
+	free(str);
 }
 
 void	add_chunks_front(t_chunk **args, char *str, t_type type)
