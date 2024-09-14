@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:38:26 by nandrian          #+#    #+#             */
-/*   Updated: 2024/09/13 15:08:04 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/09/14 17:12:19 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,23 +39,27 @@ char *one_word(char *str, int *i)
 {
 	char	*wrd;
 	int		j;
+	int		count;
 
-	j = 0;
-	if (!str[*i])
-		return (NULL);
+	count = 0;
 	while (str[*i] == 32)
+		*i += 1;
+	while (isredirection(str[*i]))
 		*i += 1;	
 	while (str[*i] && !isredirection(str[*i]) && str[*i] != 32)
 	{
-		j++;
+		count++;
 		*i += 1;
 	}
-	wrd = malloc(j + 1);
+	if (!str[*i])
+		return (NULL);
+	wrd = malloc(count + 1);
 	j = 0;
-	while (j < *i)
+	while (j < count)
 	{
 		wrd[j] = str[*i];
 		j++;
+		*i += 1;
 	}
 	wrd[j] = '\0';
 	return (wrd);
@@ -88,67 +92,180 @@ int	count_word(char *str)
 	return (j);
 }
 
-t_chunk *get_chunk(char *str)
+t_lexer *get_lexer(t_lexer *args, char *str)
 {
-	t_chunk *chunks;
-	char 	*wrd;
+	char	*wrd;
+	int		count;
+	t_type	type;
 	int		i;
 	int		j;
-	int		wrd_count;
 
 	i = 0;
 	j = 0;
-	chunks = NULL;
-	wrd_count = count_word(str);
-	while (j < wrd_count)
+	count = count_word(str);
+	while (i < count)
 	{
-		while (str[i] == 32 && str[i])
-			i++;
-		if (!isredirection(str[i]) && str[i] != 32)
+		if (str[j] != '\0')
 		{
-			wrd = one_word(str, &i);
-			if (wrd)
+			if (str[j] == 32)
+				j++;
+			else if (str[j] != 32 && !isredirection(str[j]) && str[j])
 			{
-				add_chunks_back(&chunks, wrd, WORD);
-				// free(wrd);
+				wrd = one_word(str, &j);
+				type = WORD;
+			}
+			else if (str[j] == '>')
+			{
+				j++;
+				wrd = malloc(2);
+				wrd[0] = '>';
+				wrd[1] = '\0';
+				type = OUT;
+			}
+			else if (str[j] == '<')
+			{
+				j++;
+				wrd = malloc(2);
+				wrd[0] = '<';
+				wrd[1] = '\0';
+				type = IN;
+			}
+			else if (str[j] == '>' && str[j + 1] == '>')
+			{
+				j += 2;
+				wrd = malloc(3);
+				wrd[0] = '>';
+				wrd[1] = '>';
+				wrd[2] = '\0';
+				type = APPEND;
+			}
+			else if (str[j] == '<' && str[j + 1] == '<')
+			{
+				j += 2;
+				wrd = malloc(3);
+				wrd[0] = '<';
+				wrd[1] = '<';
+				wrd[2] = '\0';
+				type = HEREDOC;
 			}
 		}
-		if (isredirection(str[i]))
+		else
+			return (NULL);
+		int len = ft_strlen(wrd);
+		for (int f = 0; f < len; f++)
 		{
-			wrd = get_op(str, &i);
-			if (wrd)
-			{
-				add_chunks_back(&chunks, wrd, WORD);
-				// free(wrd);
-			}
+			add_back(&args, wrd[f]);
 		}
-		j++;
+		i++;
 	}
-	return (chunks);
+	return (args);
 }
 
-int	main(void)
-{
-	char	*str;
-	t_chunk	*args;
+// int	main(void)
+// {
+// 	char	*str;
+// 	t_lexer	*args;
 
-	while (1)
+// 	args = NULL;
+// 	while (1)
+// 	{
+// 		str = readline(">  ");
+// 		add_history(str);
+// 		if (!check_redirection(str))
+// 		{
+// 			free(str);
+// 			continue ;
+// 		}
+// 		args = get_lexer(args, str);
+// 		while (args)
+// 		{
+// 			printf("%c\n", args->c);
+// 			args = args->next;
+// 		}
+// 		// printf("\n");
+// 		free_lst(args);
+// 	}
+// 	return (0);
+// }
+
+int	get_len(char *str, int i)
+{
+	while (str[i] != 32 && !isredirection(str[i]))
+		i++;
+	return (i);
+}
+
+
+int	main(int ac, char **av)
+{
+	char 	*wrd;
+	t_chunk	*args = NULL;
+	int		i = 0;
+	int		j = 0;
+	int		count = 0;
+	char	*str = av[1];
+	
+	(void)ac;
+	while (str[i])
 	{
-		str = readline(">  ");
-		add_history(str);
-		if (!check_redirection(str))
+		if (str[i] == '>')
 		{
-			free(str);
-			continue ;
+			printf("OUT %c\n", str[i]);
+			wrd = malloc(2);
+			wrd[0] = str[i];
+			wrd[1] = '\0';
+			add_chunks_back(&args, wrd, OUT);
 		}
-		args = get_chunk(str);
-		while (args)
+		else if (str[i] == '<')
 		{
-			printf("%c", args->type);
-			args = args->next;
+			printf("IN %c\n", str[i]);
+			wrd = malloc(2);
+			wrd[0] = str[i];
+			wrd[1] = '\0';
+			add_chunks_back(&args, wrd, IN);
 		}
-		printf("\n");
-		free_chunks(args);
+		else if (str[i] == '<' && str[i + 1] == '<')
+		{
+			printf("APP %c\n", str[i]);
+			wrd = malloc(3);
+			wrd[0] = str[i];
+			wrd[1] = str[i + 1];
+			wrd[2] = '\0';
+			add_chunks_back(&args, wrd, APPEND);
+		}
+		else if (str[i] == '>' && str[i + 1] == '>')
+		{
+			printf("HERE %c\n", str[i]);
+			wrd = malloc(3);
+			wrd[0] = str[i];
+			wrd[1] = str[i + 1];
+			wrd[2] = '\0';
+			add_chunks_back(&args, wrd, HEREDOC);
+		}
+		else if (str[i] == 32)
+			i++;
+		else if (str[i] != '\0')
+		{
+			count = get_len(str, i);
+			wrd = malloc(count + 1);
+			while (str[i] != 32 && !isredirection(str[i]) && str[i])
+			{
+				wrd[j] = str[i];
+				i++;
+				j++;
+				printf("%c ", str[i]);
+			}
+			wrd[j] = '\0';
+			add_chunks_back(&args, wrd, WORD);
+		}
+		i++;
 	}
-	return (0);
+	wrd = NULL;
+	free(wrd);	
+	// while (args->next)
+	// {
+	// 	printf("%u %s \n", args->type, args->str);
+	// 	args = args->next;
+	// }
+	free_chunks(args);
 }
