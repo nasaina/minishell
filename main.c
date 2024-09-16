@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:38:26 by nandrian          #+#    #+#             */
-/*   Updated: 2024/09/16 10:51:15 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/09/16 12:41:23 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	main(void)
 		args = lexing(args, str);
 		while (args)
 		{
-			printf("%u %s\n", args->type, args->str);
+			printf("%d : %s\n", is_variable(args->str), args->str);
 			args = args->next;
 		}
 	}
