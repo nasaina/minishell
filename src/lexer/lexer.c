@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 09:34:29 by nandrian          #+#    #+#             */
-/*   Updated: 2024/09/16 10:13:13 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/09/16 10:51:29 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,11 @@ int	count_args(int count, char *str, int i, t_type *type)
 		count = is_append(str, i, type);
 	else if (str[i] == '<')
 		count = is_heredoc(str, i, type);
+	else if (str[i] == '|')
+	{
+		count = 1;
+		*type = PIPE;
+	}
 	else
 		count = one_word(str, i, type);
 	return (count);

@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 16:47:47 by nandrian          #+#    #+#             */
-/*   Updated: 2024/09/16 10:17:05 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/09/16 10:59:41 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ int	is_redirok(char *str, int i)
 	if (isredirection(str[i]) && str[i + 1] == str[i]
 		&& !isredirection(str[i + 2]))
 		return (1);
-	if (str[i] == '<' && str[i + 1] == '>')
+	if (str[i] == '<' && str[i + 1] == '>'
+		&& !isredirection(str[i + 2]))
 		return (1);
 	return (0);
 }

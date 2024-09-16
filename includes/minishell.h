@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:32:07 by nandrian          #+#    #+#             */
-/*   Updated: 2024/09/16 10:16:13 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/09/16 10:56:13 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ typedef enum e_type
 	IN,	
 	APPEND,	
 	HEREDOC,
-	PIPE
+	PIPE,
+	NONE
 }	t_type;
 
 typedef struct s_chunk
