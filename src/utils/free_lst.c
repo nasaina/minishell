@@ -1,28 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.c                                            :+:      :+:    :+:   */
+/*   free_lst.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/13 09:34:29 by nandrian          #+#    #+#             */
-/*   Updated: 2024/09/13 09:45:13 by nandrian         ###   ########.fr       */
+/*   Created: 2024/09/13 09:08:39 by nandrian          #+#    #+#             */
+/*   Updated: 2024/09/13 14:39:30 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-t_lexer *get_args(t_lexer*args, char *str)
+void	free_lst(t_lexer *lst)
 {
-	int		i;
+	t_lexer	*tmp;
 
-	if (!str)
-		return (NULL);
-	i = 0;
-	while (str[i])
+	while (lst)
 	{
-		add_back(&args, str[i]);
-		i++;
+		tmp = lst;
+		lst = lst->next;
+		free(tmp);
 	}
-	return (args);
+	free(lst);
+}
+
+void	free_chunks(t_chunk *lst)
+{
+	t_chunk	*tmp;
+
+	while (lst)
+	{
+		tmp = lst;
+		lst = lst->next;
+		free(tmp);
+	}
+	free(lst);
 }
