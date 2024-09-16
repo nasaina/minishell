@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:38:26 by nandrian          #+#    #+#             */
-/*   Updated: 2024/09/16 13:36:34 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/09/16 16:38:54 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,13 @@ int	main(int argc, char **argv, char **envp)
 	(void)envp;
 
 	args = NULL;
+	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		str = readline(">  ");
 		add_history(str);
+		handle_eof(str);
 		if (!check_redirection(str))
 		{
 			free(str);

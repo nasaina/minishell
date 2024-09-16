@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:17:43 by nandrian          #+#    #+#             */
-/*   Updated: 2024/09/16 13:35:43 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/09/16 16:45:32 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*get_variable(char *str)
 	int		j;
 
 	i = 0;
-	while (str[i] != '$')
+	while (str[i] != '$' && !str[i])
 		i++;
 	i++;
 	name = malloc((ft_strlen(str) - i) + 1);
