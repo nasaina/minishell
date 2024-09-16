@@ -6,6 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:32:07 by nandrian          #+#    #+#             */
+
 /*   Updated: 2024/09/14 15:37:03 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -59,5 +60,12 @@ void	add_chunks_back(t_chunk **args, char *str, t_type type);
 void	add_chunks_front(t_chunk **args, char *str, t_type type);
 void	free_lst(t_lexer *lst);
 void	free_chunks(t_chunk *lst);
+char	*get_all_args(int ac, char **av);
+char	**split_arg(char *args);
+int		args_isalpha(char *str);
+int		check_redirection(char *str);
+int		handle_eof(char *str);
+void	handle_sigint(int sig);
+void	handle_sigquit(int sig);
 
 #endif

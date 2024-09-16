@@ -11,11 +11,23 @@
 /* ************************************************************************** */
 
 #include <minishell.h>
+#include <signal.h>
 
 char *get_op(char *str, int *i)
 {
 	char	*wrd;
 
+
+	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, handle_sigquit);
+	while (1)
+	{
+		str = readline(">  ");
+		if (handle_eof(str))
+			break ;
+		split = ft_split(str, ' ');
+		check_redirection(str);
+		add_history(str);
 	while (str[*i] && !isredirection(str[*i]) && str[*i])
 		*i += 1;
 	if (isredirection(str[*i]) && !isredirection(str[*i + 1]))
