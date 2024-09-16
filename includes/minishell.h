@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:32:07 by nandrian          #+#    #+#             */
-/*   Updated: 2024/09/16 13:06:02 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/09/16 13:28:48 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,6 @@ void	handle_sigint(int sig);
 void	handle_sigquit(int sig);
 void	free_lst(t_lexer *lst);
 void	free_chunks(t_chunk *lst);
+char	*get_variable(char *str);
 
 #endif
