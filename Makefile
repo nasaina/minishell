@@ -20,7 +20,7 @@ SRC_ERR = $(addprefix src/errors/, error.c)
 
 SRC_EXEC = $(addprefix src/executor/, execute.c)
 
-SRC_LEX = $(addprefix src/lexer/, lexer.c get_chunks.c)
+SRC_LEX = $(addprefix src/lexer/, lexer.c get_chunks.c check_op.c)
 
 SRC_UTILS = $(addprefix src/utils/, lst_utils.c free_lst.c)
 

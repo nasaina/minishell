@@ -6,16 +6,16 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 10:35:17 by nandrian          #+#    #+#             */
-/*   Updated: 2024/09/14 17:06:58 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/09/16 10:11:41 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-t_chunk *create_chunks(char *str, t_type type)
+t_chunk	*create_chunks(char *str, t_type type)
 {
-	t_chunk *chunks;
-	
+	t_chunk	*chunks;
+
 	chunks = (t_chunk *)malloc(sizeof(t_chunk));
 	if (!chunks)
 		return (NULL);
@@ -45,7 +45,6 @@ void	add_chunks_back(t_chunk **args, char *str, t_type type)
 	}
 	else
 		*args = element;
-	free(str);
 }
 
 void	add_chunks_front(t_chunk **args, char *str, t_type type)

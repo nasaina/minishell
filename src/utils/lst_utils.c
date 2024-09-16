@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 15:50:44 by nandrian          #+#    #+#             */
-/*   Updated: 2024/09/13 09:45:55 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/09/16 10:19:02 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_lexer	*create(char c)
 {
 	t_lexer	*args;
-	
+
 	args = malloc(sizeof(t_lexer));
 	args->c = c;
 	args->next = NULL;
@@ -41,7 +41,7 @@ void	add_back(t_lexer **args, char c)
 		tmp->next = element;
 	}
 	else
-		*args = element;	
+		*args = element;
 }
 
 void	add_front(t_lexer **args, char c)

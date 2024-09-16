@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_signals.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maandria <maandria@student.42antanana      +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:31:27 by maandria          #+#    #+#             */
-/*   Updated: 2024/09/13 17:09:29 by maandria         ###   ########.fr       */
+/*   Updated: 2024/09/16 10:18:24 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	handle_sigquit(int sig)
 	printf("Signal SIGQUIT recu");
 }
 
-int		handle_eof(char *str)
+int	handle_eof(char *str)
 {
 	if (str == NULL || !ft_strncmp(str, "exit", 6))
 	{

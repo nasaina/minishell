@@ -6,13 +6,8 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:51:47 by nandrian          #+#    #+#             */
-/*   Updated: 2024/09/04 15:23:24 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/09/16 10:17:29 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-void	execute(void)
-{
-	
-}

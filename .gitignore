@@ -2,3 +2,4 @@ objs/
 minishell
 *.o
 *.a
+.vscode/
