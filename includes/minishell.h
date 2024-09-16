@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:32:07 by nandrian          #+#    #+#             */
-/*   Updated: 2024/09/16 10:56:13 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/09/16 12:18:30 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,6 @@ int		one_word(char *str, int i, t_type *type);
 int		is_append(char *str, int i, t_type *type);
 int		is_heredoc(char *str, int i, t_type *type);
 int		is_word(char c);
+int		is_variable(char *str);
 
 #endif
