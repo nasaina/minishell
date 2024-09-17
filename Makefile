@@ -18,7 +18,7 @@ SRC_EXP = $(addprefix src/expander/, expander.c)
 
 SRC_PARS = $(addprefix src/parser/, is_space.c)
 
-SRC_ERR = $(addprefix src/errors/, error.c)
+SRC_ERR = $(addprefix src/errors/, error.c args_utils.c)
 
 SRC_EXEC = $(addprefix src/executor/, execute.c)
 

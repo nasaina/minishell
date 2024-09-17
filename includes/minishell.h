@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:32:07 by nandrian          #+#    #+#             */
-/*   Updated: 2024/09/16 13:28:48 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/09/17 15:47:54 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdio.h>
 # include <libft.h>
 # include <lexer.h>
+# include <error.h>
 # include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -33,15 +34,12 @@ typedef struct s_lexer
 	struct s_lexer	*next;
 }	t_lexer;
 
-int		check_redirection(char *str);
-int		isredirection(char c);
-int		is_redirok(char *str, int i);
-int		is_redirok(char *str, int i);
 int		handle_eof(char *str);
 void	handle_sigint(int sig);
 void	handle_sigquit(int sig);
 void	free_lst(t_lexer *lst);
 void	free_chunks(t_chunk *lst);
 char	*get_variable(char *str);
+char	*expander(t_chunk *chunks, char **envp);
 
 #endif
