@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:38:26 by nandrian          #+#    #+#             */
-/*   Updated: 2024/09/16 16:38:54 by maandria         ###   ########.fr       */
+/*   Updated: 2024/09/17 08:37:47 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int	main(int argc, char **argv, char **envp)
 	(void)envp;
 
 	args = NULL;
-	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, SIG_IGN);
+	// signal(SIGINT, handle_sigint);
+	// signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		str = readline(">  ");
@@ -37,13 +37,13 @@ int	main(int argc, char **argv, char **envp)
 		// 	printf("%s\n", get_variable(str));
 		// else
 		// 	printf("%s\n", str);
-		printf("%s\n", getenv(get_variable(str)));
-		// args = lexing(args, str);
-		// while (args)
-		// {
-		// 	printf("%d : %s\n", is_variable(args->str), args->str);
-		// 	args = args->next;
-		// }
+		args = lexing(args, str);
+		int i = 0;
+		while (args)
+		{
+			printf("%d %s\n", i++, args->str);
+			args = args->next;
+		}
 	}
 	return (0);
 }

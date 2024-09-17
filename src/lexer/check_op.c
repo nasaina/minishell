@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:10:31 by nandrian          #+#    #+#             */
-/*   Updated: 2024/09/16 10:57:12 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/09/17 09:03:55 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,22 @@ int	is_heredoc(char *str, int i, t_type *type)
 		count++;
 		i++;
 	}
+	return (count);
+}
+
+
+int	is_quote(char *str, int i, t_type *type)
+{
+	int	count;
+
+	count = -1;
+	i++;
+	while (str[i] != 39 && str[i])
+	{
+		count++;
+		i++;
+	}
+	count += 3;
+	*type = WORD;
 	return (count);
 }
