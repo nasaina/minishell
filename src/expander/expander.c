@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:17:43 by nandrian          #+#    #+#             */
-/*   Updated: 2024/09/16 16:45:32 by maandria         ###   ########.fr       */
+/*   Updated: 2024/09/17 15:52:00 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,15 @@ char	*get_variable(char *str)
 		j++;
 	}
 	name[j] = '\0';
-	return (name);	
+	return (name);
 }
 
-void	expander(t_chunk *chunks)
+char	*expander(t_chunk *chunks, char **envp)
 {
-	(void)chunks;
+	(void)envp;
+	if (is_variable(chunks->str))
+		return (getenv(get_variable(chunks->str)));
+	else
+		return (chunks->str);
+	return (NULL);
 }

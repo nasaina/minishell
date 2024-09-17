@@ -1,39 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   args_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/04 14:38:26 by nandrian          #+#    #+#             */
-/*   Updated: 2024/09/17 15:48:49 by nandrian         ###   ########.fr       */
+/*   Created: 2024/09/17 15:41:49 by nandrian          #+#    #+#             */
+/*   Updated: 2024/09/17 15:42:57 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	main(int ac, char **av, char **env)
+int	is_error(char *str)
 {
-	char	*str;
-	t_chunk	*args;
-
-	args = NULL;
-	str = NULL;
-	ignore_args(ac, av, env);
-	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, SIG_IGN);
-	while (1)
+	if (!check_redirection(str))
 	{
-		str = ft_readline(str);
-		if (is_error(str))
-			continue ;
-		args = lexing(args, str);
-		while (args)
-		{
-			printf("%s ", expander(args, env));
-			args = args->next;
-		}
-		printf("\n");
+		free(str);
+		return (1);
 	}
 	return (0);
+}
+
+void	ignore_args(int ac, char **av, char **env)
+{
+	(void)ac;
+	(void)av;
+	(void)env;
+}
+
+char	*ft_readline(char *str)
+{
+	str = readline(">  ");
+	add_history(str);
+	handle_eof(str);
+	return (str);
 }
