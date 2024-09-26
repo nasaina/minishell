@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:17:43 by nandrian          #+#    #+#             */
-/*   Updated: 2024/09/17 15:52:00 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/09/23 10:26:06 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	is_variable(char *str)
 	int	i;
 
 	i = 0;
+	if (str[i] == 39)
+		return (0);
 	while (str[i])
 	{
 		if (str[i] == '$')
@@ -24,6 +26,18 @@ int	is_variable(char *str)
 		i++;
 	}
 	return (0);
+}
+
+int	is_one_word(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (!str)
+		return (0);
+	while (str[i] && str[i] != 32)
+		i++;
+	return (i);
 }
 
 char	*get_variable(char *str)
@@ -38,7 +52,7 @@ char	*get_variable(char *str)
 	i++;
 	name = malloc((ft_strlen(str) - i) + 1);
 	j = 0;
-	while (str[i])
+	while (str[i] && str[i] != 32)
 	{
 		name[j] = str[i];
 		i++;
