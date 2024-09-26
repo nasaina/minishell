@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:17:43 by nandrian          #+#    #+#             */
-/*   Updated: 2024/09/17 16:16:28 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/09/23 10:26:06 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	is_variable(char *str)
 	int	i;
 
 	i = 0;
+	if (str[i] == 39)
+		return (0);
 	while (str[i])
 	{
 		if (str[i] == '$')

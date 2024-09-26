@@ -16,7 +16,7 @@ SRC_SIG = $(addprefix src/signals/, handle_signals.c)
 
 SRC_EXP = $(addprefix src/expander/, expander.c)
 
-SRC_PARS = $(addprefix src/parser/, is_space.c)
+SRC_PARS = $(addprefix src/parser/, parser.c)
 
 SRC_ERR = $(addprefix src/errors/, error.c args_utils.c)
 
@@ -24,7 +24,7 @@ SRC_EXEC = $(addprefix src/executor/, execute.c)
 
 SRC_LEX = $(addprefix src/lexer/, lexer.c get_chunks.c check_op.c)
 
-SRC_UTILS = $(addprefix src/utils/, lst_utils.c free_lst.c)
+SRC_UTILS = $(addprefix src/utils/, free_lst.c)
 
 MAIN = main.c
 
