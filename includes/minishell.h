@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:32:07 by nandrian          #+#    #+#             */
-/*   Updated: 2024/09/27 11:32:03 by maandria         ###   ########.fr       */
+/*   Updated: 2024/10/07 16:26:13 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,12 @@ typedef struct s_lexer
 int		handle_eof(char *str);
 void	handle_sigint(int sig);
 void	handle_sigquit(int sig);
-void	free_lst(t_lexer *lst);
 void	free_chunks(t_chunk *lst);
 void	ms_pwd(void);
 void	ms_cd(char *str);
 char	*get_variable(char *str);
-char	*expander(t_chunk *chunks, char **envp);
+char	*expander(char *str, char **envp);
+int		str_isnum(char *str);
+int		table_isnum(char **str);
 
 #endif

@@ -24,7 +24,7 @@ SRC_EXEC = $(addprefix src/executor/, execute.c directory.c)
 
 SRC_LEX = $(addprefix src/lexer/, lexer.c get_chunks.c check_op.c)
 
-SRC_UTILS = $(addprefix src/utils/, free_lst.c)
+SRC_UTILS = $(addprefix src/utils/, free_lst.c str_isnum.c)
 
 MAIN = main.c
 
