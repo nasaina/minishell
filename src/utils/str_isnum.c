@@ -1,28 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_lst.c                                         :+:      :+:    :+:   */
+/*   str_isnum.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/13 09:08:39 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/07 16:04:54 by nandrian         ###   ########.fr       */
+/*   Created: 2024/10/07 16:03:14 by nandrian          #+#    #+#             */
+/*   Updated: 2024/10/07 16:06:07 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	free_chunks(t_chunk *lst)
+int	str_isnum(char *str)
 {
-	t_chunk	*tmp;
+	int	i;
 
-	if (!lst)
-		return ;
-	while (lst)
+	i = 0;
+	while (str[i])
 	{
-		tmp = lst;
-		lst = lst->next;
-		free(tmp);
+		if (!ft_isdigit(str[i]))
+			return (0);
+		i++;
 	}
-	free(lst);
+	return (1);
+}
+
+int	table_isnum(char **str)
+{
+	int	i;
+
+	i = 1;
+	while (str[i])
+	{
+		if (!str_isnum(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
 }

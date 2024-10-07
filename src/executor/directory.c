@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_lst.c                                         :+:      :+:    :+:   */
+/*   directory.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/13 09:08:39 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/07 16:04:54 by nandrian         ###   ########.fr       */
+/*   Created: 2024/09/26 13:55:42 by maandria          #+#    #+#             */
+/*   Updated: 2024/10/07 16:01:23 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	free_chunks(t_chunk *lst)
+void	ms_pwd(void)
 {
-	t_chunk	*tmp;
+	char	*pwd;
 
-	if (!lst)
-		return ;
-	while (lst)
-	{
-		tmp = lst;
-		lst = lst->next;
-		free(tmp);
-	}
-	free(lst);
+	pwd = getcwd(NULL, 0);
+	printf("%s\n", pwd);
+}
+
+void	ms_cd(char *str)
+{
+	chdir(str);
 }

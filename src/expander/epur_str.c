@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 14:35:31 by nandrian          #+#    #+#             */
-/*   Updated: 2024/09/26 15:28:16 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/10/07 16:01:59 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	count_space(char *str)
 		i++;
 	}
 	return (count - 1);
-}		
+}
 
 int	count_char(char *str)
 {
@@ -56,8 +56,8 @@ void	ignore_space(char *str, int *i)
 
 char	*epur_str(char *str)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 	char	*result;
 
 	i = 0;
