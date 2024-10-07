@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   directory.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: maandria <maandria@student.42antanana      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:55:42 by maandria          #+#    #+#             */
-/*   Updated: 2024/10/07 16:01:23 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/09/27 15:29:28 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ms_pwd(void)
 {
 	char	*pwd;
 
-	pwd = getcwd(NULL, 0);
+	pwd = getcwd(NULL,0);
 	printf("%s\n", pwd);
 }
 

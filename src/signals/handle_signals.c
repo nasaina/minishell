@@ -69,6 +69,7 @@ int	handle_eof(char *str)
 		printf("exit\n");
 		exit (0);
 	}
+
 	else if (ft_strncmp(str, "exit", 4) == 0 && str[4] == 32)
 	{
 		take_set = ft_split(str, ' ');
