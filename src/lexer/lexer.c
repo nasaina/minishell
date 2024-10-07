@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 09:34:29 by nandrian          #+#    #+#             */
-/*   Updated: 2024/09/17 09:01:38 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/10/07 09:35:10 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,11 @@ t_chunk	*lexing(t_chunk *chunks, char *str)
 		j = 0;
 		wrd = malloc(count + 1);
 		while (j < count)
-		{
-			wrd[j] = str[i];
-			i++;
-			j++;
-		}
+			wrd[j++] = str[i++];
 		wrd[j] = '\0';
 		add_chunks_back(&chunks, wrd, type);
+		while (str[i] == 32)
+			i++;
 	}
 	return (chunks);
 }
