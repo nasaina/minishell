@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:31:27 by maandria          #+#    #+#             */
-/*   Updated: 2024/10/07 16:02:47 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/10/08 07:19:42 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ int	handle_eof(char *str)
 		printf("exit\n");
 		exit (0);
 	}
-
 	else if (ft_strncmp(str, "exit", 4) == 0 && str[4] == 32)
 	{
 		take_set = ft_split(str, ' ');

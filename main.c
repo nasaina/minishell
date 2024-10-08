@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:38:26 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/07 17:13:09 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/10/08 08:47:39 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,18 @@ int	main(int ac, char **av, char **env)
 		if (is_error(str))
 			continue ;
 		args = lexing(args, str);
+		int s = 0;
 		while (args)
 		{
-			if (ft_strncmp(args->str, "pwd", 4) == 0)
-				ms_pwd();
-			printf("%s", expander(args->str, env));
+			ms_builtins(args, str, env);
+			// printf("%d %s", s, expander(args->str, env));
+			s++;
 			args = args->next;
 		}
 		// printf("%d\n", count_chunks(args));
 		// ast = parse_args(args);
 		// print_ast(ast);
-		printf("\n");
+		// printf("\n");
 	}
 	free_chunks(args);
 	return (0);

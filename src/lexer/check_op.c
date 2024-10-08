@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:10:31 by nandrian          #+#    #+#             */
-/*   Updated: 2024/09/17 15:52:10 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/10/08 07:10:25 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	one_word(char *str, int i, t_type *type)
 	int	count;
 
 	count = 0;
-	while (is_word(str[i]))
+	while (is_word(str[i]) && str[i])
 	{
 		count++;
 		i++;
@@ -78,7 +78,7 @@ int	is_quote(char *str, int i, t_type *type)
 
 	count = -1;
 	i++;
-	while (str[i] != 39 && str[i])
+	while (str[i] != 39 && str[i] != 34 && str[i])
 	{
 		count++;
 		i++;
