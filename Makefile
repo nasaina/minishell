@@ -20,7 +20,7 @@ SRC_PARS = $(addprefix src/parser/, parser.c)
 
 SRC_ERR = $(addprefix src/errors/, error.c args_utils.c)
 
-SRC_EXEC = $(addprefix src/executor/, execute.c directory.c)
+SRC_EXEC = $(addprefix src/executor/, execute.c directory.c builtins.c)
 
 SRC_LEX = $(addprefix src/lexer/, lexer.c get_chunks.c check_op.c)
 

@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:32:07 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/07 16:41:34 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/10/08 09:22:23 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define MINISHELL_H
 
 # include <signal.h>
-#include <unistd.h>
+# include <unistd.h>
 # include <stdio.h>
 # include <libft.h>
 # include <lexer.h>
@@ -40,11 +40,15 @@ int		handle_eof(char *str);
 void	handle_sigint(int sig);
 void	handle_sigquit(int sig);
 void	free_chunks(t_chunk *lst);
-void	ms_pwd(void);
+void	ms_pwd(char *str);
 void	ms_cd(char *str);
 char	*get_variable(char *str);
 char	*expander(char *str, char **envp);
 int		str_isnum(char *str);
 int		table_isnum(char **str);
+void	ms_echo(t_chunk *chunks, char **env);
+void	ms_env(char *str, char **env);
+void	ms_builtins(t_chunk *chunks, char *str, char **env);
+void	ms_export(char **env, t_chunk *chunks);
 
 #endif
