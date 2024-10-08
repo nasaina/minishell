@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_lst.c                                         :+:      :+:    :+:   */
+/*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/13 09:08:39 by nandrian          #+#    #+#             */
+/*   Created: 2024/10/08 14:56:23 by nandrian          #+#    #+#             */
 /*   Updated: 2024/10/08 15:45:44 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	free_chunks(t_chunk *lst)
+int	ft_strcmp(char *s1, char *s2)
 {
-	t_chunk	*tmp;
+	int	i;
 
-	if (!lst)
-		return ;
-	while (lst)
-	{
-		tmp = lst;
-		lst = lst->next;
-		free(tmp);
-	}
-	free(lst);
+	i = 0;
+	while (s1[i] && s1[i] == s2[i])
+		i++;
+	if (s1[i] == s2[i])
+		return (0);
+	return (s1[i] - s2[i]);
 }

@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_lst.c                                         :+:      :+:    :+:   */
+/*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/13 09:08:39 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/08 15:45:44 by nandrian         ###   ########.fr       */
+/*   Created: 2024/10/08 12:31:44 by nandrian          #+#    #+#             */
+/*   Updated: 2024/10/08 15:03:01 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#ifndef EXECUTOR_H
+# define EXECUTOR_H
 
-void	free_chunks(t_chunk *lst)
+typedef struct s_export
 {
-	t_chunk	*tmp;
+	char			*env;
+	struct s_export	*next;
+}	t_export;
 
-	if (!lst)
-		return ;
-	while (lst)
-	{
-		tmp = lst;
-		lst = lst->next;
-		free(tmp);
-	}
-	free(lst);
-}
+void	export_back(t_export **export, char *str);
+void	ms_printenv(char **env);
+int		ft_strcmp(char *s1, char *s2);
+
+#endif

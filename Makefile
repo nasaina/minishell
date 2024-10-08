@@ -20,11 +20,11 @@ SRC_PARS = $(addprefix src/parser/, parser.c)
 
 SRC_ERR = $(addprefix src/errors/, error.c args_utils.c)
 
-SRC_EXEC = $(addprefix src/executor/, execute.c directory.c builtins.c)
+SRC_EXEC = $(addprefix src/executor/, execute.c directory.c builtins.c export.c create_t_export.c)
 
 SRC_LEX = $(addprefix src/lexer/, lexer.c get_chunks.c check_op.c)
 
-SRC_UTILS = $(addprefix src/utils/, free_lst.c str_isnum.c)
+SRC_UTILS = $(addprefix src/utils/, free_lst.c str_isnum.c export_utils.c)
 
 MAIN = main.c
 
