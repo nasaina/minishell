@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:38:26 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/08 08:47:39 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/10/08 15:58:09 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	main(int ac, char **av, char **env)
 		// ast = parse_args(args);
 		// print_ast(ast);
 		// printf("\n");
+		free_chunks(args);
 	}
-	free_chunks(args);
 	return (0);
 }

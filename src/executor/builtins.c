@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 07:15:40 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/08 09:33:22 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/10/08 15:57:17 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,43 @@ void	ms_echo(t_chunk *chunks, char **env)
 	}
 }
 
+void	print_env(char **env, int *i, int *j)
+{
+	while (env[*i][*j] != 61)
+	{
+		printf("%c", env[*i][*j]);
+		*j += 1;
+	}
+	if (env[*i][*j] == 61)
+	{
+		printf("%c", env[*i][*j]);
+		*j += 1;
+	}
+	printf("\"");
+	while (env[*i][*j])
+	{
+		printf("%c", env[*i][*j]);
+		*j += 1;
+	}
+}
+
 void	ms_print_export(char *str, char **env)
 {
 	int	i;
+	int	j;
 
 	i = 0;
 	if (ft_strncmp(str, "env", 4) == 0)
 	{
 		while (env[i])
 		{
-			printf("declare -x %s\n", env[i]);
+			j = 0;
+			printf("declare -x ");
+			while (env[i][j])
+			{
+				print_env(env, &i, &j);
+				printf("\"\n");
+			}
 			i++;
 		}
 	}
@@ -99,5 +126,6 @@ void	ms_builtins(t_chunk *chunks, char *str, char **env)
 	ms_echo(chunks, env);
 	ms_pwd(str);
 	ms_env(str, env);
-	ms_export(env, chunks);
+	if (!ft_strncmp(str, "export", 7))
+		ms_printenv(env);
 }
