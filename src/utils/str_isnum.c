@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:03:14 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/07 16:06:07 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/10/09 08:51:57 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,7 @@ int	str_isnum(char *str)
 
 int	table_isnum(char **str)
 {
-	int	i;
-
-	i = 1;
-	while (str[i])
-	{
-		if (!str_isnum(str[i]))
-			return (0);
-		i++;
-	}
+	if (!str_isnum(str[1]))
+		return (0);
 	return (1);
 }

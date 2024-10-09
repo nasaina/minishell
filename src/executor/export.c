@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:58:43 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/08 15:54:00 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/10/09 10:09:54 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,34 +47,59 @@ void	sort_env(t_export **export)
 	}
 }
 
-void	ms_printenv(char **env)
+void	ft_printenv(t_export *export, int *i)
 {
-	t_export	*export;
-	int			i;
-
-	export = ms_getenv(env);
-	sort_env(&export);
-	while (export)
+	while (export->env[*i] != 61 && export->env[*i])
 	{
-		i = 0;
-		printf("declare -x ");
-		while (export->env[i] != 61)
-		{
-			printf("%c", export->env[i]);
-			i++;
-		}
-		if (export->env[i] == 61)
-		{
-			printf("%c", export->env[i]);
-			i++;
-		}
-		printf("\"");
-		while (export->env[i])
-		{
-			printf("%c", export->env[i]);
-			i++;
-		}
+		printf("%c", export->env[*i]);
+		*i += 1;
+	}
+	if (export->env[*i] == 61)
+	{
+		printf("%c", export->env[*i]);
+		*i += 1;
+		if (export->env[*i] != 34)
+			printf("\"");
+	}
+	else
+	{
+		printf("\n");
+		return ;
+	}
+	while (export->env[*i])
+	{
+		printf("%c", export->env[*i]);
+		*i += 1;
+	}
+	if (export->env[*i - 1] != 34)
 		printf("\"\n");
-		export = export->next;
+}
+
+void	ms_printenv(t_export *export, t_chunk *chunks)
+{
+	int	i;
+
+	if (!ft_strcmp(chunks->str, "export"))
+	{
+		chunks = chunks->next;
+		if (chunks)
+		{
+			while (chunks)
+			{
+				export_back(&export, chunks->str);
+				chunks = chunks->next;
+			}
+		}
+		else
+		{
+			sort_env(&export);
+			while (export)
+			{
+				i = 0;
+				printf("declare -x ");
+				ft_printenv(export, &i);
+				export = export->next;
+			}
+		}
 	}
 }
