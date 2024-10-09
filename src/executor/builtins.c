@@ -6,11 +6,28 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 07:15:40 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/08 15:57:17 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/10/09 11:19:37 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+int	is_echoflag(char *str)
+{
+	int	i;
+
+	i = 1;
+	if (str[0] == 45)
+	{
+		while (str[i])
+		{
+			if (str[i] != 110)
+				return (0);
+			i++;
+		}
+	}
+	return (1);
+}
 
 void	ms_echo(t_chunk *chunks, char **env)
 {
@@ -19,9 +36,10 @@ void	ms_echo(t_chunk *chunks, char **env)
 		chunks = chunks->next;
 		if (!chunks)
 			return ;
-		if (!ft_strncmp(chunks->str, "-n", 3))
+		if (is_echoflag(chunks->str) && chunks->next)
 		{
-			chunks = chunks->next;		
+			while (is_echoflag(chunks->str) && chunks->next)
+				chunks = chunks->next;
 			while (chunks)
 			{
 				printf("%s", expander(chunks->str, env));
@@ -31,7 +49,7 @@ void	ms_echo(t_chunk *chunks, char **env)
 			}
 		}
 		else
-		{			
+		{
 			while (chunks)
 			{
 				printf("%s", expander(chunks->str, env));
@@ -121,11 +139,11 @@ void	ms_env(char *str, char **env)
 	}
 }
 
-void	ms_builtins(t_chunk *chunks, char *str, char **env)
+void	ms_builtins(t_export *export, t_chunk *chunks, char *str, char **env)
 {
 	ms_echo(chunks, env);
 	ms_pwd(str);
 	ms_env(str, env);
-	if (!ft_strncmp(str, "export", 7))
-		ms_printenv(env);
+	ms_printenv(export, chunks);
+	ms_unset(&export, chunks);
 }

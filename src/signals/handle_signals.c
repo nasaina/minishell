@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:31:27 by maandria          #+#    #+#             */
-/*   Updated: 2024/10/08 07:19:42 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/10/09 08:53:06 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	ft_exit(char **str)
 	if (index > 1)
 	{
 		free_split(str);
-		printf("exit : too many arguments");
+		printf("exit : too many arguments\n");
 	}
 	else if (index == 1)
 	{

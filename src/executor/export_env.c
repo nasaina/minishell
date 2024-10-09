@@ -1,30 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec.h                                             :+:      :+:    :+:   */
+/*   export_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/08 12:31:44 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/09 09:17:12 by nandrian         ###   ########.fr       */
+/*   Created: 2024/10/09 07:15:18 by nandrian          #+#    #+#             */
+/*   Updated: 2024/10/09 08:40:01 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXECUTOR_H
-# define EXECUTOR_H
-
 #include <minishell.h>
-
-typedef struct s_export
-{
-	char			*env;
-	struct s_export	*next;
-}	t_export;
-
-void		export_back(t_export **export, char *str);
-void		ms_printenv(t_export *export, t_chunk *chunks);
-int			ft_strcmp(char *s1, char *s2);
-t_export	*ms_getenv(char **env);
-void		ms_unset(t_export **export, t_chunk *chunks);
-
-#endif

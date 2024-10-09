@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:38:26 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/08 15:58:09 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/10/09 10:07:22 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,15 @@ void	print_ast(t_ast *ast)
 
 int	main(int ac, char **av, char **env)
 {
-	char	*str;
-	t_chunk	*args;
-	t_ast	*ast;
+	char		*str;
+	t_chunk		*args;
+	t_ast		*ast;
+	t_export	*export;
 
 	args = NULL;
 	str = NULL;
 	ast = NULL;
+	export = ms_getenv(env);
 	start_signal(ac, av, env);
 	while (1)
 	{
@@ -50,7 +52,7 @@ int	main(int ac, char **av, char **env)
 		int s = 0;
 		while (args)
 		{
-			ms_builtins(args, str, env);
+			ms_builtins(export, args, str, env);
 			// printf("%d %s", s, expander(args->str, env));
 			s++;
 			args = args->next;
