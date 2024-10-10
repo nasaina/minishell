@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 11:38:37 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/10 20:23:13 by maandria         ###   ########.fr       */
+/*   Updated: 2024/10/10 21:17:57 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ typedef struct s_ast
 
 int		count_cmd(t_chunk *chunks);
 int		count_chunks(t_chunk *chunks);
-int		isbuiltin(t_cmd *cmd);
-void	exec_cmd(t_cmd *cmd);
 t_cmd	*get_cmd(t_chunk **chunks);
 t_ast	*parse_args(t_chunk *chunks);
 

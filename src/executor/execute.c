@@ -6,22 +6,37 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:51:47 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/10 20:33:57 by maandria         ###   ########.fr       */
+/*   Updated: 2024/10/10 21:52:50 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+const char	**init_builtins(void)
+{
+	static const char	*builtins[] = {
+	"cd"
+	"echo",
+	"env",
+	"exit",
+	"export",
+	"pwd",
+	"unset",
+	NULL
+	};
+	return (builtins);
+}
+
 int	isbuiltin(t_cmd *cmd)
 {
-	char	**builtins;
-	int	i;
+	const char	**builtins;
+	int			i;
 
-	builtins = {"echo", "cd", "pwd", "export", "env", "unset", "exit", NULL}
+	builtins = init_builtins(); 
 	i = 0;
 	while (builtins[i])
 	{
-		if (ft_strcmp(cmd->args[0], builtins[i]) == 0)
+		if (ft_strcmp(cmd->args[0], (char *)builtins[i]) == 0)
 			return (1);
 		else
 			i++;
@@ -52,5 +67,5 @@ void	check_cmd(t_cmd *cmd, t_export *export, t_chunk *chunks, char *str, char **
 	if (!isbuiltin(cmd))
 		exec_cmd(cmd);
 	else
-		ms_builtins(export, chunks, str, env);
+		ms_builtins(cmd, export, chunks, str, env);
 }

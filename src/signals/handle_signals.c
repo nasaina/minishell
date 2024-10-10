@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:31:27 by maandria          #+#    #+#             */
-/*   Updated: 2024/10/09 08:53:06 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/10/10 22:01:20 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,7 @@ void	ft_exit(char **str)
 int	handle_eof(char *str)
 {
 	char	**take_set;
-	int		index;
 
-	index = 0;
 	if (str == NULL || !ft_strncmp(str, "exit", 5))
 	{
 		printf("exit\n");

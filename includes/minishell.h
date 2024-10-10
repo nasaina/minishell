@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:32:07 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/10 20:37:41 by maandria         ###   ########.fr       */
+/*   Updated: 2024/10/10 21:49:14 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <error.h>
 # include <parser.h>
 # include <signal.h>
+# include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -37,7 +38,10 @@ typedef struct s_lexer
 	struct s_lexer	*next;
 }	t_lexer;
 
+const char	**init_builtins(void);
 int		handle_eof(char *str);
+int		isbuiltin(t_cmd *cmd);
+void	exec_cmd(t_cmd *cmd);
 void	handle_sigint(int sig);
 void	handle_sigquit(int sig);
 void	free_chunks(t_chunk *lst);
@@ -49,7 +53,7 @@ int		str_isnum(char *str);
 int		table_isnum(char **str);
 void	ms_echo(t_chunk *chunks, char **env);
 void	ms_env(char *str, char **env);
-void	ms_builtins(t_export *export, t_chunk *chunks, char *str, char **env);
+void	ms_builtins(t_cmd *cmd, t_export *export, t_chunk *chunks, char *str, char **env);
 void	ms_export(char **env, t_chunk *chunks);
 void	ms_setenv(char *str, t_export **export);
 

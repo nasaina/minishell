@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:31:44 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/09 09:17:12 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/10/10 21:33:56 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,9 @@ typedef struct s_export
 	struct s_export	*next;
 }	t_export;
 
-void		export_back(t_export **export, char *str);
-void		ms_printenv(t_export *export, t_chunk *chunks);
 int			ft_strcmp(char *s1, char *s2);
 t_export	*ms_getenv(char **env);
 void		ms_unset(t_export **export, t_chunk *chunks);
-
+void		export_back(t_export **export, char *str);
+void		ms_printenv(t_export *export, t_chunk *chunks);
 #endif

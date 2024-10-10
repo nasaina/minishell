@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:37:04 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/08 14:34:52 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/10/10 21:55:42 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 t_export	*get_export(char *str)
 {
-	int			i;
+	/*int			i;*/
 	t_export	*export;
 
-	i = 0;
+	/*i = 0;*/
 	export = malloc(sizeof(t_export));
 	if (!export)
 		return (NULL);
