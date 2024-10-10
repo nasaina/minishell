@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:32:07 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/09 08:41:44 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/10/10 20:37:41 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int		handle_eof(char *str);
 void	handle_sigint(int sig);
 void	handle_sigquit(int sig);
 void	free_chunks(t_chunk *lst);
-void	ms_pwd(char *str);
+void	ms_pwd(t_cmd *cmd);
 void	ms_cd(char *str);
 char	*get_variable(char *str);
 char	*expander(char *str, char **envp);
