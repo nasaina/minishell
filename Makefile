@@ -12,6 +12,8 @@ INC_LIBFT = -I libft/
 
 LIBFT = libft/libft.a
 
+SRC_BUILT = $(addprefix src/builtins/, directory.c builtins.c export.c create_t_export.c unset.c)
+
 SRC_SIG = $(addprefix src/signals/, handle_signals.c)
 
 SRC_EXP = $(addprefix src/expander/, expander.c)
@@ -20,7 +22,7 @@ SRC_PARS = $(addprefix src/parser/, parser.c)
 
 SRC_ERR = $(addprefix src/errors/, error.c args_utils.c)
 
-SRC_EXEC = $(addprefix src/executor/, execute.c directory.c builtins.c export.c create_t_export.c export_env.c unset.c)
+SRC_EXEC = $(addprefix src/executor/, execute.c)
 
 SRC_LEX = $(addprefix src/lexer/, lexer.c get_chunks.c check_op.c)
 
@@ -29,6 +31,8 @@ SRC_UTILS = $(addprefix src/utils/, free_lst.c str_isnum.c export_utils.c)
 MAIN = main.c
 
 OBJ_SIG = $(SRC_SIG:%.c=$(OBJ_DIR)/%.o)
+
+OBJ_BUILT = $(SRC_BUILT:%.c=$(OBJ_DIR)/%.o)
 
 OBJ_EXP = $(SRC_EXP:%.c=$(OBJ_DIR)/%.o)
 
@@ -44,7 +48,7 @@ OBJ_UTILS = $(SRC_UTILS:%.c=$(OBJ_DIR)/%.o)
 
 OBJ_MAIN = $(MAIN:%.c=$(OBJ_DIR)/%.o)
 
-OBJS = $(OBJ_EXEC) $(OBJ_PARS) $(OBJ_UTILS) $(OBJ_LEX) $(OBJ_ERR) $(OBJ_SIG) $(OBJ_EXP) $(OBJ_MAIN)
+OBJS = $(OBJ_EXEC) $(OBJ_PARS) $(OBJ_UTILS) $(OBJ_LEX) $(OBJ_ERR) $(OBJ_BUILT) $(OBJ_SIG) $(OBJ_EXP) $(OBJ_MAIN)
 
 all : $(NAME)
 

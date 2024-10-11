@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:32:07 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/09 08:41:44 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/10/10 10:16:42 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*expander(char *str, char **envp);
 int		str_isnum(char *str);
 int		table_isnum(char **str);
 void	ms_echo(t_chunk *chunks, char **env);
-void	ms_env(char *str, char **env);
+void	ms_env(char *str, t_export *export);
 void	ms_builtins(t_export *export, t_chunk *chunks, char *str, char **env);
 void	ms_export(char **env, t_chunk *chunks);
 void	ms_setenv(char *str, t_export **export);

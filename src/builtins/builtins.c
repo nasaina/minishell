@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 07:15:40 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/09 11:19:37 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/10/10 10:16:12 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,17 +124,14 @@ void	ms_export(char **env, t_chunk *chunks)
 }
 
 
-void	ms_env(char *str, char **env)
+void	ms_env(char *str, t_export *export)
 {
-	int	i;
-
-	i = 0;
 	if (ft_strncmp(str, "env", 4) == 0)
 	{
-		while (env[i])
+		while (export)
 		{
-			printf("%s\n", env[i]);
-			i++;
+			printf("%s\n", export->env);
+			export = export->next;
 		}
 	}
 }
@@ -143,7 +140,7 @@ void	ms_builtins(t_export *export, t_chunk *chunks, char *str, char **env)
 {
 	ms_echo(chunks, env);
 	ms_pwd(str);
-	ms_env(str, env);
+	ms_env(str, export);
 	ms_printenv(export, chunks);
 	ms_unset(&export, chunks);
 }
