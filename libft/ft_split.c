@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 14:07:14 by nandrian          #+#    #+#             */
-/*   Updated: 2024/03/24 16:54:53 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/10/11 16:08:58 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static int	ft_countw(char const *s, char c)
 
 	i = 0;
 	wrd = 0;
+	if (!s)
+		return (0);
 	while (s[i] != '\0')
 	{
 		while (s[i] != '\0' && s[i] == c)
@@ -69,6 +71,8 @@ char	**ft_split(char const *s, char c)
 	char	**str;
 	int		size;
 
+	if (!s)
+		return (NULL);
 	size = ft_countw(s, c);
 	str = malloc(sizeof(char *) * (size + 1));
 	if (!str)

@@ -6,13 +6,13 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:58:43 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/09 10:09:54 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/10/11 13:15:00 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-t_export	*ms_getenv(char **env)
+t_export	*ms_envcpy(char **env)
 {
 	t_export	*export;
 	int			i;
