@@ -6,25 +6,14 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:32:07 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/10 21:49:14 by maandria         ###   ########.fr       */
+/*   Updated: 2024/10/11 12:56:03 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <signal.h>
-# include <unistd.h>
-# include <stdio.h>
-# include <libft.h>
-# include <lexer.h>
-# include <exec.h>
-# include <error.h>
-# include <parser.h>
-# include <signal.h>
-# include <sys/wait.h>
-# include <readline/readline.h>
-# include <readline/history.h>
+# include <includes.h>
 
 # define NC		"\e[0m"
 # define YELLOW	"\e[1;33m"
@@ -55,6 +44,6 @@ void	ms_echo(t_chunk *chunks, char **env);
 void	ms_env(char *str, char **env);
 void	ms_builtins(t_cmd *cmd, t_export *export, t_chunk *chunks, char *str, char **env);
 void	ms_export(char **env, t_chunk *chunks);
-void	ms_setenv(char *str, t_export **export);
+char 	*var_remove(char *str);
 
 #endif

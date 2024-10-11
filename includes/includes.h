@@ -1,29 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec.h                                             :+:      :+:    :+:   */
+/*   includes.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/08 12:31:44 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/11 13:15:09 by nandrian         ###   ########.fr       */
+/*   Created: 2024/10/11 07:51:39 by nandrian          #+#    #+#             */
+/*   Updated: 2024/10/11 07:52:37 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXECUTOR_H
-# define EXECUTOR_H
+#ifndef INCLUDES_H
+# define INCLUDES_H
 
-#include <minishell.h>
+# include <signal.h>
+# include <unistd.h>
+# include <stdio.h>
+# include <libft.h>
+# include <lexer.h>
+# include <expander.h>
+# include <exec.h>
+# include <error.h>
+# include <parser.h>
+# include <signal.h>
+# include <sys/wait.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
-typedef struct s_export
-{
-	char			*env;
-	struct s_export	*next;
-}	t_export;
-
-int			ft_strcmp(char *s1, char *s2);
-t_export	*ms_envcpy(char **env);
-void		ms_unset(t_export **export, t_chunk *chunks);
-void		export_back(t_export **export, char *str);
-void		ms_printenv(t_export *export, t_chunk *chunks);
 #endif

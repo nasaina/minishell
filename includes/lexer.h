@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 13:02:10 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/08 08:20:02 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/10/11 15:09:20 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,6 @@ int		is_quote(char *str, int i, t_type *type);
 int		is_variable(char *str);
 void	add_chunks_back(t_chunk **args, char *str, t_type type);
 void	add_chunks_front(t_chunk **args, char *str, t_type type);
-t_chunk	*lexing(t_chunk *chunks, char *str);
+t_chunk	*lexing(char *str);
 
 #endif
