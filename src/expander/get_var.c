@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 07:50:56 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/11 16:10:23 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/10/11 16:41:04 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,29 +81,36 @@ char	*ms_get(char *str, t_export *export)
 	return (str);
 }
 
+void	add_variable(t_expander **expander, char *str, t_export *export)
+{
+	int		i;
+	char	*env;
+	char	**split;
+
+	env = ms_get(str, export);
+	if (env)
+	{
+	split = ft_split(env, ' ');
+		i = 0;
+		while (split[i])
+		{
+			add_expanders_back(expander, split[i], WORD);
+			i++;
+		}
+	}
+	else
+		add_expanders_back(expander, NULL, WORD);
+}
+
 t_expander	*expand_str(t_chunk *chunks, t_export *export)
 {
-	int			i;
 	t_expander	*expander;
-	t_expander	*current;
-	char		**str;
 
-	current = NULL;
 	expander = NULL;
 	while (chunks)
 	{
 		if (is_variable(chunks->str))
-		{
-			str = ft_split(ms_get(chunks->str, export), ' ');
-			if (!str)
-				return (NULL);
-			i = 0;
-			while (str[i])
-			{
-				add_expanders_back(&expander, str[i], WORD);
-				i++;
-			}
-		}
+			add_variable(&expander, chunks->str, export);
 		else
 			add_expanders_back(&expander, chunks->str, chunks->type);
 		chunks = chunks->next;

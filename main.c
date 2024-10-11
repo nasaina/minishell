@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:38:26 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/11 16:08:05 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/10/11 16:45:37 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,11 @@ int	main(int ac, char **av, char **env)
 			continue ;
 		chunks = lexing(str);
 		expander = expand_str(chunks, export);
-		printf("hitany %s zavatra\n", expander->cmd);
+		while (expander)
+		{
+			printf("hitany %s zavatra\n", expander->cmd);
+			expander = expander->next;
+		}
 		free(str);
 	}
 	
