@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 09:04:24 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/10 22:00:08 by maandria         ###   ########.fr       */
+/*   Updated: 2024/10/11 07:15:31 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,8 @@ void	remove_env(t_export **export, char *str)
 
 void	ms_unset(t_export **export, t_chunk *chunks)
 {
-	/*t_export	*tmp;*/
 	t_chunk		*token;
 
-	/*tmp = *export;*/
 	token = chunks;
 	if (!ft_strcmp(token->str, "unset"))
 	{

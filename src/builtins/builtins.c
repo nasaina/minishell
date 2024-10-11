@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 07:15:40 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/10 21:46:09 by maandria         ###   ########.fr       */
+/*   Updated: 2024/10/11 07:26:46 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,8 +141,9 @@ void	ms_env(char *str, char **env)
 
 void	ms_builtins(t_cmd *cmd, t_export *export, t_chunk *chunks, char *str, char **env)
 {
+	(void)cmd;
 	ms_echo(chunks, env);
-	ms_pwd(cmd);
+	// ms_pwd(cmd);
 	ms_env(str, env);
 	ms_printenv(export, chunks);
 	ms_unset(&export, chunks);
