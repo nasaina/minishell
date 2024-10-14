@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:58:43 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/11 13:15:00 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/10/14 08:44:26 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,19 +75,19 @@ void	ft_printenv(t_export *export, int *i)
 		printf("\"\n");
 }
 
-void	ms_printenv(t_export *export, t_chunk *chunks)
+void	ms_printenv(t_export *export, t_expander *expander)
 {
 	int	i;
 
-	if (!ft_strcmp(chunks->str, "export"))
+	if (!ft_strcmp(expander->cmd, "export"))
 	{
-		chunks = chunks->next;
-		if (chunks)
+		expander = expander->next;
+		if (expander)
 		{
-			while (chunks)
+			while (expander)
 			{
-				export_back(&export, chunks->str);
-				chunks = chunks->next;
+				export_back(&export, expander->cmd);
+				expander = expander->next;
 			}
 		}
 		else

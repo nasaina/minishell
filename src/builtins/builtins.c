@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 07:15:40 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/11 07:26:46 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/10/14 08:38:40 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,32 +29,32 @@ int	is_echoflag(char *str)
 	return (1);
 }
 
-void	ms_echo(t_chunk *chunks, char **env)
+void	ms_echo(t_expander *expander)
 {
-	if (!ft_strncmp(chunks->str, "echo", 5))
+	if (!ft_strncmp(expander->cmd, "echo", 5))
 	{
-		chunks = chunks->next;
-		if (!chunks)
+		expander = expander->next;
+		if (!expander)
 			return ;
-		if (is_echoflag(chunks->str) && chunks->next)
+		if (is_echoflag(expander->cmd) && expander->next)
 		{
-			while (is_echoflag(chunks->str) && chunks->next)
-				chunks = chunks->next;
-			while (chunks)
+			while (is_echoflag(expander->cmd) && expander->next)
+				expander = expander->next;
+			while (expander)
 			{
-				printf("%s", expander(chunks->str, env));
-				chunks = chunks->next;
-				if (chunks)
+				printf("%s", expander->cmd);
+				expander = expander->next;
+				if (expander)
 					printf(" ");
 			}
 		}
 		else
 		{
-			while (chunks)
+			while (expander)
 			{
-				printf("%s", expander(chunks->str, env));
-				chunks = chunks->next;
-				if (chunks)
+				printf("%s", expander->cmd);
+				expander = expander->next;
+				if (expander)
 					printf(" ");
 			}
 			printf("\n");
@@ -139,12 +139,12 @@ void	ms_env(char *str, char **env)
 	}
 }
 
-void	ms_builtins(t_cmd *cmd, t_export *export, t_chunk *chunks, char *str, char **env)
+void	ms_builtins(t_cmd *cmd, t_export *export, t_expander *expander, char *str, char **env)
 {
 	(void)cmd;
-	ms_echo(chunks, env);
+	ms_echo(expander);
 	// ms_pwd(cmd);
 	ms_env(str, env);
-	ms_printenv(export, chunks);
-	ms_unset(&export, chunks);
+	ms_printenv(export, expander);
+	ms_unset(&export, expander);
 }

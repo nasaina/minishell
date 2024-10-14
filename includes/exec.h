@@ -6,14 +6,15 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:31:44 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/11 13:15:09 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/10/14 08:44:59 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTOR_H
 # define EXECUTOR_H
 
-#include <minishell.h>
+# include <minishell.h>
+# include <expander.h>
 
 typedef struct s_export
 {
@@ -23,7 +24,7 @@ typedef struct s_export
 
 int			ft_strcmp(char *s1, char *s2);
 t_export	*ms_envcpy(char **env);
-void		ms_unset(t_export **export, t_chunk *chunks);
 void		export_back(t_export **export, char *str);
-void		ms_printenv(t_export *export, t_chunk *chunks);
+void		free_export(t_export *export);
+
 #endif

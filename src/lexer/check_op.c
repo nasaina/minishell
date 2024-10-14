@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:10:31 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/08 07:10:25 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/10/14 11:17:32 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	is_heredoc(char *str, int i, t_type *type)
 	}
 	if (str[i] == '>')
 	{
-		*type = NONE;
+		*type = OUT;
 		count++;
 		i++;
 	}

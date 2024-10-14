@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:51:47 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/10 21:52:50 by maandria         ###   ########.fr       */
+/*   Updated: 2024/10/14 08:38:18 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,10 @@ void	exec_cmd(t_cmd *cmd)
 		waitpid(pid, &status, 0);
 }
 
-void	check_cmd(t_cmd *cmd, t_export *export, t_chunk *chunks, char *str, char **env)
+void	check_cmd(t_cmd *cmd, t_export *export, t_expander *expander, char *str, char **env)
 {
 	if (!isbuiltin(cmd))
 		exec_cmd(cmd);
 	else
-		ms_builtins(cmd, export, chunks, str, env);
+		ms_builtins(cmd, export, expander, str, env);
 }

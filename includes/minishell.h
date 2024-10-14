@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:32:07 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/11 12:56:03 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/10/14 08:37:33 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@ void	free_chunks(t_chunk *lst);
 void	ms_pwd(t_cmd *cmd);
 void	ms_cd(char *str);
 char	*get_variable(char *str);
-char	*expander(char *str, char **envp);
+// char	*expander(char *str, char **envp);
 int		str_isnum(char *str);
 int		table_isnum(char **str);
-void	ms_echo(t_chunk *chunks, char **env);
+void	ms_echo(t_expander *expander);
 void	ms_env(char *str, char **env);
-void	ms_builtins(t_cmd *cmd, t_export *export, t_chunk *chunks, char *str, char **env);
+void	ms_builtins(t_cmd *cmd, t_export *export, t_expander *expander, char *str, char **env);
 void	ms_export(char **env, t_chunk *chunks);
 char 	*var_remove(char *str);
 
