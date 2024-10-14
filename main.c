@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:38:26 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/11 16:45:37 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/10/14 14:54:34 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,32 @@ void	print_ast(t_ast *ast)
 		return;
 	if (ast->type == AST_PIPE)
 		printf("PIPE\n");
-	if (ast->type == AST_COMMAND)
-		printf("%s\n", ast->cmd->args[0]);
+	if (ast->type == AST_CMD)
+	{
+		int i = 0;
+		while (ast->cmd->args[i])
+		{
+			printf("type %d : ", ast->type);
+			printf("%s ", ast->cmd->args[i]);
+			i++;
+		}
+	}
 	print_ast(ast->left);
 	print_ast(ast->right);
 }
 
 int	main(int ac, char **av, char **env)
 {
-	t_chunk	*chunks = NULL;
+	(void)ac;
+	(void)av;
 	char	*str = NULL;
+	t_chunk	*chunks = NULL;
 	t_export	*export = NULL;
 	t_expander	*expander = NULL;
+	t_ast		*ast = NULL;
 
 	export = ms_envcpy(env);
-	start_signal(ac, av, env);
+	// start_signal(ac, av, env);
 	while (1)
 	{
 		str = ft_readline(str);
@@ -47,14 +58,11 @@ int	main(int ac, char **av, char **env)
 			continue ;
 		chunks = lexing(str);
 		expander = expand_str(chunks, export);
-		while (expander)
-		{
-			printf("hitany %s zavatra\n", expander->cmd);
-			expander = expander->next;
-		}
+		ast = parse_args(expander);
+		print_ast(ast);
 		free(str);
 	}
-	
+	free_export(export);
 }
 
 // int	main(int ac, char **av, char **env)
@@ -100,7 +108,6 @@ int	main(int ac, char **av, char **env)
 // 		// ast = parse_args(args);
 // 		// print_ast(ast);
 // 		// printf("\n");
-// 		free_chunks(args);
 // 	}
 // 	return (0);
 // }
