@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 13:02:10 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/14 11:15:04 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/10/14 15:38:28 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 
 typedef enum e_type
 {
-	WORD,
-	OUT,	
-	IN,	
-	APPEND,	
-	HEREDOC,
-	PIPE,
+	WORD = 0,
+	OUT = 1,
+	IN = 2,
+	APPEND = 3,
+	HEREDOC = 4,
+	PIPE = 5,
 }	t_type;
 
 typedef struct s_chunk
