@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 11:38:37 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/14 14:34:54 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/10/15 14:49:46 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,7 @@ int		count_cmd(t_expander *expander);
 int		count_token(t_expander *expander);
 t_cmd	*get_cmd(t_expander **expander);
 t_ast	*parse_args(t_expander *expander);
+void	add_redir_back(t_redir **redir, char *str, char *file, t_type type);
+void	free_redir(t_redir *redir);
 
 #endif

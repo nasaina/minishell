@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 09:08:39 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/14 08:20:14 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/10/15 14:49:37 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,21 @@ void	free_export(t_export *export)
 		free(tmp);
 	}
 	free(export);
+}
+
+void	free_redir(t_redir *redir)
+{
+	t_redir	*tmp;
+
+	if (!redir)
+		return ;
+	while (redir)
+	{
+		tmp = redir;
+		redir = redir->next;
+		free(tmp->redir);
+		free(tmp->file);
+		free(tmp);
+	}
+	free(redir);
 }
