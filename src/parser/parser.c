@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 11:38:08 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/14 14:54:41 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/10/15 14:50:49 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,25 @@ int	count_token(t_expander *expander)
 	return (i);
 }
 
+t_redir	*get_redir(t_expander **expander)
+{
+	t_redir	*redir;
+	int		i;
+
+	i = 0;
+	redir = NULL;
+	add_redir_back(&redir, (*expander)->cmd, (*expander)->next->cmd, (*expander)->type);
+	return (redir);
+}
+
 t_cmd	*get_cmd(t_expander **expander)
 {
 	int		i;
 	int		count;
 	t_cmd	*cmd;
+	t_redir	*redir;
 
+	redir = NULL;
 	count = count_token(*expander);
 	printf("\n count %d\n", count);
 	cmd = (t_cmd *)malloc(sizeof(t_cmd));
@@ -53,6 +66,9 @@ t_cmd	*get_cmd(t_expander **expander)
 	while (*expander && (*expander)->cmd[0] != 124)
 	{
 		cmd->args[i] = ft_strdup((*expander)->cmd);
+		if ((*expander)->type == OUT)
+			redir = get_redir(expander);
+		printf("--%s--\n", (*expander)->cmd);
 		*expander = (*expander)->next;
 		i++;
 	}
@@ -66,7 +82,8 @@ t_ast	*parse_args(t_expander *expander)
 
 	tmp = malloc(sizeof(t_ast));
 	tmp->type = AST_CMD;
-	tmp->cmd = get_cmd(&expander);
+	if (expander)
+		tmp->cmd = get_cmd(&expander);
 	tmp->left = NULL;
 	tmp->right = NULL;
 	if (expander && expander->type == PIPE)

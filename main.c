@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:38:26 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/14 14:54:34 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/10/15 14:50:27 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	main(int ac, char **av, char **env)
 		chunks = lexing(str);
 		expander = expand_str(chunks, export);
 		ast = parse_args(expander);
+		free_expander(expander);
 		print_ast(ast);
 		free(str);
 	}

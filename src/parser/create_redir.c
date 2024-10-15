@@ -1,48 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_expander.c                                  :+:      :+:    :+:   */
+/*   create_redir.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/11 15:32:25 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/15 14:16:51 by nandrian         ###   ########.fr       */
+/*   Created: 2024/10/15 14:15:32 by nandrian          #+#    #+#             */
+/*   Updated: 2024/10/15 14:20:13 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-t_expander	*create_expander(char *str, t_type type)
+t_redir	*create_redir(char *str, char *file, t_type type)
 {
-	t_expander	*expander;
+	t_redir	*redir;
 
-	expander = (t_expander *)malloc(sizeof(t_expander));
-	if (!expander)
+	redir = (t_redir *)malloc(sizeof(t_redir));
+	if (!redir)
 		return (NULL);
-	expander->type = type;
-	expander->cmd = str;
-	expander->next = NULL;
-	return (expander);
+	redir->type = type;
+	redir->redir = str;
+	redir->file = file;
+	redir->next = NULL;
+	return (redir);
 }
 
-t_expander	*expander_last(t_expander *args)
+t_redir	*redir_last(t_redir *args)
 {
 	while (args->next)
 		args = args->next;
 	return (args);
 }
 
-void	add_expanders_back(t_expander **expander, char *str, t_type type)
+void	add_redir_back(t_redir **redir, char *str, char *file, t_type type)
 {
-	t_expander	*element;
-	t_expander	*tmp;
+	t_redir	*element;
+	t_redir	*tmp;
 
-	element = create_expander(str, type);
-	if (*expander)
+	element = create_redir(str, file, type);
+	if (*redir)
 	{
-		tmp = expander_last(*expander);
+		tmp = redir_last(*redir);
 		tmp->next = element;
 	}
 	else
-		*expander = element;
+		*redir = element;
 }
