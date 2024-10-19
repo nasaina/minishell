@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:31:27 by maandria          #+#    #+#             */
-/*   Updated: 2024/10/10 22:01:20 by maandria         ###   ########.fr       */
+/*   Updated: 2024/10/19 22:40:26 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	free_split(char **str)
 void	handle_sigint(int sig)
 {
 	(void)sig;
+	write(1, "\n", 1);
 	return ;
 }
 
