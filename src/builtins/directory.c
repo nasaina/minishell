@@ -6,11 +6,13 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:55:42 by maandria          #+#    #+#             */
-/*   Updated: 2024/10/19 21:41:38 by maandria         ###   ########.fr       */
+/*   Updated: 2024/10/19 23:19:44 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+char	*last_directory = NULL;
 
 void	ms_pwd(t_cmd *cmd)
 {
@@ -18,18 +20,52 @@ void	ms_pwd(t_cmd *cmd)
 
 	if (!ft_strncmp(cmd->args[0], "pwd", 4))
 	{
-		pwd = getcwd(NULL, 0);
-		printf("%s\n", pwd);
+		if (getcwd(pwd, sizeof(pwd)) != NULL)
+			printf("%s\n", pwd);
+		else
+			perror("getcwd");
 	}
+}
+
+char	*get_cd(char *str)
+{
+	char	*dir;
+
+	dir = NULL;
+	if (!str)
+	{
+		dir = getenv("HOME");
+		if (!dir)
+			ft_putsr_fd("cd: HOME environment variable not set\n", 2);
+	}
+	else if (str == "-")
+	{
+		dir = last_directory;
+
+		if (!dir)
+			ft_putstr_fd("cd: OLDPWD not set\n", 2);
+	}
+	else
+		dir = str;
+	return (dir);
 }
 
 void	ms_cd(char *str)
 {
 	char	*dir;
+	char	cwd[1024];
 
-	if (!str)
+	dir = get_cd(str);
+	if (getcwd(, sizeof(cwd)) != NULL)
 	{
-		dir = getenv("HOME");
-		chdir(str);
+		if (chdir(dir) == 0)
+		{
+			free(last_directory);
+			last_directory = ft_strdup((const char *)cwd); 
+		}
+		else
+			perror("cd");
 	}
+	else
+		perror("getcwd");
 }

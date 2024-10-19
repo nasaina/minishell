@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 07:51:39 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/11 07:52:37 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/10/19 23:25:07 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@
 # include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <errno.h>
 
 #endif
