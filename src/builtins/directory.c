@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:55:42 by maandria          #+#    #+#             */
-/*   Updated: 2024/10/10 20:36:42 by maandria         ###   ########.fr       */
+/*   Updated: 2024/10/19 21:41:38 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,11 @@ void	ms_pwd(t_cmd *cmd)
 
 void	ms_cd(char *str)
 {
-	chdir(str);
+	char	*dir;
+
+	if (!str)
+	{
+		dir = getenv("HOME");
+		chdir(str);
+	}
 }
