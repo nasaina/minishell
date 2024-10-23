@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:38:26 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/15 14:50:27 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/10/21 15:02:30 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	main(int ac, char **av, char **env)
 	t_ast		*ast = NULL;
 
 	export = ms_envcpy(env);
-	// start_signal(ac, av, env);
+	start_signal(ac, av, env);
 	while (1)
 	{
 		str = ft_readline(str);

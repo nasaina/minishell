@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:31:27 by maandria          #+#    #+#             */
-/*   Updated: 2024/10/19 22:40:26 by maandria         ###   ########.fr       */
+/*   Updated: 2024/10/23 15:50:57 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	handle_sigint(int sig)
 {
 	(void)sig;
 	write(1, "\n", 1);
+	rl_on_new_line();
+	rl_redisplay();
 	return ;
 }
 
