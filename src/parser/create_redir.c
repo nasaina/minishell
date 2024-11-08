@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   create_redir.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 14:15:32 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/15 14:20:13 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/11/08 13:08:13 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-t_redir	*create_redir(char *str, char *file, t_type type)
+t_redir	*create_redir(char *file, t_type type)
 {
 	t_redir	*redir;
 
@@ -20,8 +20,7 @@ t_redir	*create_redir(char *str, char *file, t_type type)
 	if (!redir)
 		return (NULL);
 	redir->type = type;
-	redir->redir = str;
-	redir->file = file;
+	redir->file = ft_strdup(file);
 	redir->next = NULL;
 	return (redir);
 }
@@ -33,12 +32,12 @@ t_redir	*redir_last(t_redir *args)
 	return (args);
 }
 
-void	add_redir_back(t_redir **redir, char *str, char *file, t_type type)
+void	add_redir_back(t_redir **redir, char *file, t_type type)
 {
 	t_redir	*element;
 	t_redir	*tmp;
 
-	element = create_redir(str, file, type);
+	element = create_redir(file, type);
 	if (*redir)
 	{
 		tmp = redir_last(*redir);

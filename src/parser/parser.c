@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 11:38:08 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/15 14:50:49 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/11/08 13:15:09 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,15 @@ int	count_token(t_expander *expander)
 	return (i);
 }
 
-t_redir	*get_redir(t_expander **expander)
+t_redir	*get_redir(t_expander **expander, t_redir *redir)
 {
-	t_redir	*redir;
+	t_type	type;
 	int		i;
 
 	i = 0;
-	redir = NULL;
-	add_redir_back(&redir, (*expander)->cmd, (*expander)->next->cmd, (*expander)->type);
+	type = (*expander)->type;
+	*expander = (*expander)->next;
+	add_redir_back(&redir, (*expander)->cmd, type);
 	return (redir);
 }
 
@@ -55,22 +56,22 @@ t_cmd	*get_cmd(t_expander **expander)
 	int		i;
 	int		count;
 	t_cmd	*cmd;
-	t_redir	*redir;
 
-	redir = NULL;
 	count = count_token(*expander);
-	printf("\n count %d\n", count);
 	cmd = (t_cmd *)malloc(sizeof(t_cmd));
 	cmd->args = (char **)malloc((count + 1) * sizeof(char *));
+	cmd->redir = NULL;
 	i = 0;
 	while (*expander && (*expander)->cmd[0] != 124)
 	{
-		cmd->args[i] = ft_strdup((*expander)->cmd);
-		if ((*expander)->type == OUT)
-			redir = get_redir(expander);
-		printf("--%s--\n", (*expander)->cmd);
+		if ((*expander)->type == WORD)
+		{
+			cmd->args[i] = ft_strdup((*expander)->cmd);
+			i++;
+		}
+		else
+			cmd->redir = get_redir(expander, cmd->redir);
 		*expander = (*expander)->next;
-		i++;
 	}
 	return (cmd);
 }

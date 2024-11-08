@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 11:38:37 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/15 14:49:46 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/11/08 12:49:26 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ typedef enum s_asttype
 typedef struct s_redir
 {
 	t_type		type;
-	char		*redir;
 	char		*file;
 	struct s_redir	*next;
 }	t_redir;
@@ -49,7 +48,7 @@ int		count_cmd(t_expander *expander);
 int		count_token(t_expander *expander);
 t_cmd	*get_cmd(t_expander **expander);
 t_ast	*parse_args(t_expander *expander);
-void	add_redir_back(t_redir **redir, char *str, char *file, t_type type);
+void	add_redir_back(t_redir **redir, char *file, t_type type);
 void	free_redir(t_redir *redir);
 
 #endif
