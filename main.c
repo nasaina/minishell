@@ -66,9 +66,9 @@ int	main(int ac, char **av, char **env)
 		chunks = lexing(str);
 		expander = expand_str(chunks, export);
 		ast = parse_args(expander);
+		check_cmd(ast, export, expander, str, env);
 		free_expander(expander);
 		print_ast(ast);
-		// free_redir(ast->cmd->redir);
 		printf("\n");
 		free(str);
 	}

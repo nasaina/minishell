@@ -13,6 +13,8 @@
 #ifndef INCLUDES_H
 # define INCLUDES_H
 
+# define PATH_MAX 5000
+
 # include <signal.h>
 # include <unistd.h>
 # include <stdio.h>
