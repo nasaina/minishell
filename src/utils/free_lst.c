@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 09:08:39 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/15 14:49:37 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/11/11 10:59:28 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	free_redir(t_redir *redir)
 	{
 		tmp = redir;
 		redir = redir->next;
-		free(tmp->redir);
+		/*free(tmp->redir);*/
 		free(tmp->file);
 		free(tmp);
 	}

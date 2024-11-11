@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:51:47 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/14 08:38:18 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/11/11 10:57:06 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,3 +69,5 @@ void	check_cmd(t_cmd *cmd, t_export *export, t_expander *expander, char *str, ch
 	else
 		ms_builtins(cmd, export, expander, str, env);
 }
+
+
