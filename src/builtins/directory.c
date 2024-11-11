@@ -14,14 +14,13 @@
 
 char	*last_directory = NULL;
 
-void	ms_pwd(t_cmd *cmd)
+void	ms_pwd(t_ast *ast)
 {
-	char	*pwd;
+	char	pwd[PATH_MAX];
 
-	pwd = NULL;
-	if (!ft_strncmp(cmd->args[0], "pwd", 4))
+	if (!ft_strncmp(ast->cmd->args[0], "pwd", 4))
 	{
-		if (getcwd(pwd, sizeof(pwd)) != NULL)
+		if (getcwd(pwd, PATH_MAX) != NULL)
 			printf("%s\n", pwd);
 		else
 			perror("getcwd");
@@ -51,22 +50,26 @@ char	*get_cd(char *str)
 	return (dir);
 }
 
-void	ms_cd(char *str)
+void	ms_cd(t_ast *ast)
 {
 	char	*dir;
-	char	cwd[1024];
+	char	cwd[PATH_MAX];
 
-	dir = get_cd(str);
-	if (getcwd(cwd, sizeof(cwd)) != NULL)
+		printf("print kely");
+	if (ft_strcmp(ast->cmd->args[0], "cd") == 0)
 	{
-		if (chdir(dir) == 0)
+		dir = get_cd(ast->cmd->args[1]);
+		if (getcwd(cwd, PATH_MAX) != NULL)
 		{
-			free(last_directory);
-			last_directory = ft_strdup((const char *)cwd); 
+			if (chdir(dir) == 0)
+			{
+				free(last_directory);
+				last_directory = ft_strdup((const char *)cwd); 
+			}
+			else
+				perror("cd");
 		}
 		else
-			perror("cd");
+			perror("getcwd");
 	}
-	else
-		perror("getcwd");
 }

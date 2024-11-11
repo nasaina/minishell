@@ -52,6 +52,8 @@ void	ms_echo(t_expander *expander)
 		{
 			while (expander)
 			{
+				if (is_echoflag(expander->cmd) && expander->next)
+					expander = expander->next;		
 				printf("%s", expander->cmd);
 				expander = expander->next;
 				if (expander)
@@ -139,12 +141,12 @@ void	ms_env(char *str, char **env)
 	}
 }
 
-void	ms_builtins(t_cmd *cmd, t_export *export, t_expander *expander, char *str, char **env)
+void	ms_builtins(t_ast *ast, t_export *export, t_expander *expander, char *str, char **env)
 {
-	(void)cmd;
 	ms_echo(expander);
-	// ms_pwd(cmd);
+	ms_pwd(ast);
 	ms_env(str, env);
+	ms_cd(ast);
 	ms_printenv(export, expander);
 	ms_unset(&export, expander);
 }

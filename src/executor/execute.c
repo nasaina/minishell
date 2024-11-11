@@ -15,7 +15,7 @@
 const char	**init_builtins(void)
 {
 	static const char	*builtins[] = {
-	"cd"
+	"cd",
 	"echo",
 	"env",
 	"exit",
@@ -27,7 +27,7 @@ const char	**init_builtins(void)
 	return (builtins);
 }
 
-int	isbuiltin(t_cmd *cmd)
+int	isbuiltin(t_ast *ast)
 {
 	const char	**builtins;
 	int			i;
@@ -36,7 +36,7 @@ int	isbuiltin(t_cmd *cmd)
 	i = 0;
 	while (builtins[i])
 	{
-		if (ft_strcmp(cmd->args[0], (char *)builtins[i]) == 0)
+		if (ft_strcmp(ast->cmd->args[0], (char *)builtins[i]) == 0)
 			return (1);
 		else
 			i++;
@@ -44,7 +44,7 @@ int	isbuiltin(t_cmd *cmd)
 	return (0);
 }
 
-void	exec_cmd(t_cmd *cmd)
+void	exec_cmd(t_ast *ast)
 {
 	pid_t	pid;
 	int	status;
@@ -54,7 +54,7 @@ void	exec_cmd(t_cmd *cmd)
 		perror("fork");
 	else if (pid == 0)
 	{
-		if (execve(cmd->args[0], cmd->args, NULL ) == -1)
+		if (execve(ast->cmd->args[0], &ast->cmd->args[0], NULL ) == -1)
 			perror("execve");
 		exit (EXIT_FAILURE);
 	}
@@ -62,12 +62,10 @@ void	exec_cmd(t_cmd *cmd)
 		waitpid(pid, &status, 0);
 }
 
-void	check_cmd(t_cmd *cmd, t_export *export, t_expander *expander, char *str, char **env)
+void	check_cmd(t_ast *ast, t_export *export, t_expander *expander, char *str, char **env)
 {
-	if (!isbuiltin(cmd))
-		exec_cmd(cmd);
+	if (isbuiltin(ast))
+		ms_builtins(ast, export, expander, str, env);
 	else
-		ms_builtins(cmd, export, expander, str, env);
+		exec_cmd(ast);
 }
-
-

@@ -70,7 +70,6 @@ void	free_redir(t_redir *redir)
 	{
 		tmp = redir;
 		redir = redir->next;
-		/*free(tmp->redir);*/
 		free(tmp->file);
 		free(tmp);
 	}
