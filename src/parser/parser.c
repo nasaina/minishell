@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 11:38:08 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/08 13:15:09 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/11/11 16:41:30 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_cmd	*get_cmd(t_expander **expander)
 	cmd->args = (char **)malloc((count + 1) * sizeof(char *));
 	cmd->redir = NULL;
 	i = 0;
-	while (*expander && (*expander)->cmd[0] != 124)
+	while (*expander && (*expander)->type != PIPE)
 	{
 		if ((*expander)->type == WORD)
 		{
@@ -73,6 +73,8 @@ t_cmd	*get_cmd(t_expander **expander)
 			cmd->redir = get_redir(expander, cmd->redir);
 		*expander = (*expander)->next;
 	}
+	if (*expander == NULL)
+		cmd->args[i] = NULL;
 	return (cmd);
 }
 

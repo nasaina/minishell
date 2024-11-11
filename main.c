@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:38:26 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/08 13:27:22 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/11/11 16:42:48 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,17 @@ void	print_ast(t_ast *ast)
 	}
 	print_ast(ast->left);
 	print_ast(ast->right);
+}
+
+void	prinexp(t_expander *expander)
+{
+	if (!expander)
+		return ;
+	while (expander)
+	{
+		printf("%s\n", expander->cmd);
+		expander = expander->next;
+	}
 }
 
 int	main(int ac, char **av, char **env)
