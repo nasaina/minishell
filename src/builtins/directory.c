@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   directory.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:55:42 by maandria          #+#    #+#             */
-/*   Updated: 2024/10/21 14:58:32 by maandria         ###   ########.fr       */
+/*   Updated: 2024/11/11 16:49:23 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ void	ms_cd(t_ast *ast)
 	char	*dir;
 	char	cwd[PATH_MAX];
 
-		printf("print kely");
 	if (ft_strcmp(ast->cmd->args[0], "cd") == 0)
 	{
 		dir = get_cd(ast->cmd->args[1]);
@@ -66,6 +65,8 @@ void	ms_cd(t_ast *ast)
 				free(last_directory);
 				last_directory = ft_strdup((const char *)cwd); 
 			}
+			else if (!ft_strcmp("(null)", dir))
+				printf("");
 			else
 				perror("cd");
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 07:50:56 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/14 14:53:12 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/11/11 16:42:07 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,8 @@ char	*ms_getenv(char *str, t_export *export)
 		export = export->next;
 	}
 	free(var_name);
-	return (NULL);
+	value = ft_strdup("(null)");
+	return (value);
 }
 
 char	*ms_get(char *str, t_export *export)

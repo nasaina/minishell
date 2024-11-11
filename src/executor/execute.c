@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:51:47 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/11 10:57:06 by maandria         ###   ########.fr       */
+/*   Updated: 2024/11/11 16:45:06 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,10 @@ void	exec_cmd(t_ast *ast)
 void	check_cmd(t_ast *ast, t_export *export, t_expander *expander, char *str, char **env)
 {
 	if (isbuiltin(ast))
+	{
+		printf("\n*** usain built ***\n");
 		ms_builtins(ast, export, expander, str, env);
+	}
 	else
 		exec_cmd(ast);
 }
