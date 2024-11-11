@@ -25,7 +25,7 @@ void	print_ast(t_ast *ast)
 		return;
 	if (ast->type == AST_PIPE)
 		printf("PIPE\n");
-	if (ast->type == AST_CMD)
+	else if (ast->type == AST_CMD)
 	{
 		int i = 0;
 		while (ast->cmd->args[i])
@@ -68,7 +68,7 @@ int	main(int ac, char **av, char **env)
 		ast = parse_args(expander);
 		free_expander(expander);
 		print_ast(ast);
-		free_redir(ast->cmd->redir);
+		// free_redir(ast->cmd->redir);
 		printf("\n");
 		free(str);
 	}
