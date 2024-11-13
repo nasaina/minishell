@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:55:42 by maandria          #+#    #+#             */
-/*   Updated: 2024/11/13 16:53:18 by maandria         ###   ########.fr       */
+/*   Updated: 2024/11/13 23:23:15 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	ms_cd(t_ast *ast)
 				last_directory = ft_strdup((const char *)cwd); 
 			}
 			else if (!ft_strcmp("(null)", dir))
-				printf("");
+				printf("\n");
 			else
 				perror("cd");
 		}
