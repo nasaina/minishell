@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:51:47 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/11 16:45:06 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/11/13 16:34:43 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,13 @@ int	isbuiltin(t_ast *ast)
 	return (0);
 }
 
-void	exec_cmd(t_ast *ast)
+void	exec_cmd(t_ast *ast, t_export *export)
 {
 	pid_t	pid;
 	int	status;
+	char	**pathlist;
 
+	pathlist = path_list(&export);
 	pid = fork();
 	if (pid < 0)
 		perror("fork");
@@ -70,5 +72,5 @@ void	check_cmd(t_ast *ast, t_export *export, t_expander *expander, char *str, ch
 		ms_builtins(ast, export, expander, str, env);
 	}
 	else
-		exec_cmd(ast);
+		exec_cmd(ast, export);
 }
