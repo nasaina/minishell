@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 11:38:08 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/11 16:41:30 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/11/13 23:22:03 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ int	count_token(t_expander *expander)
 t_redir	*get_redir(t_expander **expander, t_redir *redir)
 {
 	t_type	type;
-	int		i;
+	/*int		i;*/
 
-	i = 0;
+	/*i = 0;*/
 	type = (*expander)->type;
 	*expander = (*expander)->next;
 	add_redir_back(&redir, (*expander)->cmd, type);
