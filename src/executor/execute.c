@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:51:47 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/11 16:45:06 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/11/13 23:20:46 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,42 @@ int	isbuiltin(t_ast *ast)
 	return (0);
 }
 
-void	exec_cmd(t_ast *ast)
+char	*check_path(char **pathlist, t_ast *ast)
+{
+	int	i;
+	char	*path;
+	char	*command;
+
+	i = 0;
+	command = ft_strdup(ast->cmd->args[0]);
+	while (pathlist[i])
+	{
+		if (access(ft_strjoin(pathlist[i], command), F_OK) == 0)
+		{
+			path = pathlist[i];
+			return (path);
+		}
+		i++;
+	}
+	perror("access");
+	return (NULL);
+}
+
+void	exec_cmd(t_ast *ast, t_export *export)
 {
 	pid_t	pid;
 	int	status;
+	char	**pathlist;
+	char	*path;
 
+	pathlist = path_list(&export);
+	path = check_path(pathlist, ast);
 	pid = fork();
 	if (pid < 0)
 		perror("fork");
 	else if (pid == 0)
 	{
-		if (execve(ast->cmd->args[0], &ast->cmd->args[0], NULL ) == -1)
+		if (execve(path, &ast->cmd->args[0], NULL ) == -1)
 			perror("execve");
 		exit (EXIT_FAILURE);
 	}
@@ -70,5 +95,5 @@ void	check_cmd(t_ast *ast, t_export *export, t_expander *expander, char *str, ch
 		ms_builtins(ast, export, expander, str, env);
 	}
 	else
-		exec_cmd(ast);
+		exec_cmd(ast, export);
 }

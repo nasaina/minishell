@@ -22,7 +22,7 @@ SRC_ERR = $(addprefix src/errors/, error.c args_utils.c)
 
 SRC_BUILT = $(addprefix src/builtins/, directory.c builtins.c export.c create_t_export.c export_env.c unset.c)
 
-SRC_EXEC = $(addprefix src/executor/, execute.c)
+SRC_EXEC = $(addprefix src/executor/, execute.c path_checker.c)
 
 SRC_LEX = $(addprefix src/lexer/, lexer.c get_chunks.c check_op.c)
 
