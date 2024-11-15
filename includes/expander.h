@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 07:48:44 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/14 08:45:50 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/11/12 09:00:37 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,5 @@ char		*ms_get(char *str, t_export *export);
 void		add_expanders_back(t_expander **args, char *str, t_type type);
 void		free_expander(t_expander *expander);
 void		ms_unset(t_export **export, t_expander *expander);
-void		ms_printenv(t_export *export, t_expander *expander);
 
 #endif

@@ -5,6 +5,8 @@
 		"history.h": "c",
 		"readline.h": "c",
 		"lexer.h": "c",
-		"expander.h": "c"
+		"expander.h": "c",
+		"parser.h": "c",
+		"exec.h": "c"
 	}
 }
