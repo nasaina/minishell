@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_t_export.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:37:04 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/12 09:05:56 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/11/15 06:29:11 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
