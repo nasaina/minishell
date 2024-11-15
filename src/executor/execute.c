@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:51:47 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/13 23:20:46 by maandria         ###   ########.fr       */
+/*   Updated: 2024/11/15 11:33:46 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,19 +49,24 @@ char	*check_path(char **pathlist, t_ast *ast)
 	int	i;
 	char	*path;
 	char	*command;
+	char	*tmp;
 
 	i = 0;
-	command = ft_strdup(ast->cmd->args[0]);
+	tmp = "/";
+	command = ft_strjoin(tmp, ast->cmd->args[0]);
+
 	while (pathlist[i])
 	{
 		if (access(ft_strjoin(pathlist[i], command), F_OK) == 0)
 		{
-			path = pathlist[i];
+			path = ft_strjoin(pathlist[i], tmp);
+			path  = ft_strjoin(path, ast->cmd->args[0]);
 			return (path);
 		}
-		i++;
+		else
+			i++;
 	}
-	perror("access");
+	perror(command);
 	return (NULL);
 }
 
@@ -80,7 +85,9 @@ void	exec_cmd(t_ast *ast, t_export *export)
 	else if (pid == 0)
 	{
 		if (execve(path, &ast->cmd->args[0], NULL ) == -1)
-			perror("execve");
+		{
+				perror("execve");
+		}
 		exit (EXIT_FAILURE);
 	}
 	else
