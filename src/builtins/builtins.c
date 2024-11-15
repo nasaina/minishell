@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 07:15:40 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/14 08:38:40 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/11/12 10:01:15 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,6 @@ void	ms_builtins(t_ast *ast, t_export *export, t_expander *expander, char *str, 
 	ms_pwd(ast);
 	ms_env(str, env);
 	ms_cd(ast);
-	ms_printenv(export, expander);
+	ms_printenv(ast, export);
 	ms_unset(&export, expander);
 }

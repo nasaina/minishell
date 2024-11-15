@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:58:43 by nandrian          #+#    #+#             */
-/*   Updated: 2024/10/14 08:44:26 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/11/12 09:57:52 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,31 +75,37 @@ void	ft_printenv(t_export *export, int *i)
 		printf("\"\n");
 }
 
-void	ms_printenv(t_export *export, t_expander *expander)
+void	print_export(t_export *export)
+{
+	int	j;
+
+	sort_env(&export);
+	while (export)
+	{
+		j = 0;
+		printf("declare -x ");
+		ft_printenv(export, &j);
+		export = export->next;
+	}
+}
+
+void	ms_printenv(t_ast *ast, t_export *export)
 {
 	int	i;
 
-	if (!ft_strcmp(expander->cmd, "export"))
+	i = 0;
+	if (!ft_strcmp(ast->cmd->args[i], "export"))
 	{
-		expander = expander->next;
-		if (expander)
+		i++;
+		if (ast->cmd->args[i])
 		{
-			while (expander)
+			while (ast->cmd->args[i])
 			{
-				export_back(&export, expander->cmd);
-				expander = expander->next;
+				export_back(&export, ast->cmd->args[i]);
+				i++;
 			}
 		}
 		else
-		{
-			sort_env(&export);
-			while (export)
-			{
-				i = 0;
-				printf("declare -x ");
-				ft_printenv(export, &i);
-				export = export->next;
-			}
-		}
+			print_export(export);
 	}
 }

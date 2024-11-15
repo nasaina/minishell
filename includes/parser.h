@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 11:38:37 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/08 12:49:26 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/11/12 09:00:49 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define PARSER_H
 
 # include <lexer.h>
-
 
 typedef enum s_asttype
 {
@@ -50,5 +49,6 @@ t_cmd	*get_cmd(t_expander **expander);
 t_ast	*parse_args(t_expander *expander);
 void	add_redir_back(t_redir **redir, char *file, t_type type);
 void	free_redir(t_redir *redir);
+void	ms_printenv(t_ast *ast, t_export *export);
 
 #endif
