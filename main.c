@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/04 14:38:26 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/18 12:52:24 by nandrian         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include <minishell.h>
 
 void	start_signal(int ac, char **av, char **env)
@@ -63,11 +51,11 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	char	*str = NULL;
 	t_chunk	*chunks = NULL;
-	// t_export	*export = NULL;
-	// t_expander	*expander = NULL;
-	// t_ast		*ast = NULL;
+	t_export	*export = NULL;
+	t_expander	*expander = NULL;
+	t_ast		*ast = NULL;
 
-	// export = ms_envcpy(env);
+	export = ms_envcpy(env);
 	start_signal(ac, av, env);
 	while (1)
 	{
@@ -75,15 +63,10 @@ int	main(int ac, char **av, char **env)
 		if (is_error(str))
 			continue ;
 		chunks = lexing(str);
-		while (chunks)
-		{
-			printf("##%s##\n", chunks->str);
-			chunks = chunks->next;
-		}
-		// expander = expand_str(chunks, export);
-		// ast = parse_args(expander);
-		// check_cmd(ast, export, expander, str, env);
-		// free_expander(expander);
+		expander = expand_str(chunks, export);
+		ast = parse_args(expander);
+		check_cmd(ast, export, expander, str, env);
+		free_expander(expander);
 		// print_ast(ast);
 		printf("\n");
 		free(str);

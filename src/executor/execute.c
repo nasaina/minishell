@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:51:47 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/18 12:45:16 by maandria         ###   ########.fr       */
+/*   Updated: 2024/11/18 13:17:09 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	*check_path(char **pathlist, t_ast *ast)
 	return (NULL);
 }
 
-void	exec_cmd(t_ast *ast, t_export *export)
+void	exec_cmd(t_ast *ast, t_export *export, char **env)
 {
 	pid_t	pid;
 	int	status;
@@ -84,7 +84,7 @@ void	exec_cmd(t_ast *ast, t_export *export)
 		perror("fork");
 	else if (pid == 0)
 	{
-		if (execve(path, &ast->cmd->args[0], NULL ) == -1)
+		if (execve(path, &ast->cmd->args[0], env) == -1)
 		{
 				perror("execve");
 		}
@@ -102,5 +102,5 @@ void	check_cmd(t_ast *ast, t_export *export, t_expander *expander, char *str, ch
 		ms_builtins(ast, export, expander, str, env);
 	}
 	else
-		exec_cmd(ast, export);
+		exec_cmd(ast, export, env);
 }
