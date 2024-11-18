@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 09:34:29 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/15 06:29:57 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/11/18 11:45:11 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	is_word(char c)
 {
 	char	*str;
 
-	str = "<>|\" \'";
+	str = "<>|";
 	if (!ft_strchr(str, c))
 		return (1);
 	return (0);
@@ -35,8 +35,6 @@ int	count_args(int count, char *str, int i, t_type *type)
 		count = 1;
 		*type = PIPE;
 	}
-	else if (str[i] == 39 || str[i] == 34)
-		count = is_quote(str, i, type);
 	else
 		count = one_word(str, i, type);
 	return (count);
