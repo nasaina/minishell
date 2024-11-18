@@ -63,11 +63,6 @@ int	main(int ac, char **av, char **env)
 		if (is_error(str))
 			continue ;
 		chunks = lexing(str);
-		// while (chunks)
-		// {
-		// 	printf("##%s##\n", chunks->str);
-		// 	chunks = chunks->next;
-		// }
 		expander = expand_str(chunks, export);
 		ast = parse_args(expander);
 		check_cmd(ast, export, expander, str, env);
