@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:32:07 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/13 15:39:54 by maandria         ###   ########.fr       */
+/*   Updated: 2024/11/18 13:16:40 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct s_lexer
 const char	**init_builtins(void);
 int		handle_eof(char *str);
 int		isbuiltin(t_ast *ast);
-void	exec_cmd(t_ast *ast, t_export *export);
+void	exec_cmd(t_ast *ast, t_export *export, char **env);
 void	check_cmd(t_ast *ast, t_export *export, t_expander *expander, char *str, char **env);
 void	handle_sigint(int sig);
 void	handle_sigquit(int sig);
