@@ -71,5 +71,5 @@ int	main(int ac, char **av, char **env)
 		printf("\n");
 		free(str);
 	}
-	// free_export(export);
+	free_export(export);
 }
