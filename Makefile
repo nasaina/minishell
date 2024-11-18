@@ -24,7 +24,7 @@ SRC_BUILT = $(addprefix src/builtins/, directory.c builtins.c export.c create_t_
 
 SRC_EXEC = $(addprefix src/executor/, execute.c path_checker.c)
 
-SRC_LEX = $(addprefix src/lexer/, lexer.c get_chunks.c check_op.c)
+SRC_LEX = $(addprefix src/lexer/, lexer.c get_chunks.c check_op.c quote.c)
 
 SRC_UTILS = $(addprefix src/utils/, free_lst.c str_isnum.c export_utils.c)
 

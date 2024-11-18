@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:10:31 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/15 06:29:53 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/11/18 11:50:06 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,7 @@ int	one_word(char *str, int i, t_type *type)
 {
 	int	count;
 
-	count = 0;
-	while (is_word(str[i]) && str[i])
-	{
-		count++;
-		i++;
-	}
+	count = qword_len(str, i);
 	*type = WORD;
 	return (count);
 }
