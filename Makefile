@@ -20,7 +20,7 @@ SRC_PARS = $(addprefix src/parser/, parser.c create_redir.c)
 
 SRC_ERR = $(addprefix src/errors/, error.c args_utils.c)
 
-SRC_BUILT = $(addprefix src/builtins/, directory.c builtins.c export.c create_t_export.c export_env.c unset.c)
+SRC_BUILT = $(addprefix src/builtins/, directory.c builtins.c export.c create_t_export.c export_env.c unset.c utils_echo.c init_builtins.c)
 
 SRC_EXEC = $(addprefix src/executor/, execute.c path_checker.c)
 

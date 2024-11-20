@@ -68,7 +68,7 @@ int	main(int ac, char **av, char **env)
 		check_cmd(ast, export, expander, str, env);
 		free_expander(expander);
 		// print_ast(ast);
-		printf("\n");
+		// printf("\n");
 		free(str);
 	}
 	free_export(export);
