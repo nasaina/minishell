@@ -6,26 +6,11 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:51:47 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/18 13:17:09 by maandria         ###   ########.fr       */
+/*   Updated: 2024/11/20 11:18:33 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-const char	**init_builtins(void)
-{
-	static const char	*builtins[] = {
-	"cd",
-	"echo",
-	"env",
-	"exit",
-	"export",
-	"pwd",
-	"unset",
-	NULL
-	};
-	return (builtins);
-}
 
 int	isbuiltin(t_ast *ast)
 {
@@ -52,19 +37,35 @@ char	*check_path(char **pathlist, t_ast *ast)
 	char	*tmp;
 
 	i = 0;
-	tmp = "/";
-	command = ft_strjoin(tmp, ast->cmd->args[0]);
+	command = ft_strjoin("/", ast->cmd->args[0]);
 
 	while (pathlist[i])
 	{
 		if (access(ft_strjoin(pathlist[i], command), F_OK) == 0)
 		{
-			path = ft_strjoin(pathlist[i], tmp);
-			path  = ft_strjoin(path, ast->cmd->args[0]);
+			tmp = ft_strjoin(pathlist[i], "/");
+			path  = ft_strjoin(tmp, ast->cmd->args[0]);
+			free(tmp);
 			return (path);
 		}
 		else
 			i++;
+	}
+	perror(ast->cmd->args[0]);
+	return (NULL);
+}
+
+char	*check_access(t_ast *ast)
+{
+	char	*path;
+	char	*command;
+
+	command = ast->cmd->args[0];
+
+	if (access(command, F_OK) == 0)
+	{
+		path  = ast->cmd->args[0];
+		return (path);
 	}
 	perror(command);
 	return (NULL);
@@ -74,11 +75,12 @@ void	exec_cmd(t_ast *ast, t_export *export, char **env)
 {
 	pid_t	pid;
 	int	status;
-	char	**pathlist;
 	char	*path;
 
-	pathlist = path_list(&export);
-	path = check_path(pathlist, ast);
+	if (ast->cmd->args[0][0] == '/' || ast->cmd->args[0][0] == '.')
+		path = check_access(ast);
+	else
+		path = check_path(path_list(&export), ast);
 	pid = fork();
 	if (pid < 0)
 		perror("fork");
@@ -86,6 +88,8 @@ void	exec_cmd(t_ast *ast, t_export *export, char **env)
 	{
 		if (execve(path, &ast->cmd->args[0], env) == -1)
 		{
+				if (path == NULL)
+					exit (EXIT_FAILURE);
 				perror("execve");
 		}
 		exit (EXIT_FAILURE);

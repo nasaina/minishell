@@ -3,66 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 07:15:40 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/15 06:29:09 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/11/18 14:46:19 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-int	is_echoflag(char *str)
-{
-	int	i;
-
-	i = 1;
-	if (str[0] == 45)
-	{
-		while (str[i])
-		{
-			if (str[i] != 110)
-				return (0);
-			i++;
-		}
-	}
-	return (1);
-}
-
-void	ms_echo(t_expander *expander)
-{
-	if (!ft_strncmp(expander->cmd, "echo", 5))
-	{
-		expander = expander->next;
-		if (!expander)
-			return ;
-		if (is_echoflag(expander->cmd) && expander->next)
-		{
-			while (is_echoflag(expander->cmd) && expander->next)
-				expander = expander->next;
-			while (expander)
-			{
-				printf("%s", expander->cmd);
-				expander = expander->next;
-				if (expander)
-					printf(" ");
-			}
-		}
-		else
-		{
-			while (expander)
-			{
-				if (is_echoflag(expander->cmd) && expander->next)
-					expander = expander->next;		
-				printf("%s", expander->cmd);
-				expander = expander->next;
-				if (expander)
-					printf(" ");
-			}
-			printf("\n");
-		}
-	}
-}
 
 void	print_env(char **env, int *i, int *j)
 {

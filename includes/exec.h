@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:31:44 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/13 15:49:41 by maandria         ###   ########.fr       */
+/*   Updated: 2024/11/20 10:53:55 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ t_export	*ms_envcpy(char **env);
 void		export_back(t_export **export, char *str);
 void		free_export(t_export *export);
 char    	**path_list(t_export **export);
+const char	**init_builtins(void);
 
 #endif
