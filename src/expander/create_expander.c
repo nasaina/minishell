@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 15:32:25 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/15 06:29:39 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/11/22 15:35:51 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	add_expanders_back(t_expander **expander, char *str, t_type type)
 	t_expander	*element;
 	t_expander	*tmp;
 
+	if (!str)
+		return ;
 	element = create_expander(str, type);
 	if (*expander)
 	{

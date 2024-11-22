@@ -3,74 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:17:43 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/21 13:38:57 by maandria         ###   ########.fr       */
+/*   Updated: 2024/11/22 16:00:34 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include <minishell.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
+#include <minishell.h>
 
-int	ft_strlen(char *str)
+char	*get_var_name(char *str, int i)
 {
-	if (!str)
-		return (0);
-	int i = 0;
-	while (str[i])
+	int		j;
+	int		len;
+	char	*name;
+
+	len = 0;
+	if (str[i] == '$')
+		i++;
+	j = i;
+	while (str[i] != 32 && str[i] != 34 && str[i])
 	{
 		i++;
+		len++;
 	}
-	return (i);
-	
-}
-
-char	*strjoin(char *s1, char *s2)
-{
-	size_t	i;
-	size_t	j;
-	char	*str;
-
+	name = malloc(len + 1);
 	i = 0;
-	j = 0;
-	str = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (!str)
-		return (NULL);
-	if (s1)
-	{
-		while (s1[i])
-		{
-			str[i] = s1[i];
-			i++;
-		}
-	}
-	while (s2[j])
-	{
-		str[i] = s2[j];
-		i++;
-		j++;
-	}
-	str[i] = '\0';
-	return (str);
-}
-
-int	is_variable(char *str)
-{
-	int	i;
-
-	i = 0;
-	if (str[i] == 39)
-		return (0);
-	while (str[i])
-	{
-		if (str[i] == '$')
-			return (1);
-		i++;
-	}
-	return (0);
+	while (i < len)
+		name[i++] = str[j++];
+	name[i] = 0;
+	return (name);
 }
 
 int	no_quote(char *str, int i)
@@ -112,7 +74,7 @@ int	quote_double(char *str, int i)
 	return (count);
 }
 
-char	*cpy(char *str, int count, int *i)
+char	*str_insert(char *str, int count, int *i)
 {
 	char	*new;
 	int		j;
@@ -129,81 +91,132 @@ char	*cpy(char *str, int count, int *i)
 	return (new);
 }
 
-char	*expanded(char *str)
+char	*join_char(char *str, char c)
+{
+	char	*result;
+	int		len;
+
+	if (!str)
+	{
+		result = malloc(2);
+		result[0] = c;
+		result[1] = 0;
+	}
+	else
+	{
+		len = ft_strlen(str);
+		result = malloc(len + 2);
+		ft_strlcpy(result, str, len + 1);
+		result[len] = c;
+		result[len + 1] = 0;
+	}
+	return (result);
+}
+
+char	*expander(char *str, t_export *export)
+{
+	int		i;
+	char	*result;
+	char	*value;
+	char	*name;
+	size_t	j;
+
+	i = 0;
+	result = NULL;
+	if (!str)
+		return (NULL);
+	while (str[i])
+	{
+		if (str[i] == '\'')
+		{
+			result = join_char(result, str[i]);
+			i++;
+			while (str[i] != '\'' && str[i])
+			{
+				result = join_char(result, str[i]);
+				i++;
+			}
+		}
+		if (str[i] == '$')
+		{
+			name = get_var_name(str, i);
+			i++;
+			j = 0;
+			value = ms_getenv(name, export);
+			if (value)
+			{
+				result = ft_strjoin(result, value);
+				free(value);
+			}
+			while (j < ft_strlen(name))
+			{
+				j++;
+				i++;
+			}
+		}
+		result = join_char(result, str[i]);
+		i++;
+	}
+	return (result);
+}
+
+char	*expanded(char *token, t_export *export)
 {
 	int		i;
 	int		count;
 	char	*new;
 	char	*out;
+	char	*str;
 
 	i = 0;
+	(void)export;
 	out = NULL;
+	str = expander(token, export);
+	if (!str)
+		return (NULL);
 	while (str[i])
 	{
 		if (str[i] == '\'')
 		{
 			i++;
 			count = quote_simple(str, i);
-			new = cpy(str, count, &i);
-			i++;
+			new = str_insert(str, count, &i);
+			if (str[i] == '\'')
+				i++;
 		}
 		else if (str[i] == '\"')
 		{
 			i++;
 			count = quote_double(str, i);
-			new = cpy(str, count, &i);
-			i++;
+			new = str_insert(str, count, &i);
+			if (str[i] == '\"')
+				i++;
 		}
 		else
 		{
 			count = no_quote(str, i);
-			new = cpy(str, count, &i);
+			new = str_insert(str, count, &i);
 		}
-		out = strjoin(out, new);
+		out = ft_strjoin(out, new);
+		free(new);
 	}
 	return (out);
 }
 
-char	*get_var_name(char *str)
+t_expander	*expand_str(t_chunk *chunks, t_export *export)
 {
-	int		i;
-	int		j;
-	int		len;
-	char	*name;
+	t_expander	*expander = NULL;
+	t_chunk		*tmp;
+	char		*str;
 
-	i = 0;
-	len = 0;
-	while (str[i] != '$')
-		i++;
-	i++;
-	j = i;
-	while (str[i] != 32 && str[i])
+	tmp = chunks;
+	if (!tmp)
+		return (NULL);
+	while (tmp)
 	{
-		i++;
-		len++;
+		str = expanded(tmp->str, export);
+		add_expanders_back(&expander, str, tmp->type);
+		tmp = tmp->next;
 	}
-	name = malloc(len + 1);
-	i = 0;
-	while (i < len)
-		name[i++] = str[j++];
-	name[i] = 0;
-	return (name);
+	return (expander);
 }
-
-// int	main()
-// {
-
-// 	char *str = "this is a \"$te\'gt\"in\'the \" club\'";
-// 	// str = jump_quote(str);
-// 	printf("%s\n", expanded(str));
-// }
-
-// char	*expanded_str(char *str, t_export *export)
-// {
-// 	int	i;
-
-// 	i = 0;
-
-	
-// }
-
