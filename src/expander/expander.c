@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:17:43 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/18 17:02:16 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/11/21 13:38:57 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,13 +190,13 @@ char	*get_var_name(char *str)
 	return (name);
 }
 
-int	main()
-{
+// int	main()
+// {
 
-	char *str = "this is a \"$te\'gt\"in\'the \" club\'";
-	// str = jump_quote(str);
-	printf("%s\n", expanded(str));
-}
+// 	char *str = "this is a \"$te\'gt\"in\'the \" club\'";
+// 	// str = jump_quote(str);
+// 	printf("%s\n", expanded(str));
+// }
 
 // char	*expanded_str(char *str, t_export *export)
 // {

@@ -14,8 +14,9 @@ int	is_echoflag(char *str)
 			else
 				return (0);
 		}
+		return (1);
 	}
-	return (1);
+	return (0);
 }
 
 int	echo_flagonly(t_expander *expander)
@@ -32,8 +33,15 @@ void	echo_monitor(t_expander *expander)
 		rl_redisplay();
 	else if (is_echoflag(expander->cmd) && expander->cmd)
 	{
-		while (!echo_flagonly(expander))
+		while (is_echoflag(expander->cmd))
 			expander = expander->next;
+		while (expander)
+			{
+				printf("%s", expander->cmd);
+				expander = expander->next;
+				if (expander)
+					printf(" ");
+			}
 	}
 	else if (expander)
 	{
@@ -55,31 +63,33 @@ void	ms_echo(t_expander *expander)
 		expander = expander->next;
 		if (!expander)
 			return ;
-		// echo_monitor(expander);
-		if (is_echoflag(expander->cmd) && expander->next)
-		{
-			while (is_echoflag(expander->cmd) && expander->next)
-				expander = expander->next;
-			while (expander)
-			{
-				printf("%s", expander->cmd);
-				expander = expander->next;
-				if (expander)
-					printf(" ");
-			}
-		}
-		else
-		{
-			while (expander)
-			{
-				if (is_echoflag(expander->cmd) && expander->next)
-					expander = expander->next;		
-				printf("%s", expander->cmd);
-				expander = expander->next;
-				if (expander)
-					printf(" ");
-			}
-			printf("\n");
-		}
+		echo_monitor(expander);
+		// if (is_echoflag(expander->cmd) && expander->next)
+		// {
+		// 	while (is_echoflag(expander->cmd) && expander->next)
+		// 		expander = expander->next;
+		// 	while (expander)
+		// 	{
+		// 		printf("%s", expander->cmd);
+		// 		expander = expander->next;
+		// 		if (expander)
+		// 			printf(" ");
+		// 	}
+		// 	printf("** 1 **");
+		// }
+		// else
+		// {
+		// 	while (expander)
+		// 	{
+		// 		if (is_echoflag(expander->cmd) && expander->next)
+		// 			expander = expander->next;
+		// 		printf("%s", expander->cmd);
+		// 		expander = expander->next;
+		// 		if (expander)
+		// 			printf(" ");
+		// 	}
+		// 	printf("** 2 **");
+		// 	printf("\n");
+		// }
 	}
 }
