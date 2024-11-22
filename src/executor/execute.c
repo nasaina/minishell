@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:51:47 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/22 16:12:33 by maandria         ###   ########.fr       */
+/*   Updated: 2024/11/22 16:41:14 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	isbuiltin(t_ast *ast)
 	const char	**builtins;
 	int			i;
 
+	if (!ast)
+		return (0);
 	builtins = init_builtins(); 
 	i = 0;
 	while (builtins[i])
