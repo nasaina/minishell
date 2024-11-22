@@ -33,7 +33,7 @@ void	echo_monitor(t_expander *expander)
 		rl_redisplay();
 	else if (is_echoflag(expander->cmd) && expander->cmd)
 	{
-		while (is_echoflag(expander->cmd))
+		while (expander && is_echoflag(expander->cmd))
 			expander = expander->next;
 		while (expander)
 			{
