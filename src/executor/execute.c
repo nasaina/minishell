@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:51:47 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/20 11:18:33 by maandria         ###   ########.fr       */
+/*   Updated: 2024/11/22 16:12:33 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ char	*check_path(char **pathlist, t_ast *ast)
 		else
 			i++;
 	}
-	perror(ast->cmd->args[0]);
+	if (ast->cmd->args[0] != NULL)
+		perror(ast->cmd->args[0]);
 	return (NULL);
 }
 
@@ -61,13 +62,14 @@ char	*check_access(t_ast *ast)
 	char	*command;
 
 	command = ast->cmd->args[0];
-
+	path = NULL;
 	if (access(command, F_OK) == 0)
 	{
 		path  = ast->cmd->args[0];
 		return (path);
 	}
-	perror(command);
+	if (command != NULL)
+		perror(command);
 	return (NULL);
 }
 
@@ -88,7 +90,7 @@ void	exec_cmd(t_ast *ast, t_export *export, char **env)
 	{
 		if (execve(path, &ast->cmd->args[0], env) == -1)
 		{
-				if (path == NULL)
+				if (path == NULL || &ast->cmd->args[0] == NULL)
 					exit (EXIT_FAILURE);
 				perror("execve");
 		}

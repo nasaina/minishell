@@ -60,6 +60,8 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		str = ft_readline(str);
+		if (is_void(str))
+			continue ;
 		if (is_error(str))
 			continue ;
 		chunks = lexing(str);
