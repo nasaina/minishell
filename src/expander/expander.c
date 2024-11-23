@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:17:43 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/22 16:00:34 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/11/23 10:18:14 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,18 +160,18 @@ char	*expander(char *str, t_export *export)
 	return (result);
 }
 
-char	*expanded(char *token, t_export *export)
+char	*expanded(char *str, t_export *export)
 {
 	int		i;
 	int		count;
 	char	*new;
 	char	*out;
-	char	*str;
+	// char	*str;
 
 	i = 0;
 	(void)export;
 	out = NULL;
-	str = expander(token, export);
+	// str = expander(token, export);
 	if (!str)
 		return (NULL);
 	while (str[i])
@@ -205,18 +205,20 @@ char	*expanded(char *token, t_export *export)
 
 t_expander	*expand_str(t_chunk *chunks, t_export *export)
 {
-	t_expander	*expander = NULL;
+	t_expander	*expanders = NULL;
 	t_chunk		*tmp;
 	char		*str;
+	char		*result;
 
 	tmp = chunks;
 	if (!tmp)
 		return (NULL);
 	while (tmp)
 	{
-		str = expanded(tmp->str, export);
-		add_expanders_back(&expander, str, tmp->type);
+		str = expander(tmp->str, export);
+		result = expanded(str, export);
+		add_expanders_back(&expanders, result, tmp->type);
 		tmp = tmp->next;
 	}
-	return (expander);
+	return (expanders);
 }

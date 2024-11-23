@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:51:47 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/22 16:41:14 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/11/23 10:07:24 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,10 +105,7 @@ void	exec_cmd(t_ast *ast, t_export *export, char **env)
 void	check_cmd(t_ast *ast, t_export *export, t_expander *expander, char *str, char **env)
 {
 	if (isbuiltin(ast))
-	{
-		printf("\n*** usain built ***\n");
 		ms_builtins(ast, export, expander, str, env);
-	}
 	else
 		exec_cmd(ast, export, env);
 }

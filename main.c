@@ -60,17 +60,18 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		str = ft_readline(str);
-		if (is_void(str))
-			continue ;
-		if (is_error(str))
+		if (is_void(str) && is_error(str))
 			continue ;
 		chunks = lexing(str);
 		expander = expand_str(chunks, export);
-		ast = parse_args(expander);
-		check_cmd(ast, export, expander, str, env);
-		free_expander(expander);
-		// print_ast(ast);
-		// printf("\n");
+		if (expander)
+		{
+			ast = parse_args(expander);
+			check_cmd(ast, export, expander, str, env);
+			free_expander(expander);
+		}
+		else
+			continue ;
 		free(str);
 	}
 	free_export(export);

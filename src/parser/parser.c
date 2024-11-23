@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 11:38:08 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/22 16:44:02 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/11/23 10:04:44 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,7 @@ t_ast	*parse_args(t_expander *expander)
 	tmp = malloc(sizeof(t_ast));
 	tmp->type = AST_CMD;
 	if (expander)
-	{
 		tmp->cmd = get_cmd(&expander);
-	}
 	tmp->left = NULL;
 	tmp->right = NULL;
 	if (expander && expander->type == PIPE)
