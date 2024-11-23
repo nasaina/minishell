@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:17:43 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/23 10:18:14 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/11/23 10:35:22 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,10 +153,12 @@ char	*expander(char *str, t_export *export)
 				j++;
 				i++;
 			}
+			free (name);
 		}
 		result = join_char(result, str[i]);
 		i++;
 	}
+	free(str);
 	return (result);
 }
 
@@ -164,14 +166,12 @@ char	*expanded(char *str, t_export *export)
 {
 	int		i;
 	int		count;
-	char	*new;
-	char	*out;
-	// char	*str;
+	char	*tmp;
+	char	*result;
 
 	i = 0;
 	(void)export;
-	out = NULL;
-	// str = expander(token, export);
+	result = NULL;
 	if (!str)
 		return (NULL);
 	while (str[i])
@@ -180,7 +180,7 @@ char	*expanded(char *str, t_export *export)
 		{
 			i++;
 			count = quote_simple(str, i);
-			new = str_insert(str, count, &i);
+			tmp = str_insert(str, count, &i);
 			if (str[i] == '\'')
 				i++;
 		}
@@ -188,19 +188,19 @@ char	*expanded(char *str, t_export *export)
 		{
 			i++;
 			count = quote_double(str, i);
-			new = str_insert(str, count, &i);
+			tmp = str_insert(str, count, &i);
 			if (str[i] == '\"')
 				i++;
 		}
 		else
 		{
 			count = no_quote(str, i);
-			new = str_insert(str, count, &i);
+			tmp = str_insert(str, count, &i);
 		}
-		out = ft_strjoin(out, new);
-		free(new);
+		result = ft_strjoin(result, tmp);
+		free(tmp);
 	}
-	return (out);
+	return (result);
 }
 
 t_expander	*expand_str(t_chunk *chunks, t_export *export)
