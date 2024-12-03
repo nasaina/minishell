@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:51:47 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/03 15:17:14 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/03 15:37:17 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,8 @@ void	exec_cmd(t_ast *ast, t_export *export, char **env)
 		perror("fork");
 	else if (pid == 0)
 	{
-		do_redir(ast->cmd);
+		if (ast->cmd->redir)
+			do_redir(ast->cmd);
 		if (execve(path, &ast->cmd->args[0], env) == -1)
 		{
 				if (path == NULL || &ast->cmd->args[0] == NULL)
@@ -103,10 +104,14 @@ void	exec_cmd(t_ast *ast, t_export *export, char **env)
 		waitpid(pid, &status, 0);
 }
 
-void	check_cmd(t_ast *ast, t_export *export, t_expander *expander, char *str, char **env)
+void	check_cmd(t_ast *ast, t_export *export, t_expander *expander, char **env)
 {
 	if (isbuiltin(ast))
-		ms_builtins(ast, export, expander, str, env);
+	{
+		if (ast->cmd->redir)
+			do_redir(ast->cmd);
+		ms_builtins(ast, export, expander);
+	}
 	else
 		exec_cmd(ast, export, env);
 }

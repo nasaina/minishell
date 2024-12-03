@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 13:29:57 by maandria          #+#    #+#             */
-/*   Updated: 2024/11/27 15:34:01 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/03 15:41:03 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,16 @@ void	pipe_check(t_ast *ast, t_export *export, t_expander *expander, char *str, c
 		exec_pipe(ast, export, expander, str, env);
 	}
 	else
-		check_cmd(ast, export, expander, str, env);
+		check_cmd(ast, export, expander, env);
 }
 
 void	exec_pipe(t_ast *ast, t_export *export, t_expander *expander, char *str, char **env)
 {
 	pid_t	pid;
 	int		status;
-	// int		pipe_fds[2];
+	int		pipe_fds[2];
 
-	// pipe(pipe_fds);
+	pipe(pipe_fds);
 	pid = fork();
 	if (pid < 0)
 		perror("fork");
@@ -35,10 +35,10 @@ void	exec_pipe(t_ast *ast, t_export *export, t_expander *expander, char *str, ch
 	{
 		if (ast->left)
 		{
-			// dup2(pipe_fds[1], 1);
+			dup2(pipe_fds[1], 1);
 			pipe_check(ast->left, export, expander, str, env);
-			// close(pipe_fds[1]);
-			// close(pipe_fds[0]);
+			close(pipe_fds[1]);
+			close(pipe_fds[0]);
 			exit(EXIT_FAILURE);
 		}
 	}
@@ -48,10 +48,10 @@ void	exec_pipe(t_ast *ast, t_export *export, t_expander *expander, char *str, ch
 		{ 
 			if (ast->right)
 			{
-				// dup2(pipe_fds[0], 0);
+				dup2(pipe_fds[0], 0);
 				pipe_check(ast->right, export, expander, str, env);
-				// close(pipe_fds[1]);
-				// close(pipe_fds[0]);
+				close(pipe_fds[1]);
+				close(pipe_fds[0]);
 				exit (EXIT_FAILURE);
 			}
 		}
