@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 07:15:40 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/18 14:46:19 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/03 15:17:29 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	ms_env(char *str, char **env)
 
 void	ms_builtins(t_ast *ast, t_export *export, t_expander *expander, char *str, char **env)
 {
-	ms_echo(expander);
+	ms_echo(ast->cmd);
 	ms_pwd(ast);
 	ms_env(str, env);
 	ms_cd(ast);

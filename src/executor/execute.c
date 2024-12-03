@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:51:47 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/27 14:44:21 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/03 15:17:14 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void	exec_cmd(t_ast *ast, t_export *export, char **env)
 		perror("fork");
 	else if (pid == 0)
 	{
+		do_redir(ast->cmd);
 		if (execve(path, &ast->cmd->args[0], env) == -1)
 		{
 				if (path == NULL || &ast->cmd->args[0] == NULL)

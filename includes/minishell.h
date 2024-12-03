@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:32:07 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/27 14:18:39 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/03 15:09:01 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ void	exec_pipe(t_ast *ast, t_export *export, t_expander *expander, char *str, ch
 void	pipe_check(t_ast *ast, t_export *export, t_expander *expander, char *str, char **env);
 void	pipe_fd(t_ast *ast, t_export *export, t_expander *expander, char *str, char **env);
 char	*get_variable(char *str);
-// char	*expander(char *str, char **envp);
 int		str_isnum(char *str);
 int		table_isnum(char **str);
-void	ms_echo(t_expander *expander);
+void	ms_echo(t_cmd *cmd);
 void	ms_env(char *str, char **env);
 void	ms_builtins(t_ast *ast, t_export *export, t_expander *expander, char *str, char **env);
 void	ms_export(char **env, t_chunk *chunks);
 char 	*var_remove(char *str);
+void	do_redir(t_cmd *cmd);
 
 #endif

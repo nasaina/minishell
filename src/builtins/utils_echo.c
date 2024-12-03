@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_echo.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:54:57 by maandria          #+#    #+#             */
-/*   Updated: 2024/11/27 11:29:28 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/03 15:05:25 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,52 +31,52 @@ int	is_echoflag(char *str)
 	return (0);
 }
 
-int	echo_flagonly(t_expander *expander)
+int	echo_flagonly(char **str)
 {
-	if (is_echoflag(expander->cmd) && !expander->next)
+	if (is_echoflag(str[0]) && !str[1])
 		return (1);
-	else
-		return (0);
+	return (0);
 }
 
-void	echo_monitor(t_expander *expander)
+void	echo_monitor(char **str, int i)
 {
-	if (echo_flagonly(expander))
+	if (echo_flagonly(str))
 		rl_redisplay();
-	else if (is_echoflag(expander->cmd) && expander->cmd)
+	else if (is_echoflag(str[i]) && str[i + 1])
 	{
-		while (expander && is_echoflag(expander->cmd))
-			expander = expander->next;
-		while (expander)
-			{
-				printf("%s", expander->cmd);
-				expander = expander->next;
-				if (expander)
-					printf(" ");
-			}
-	}
-	else if (expander)
-	{
-		while (expander)
+		while (str[i] && is_echoflag(str[i]))
+			i++;
+		while (str[i])
 		{
-			if (ft_strncmp(expander->cmd, "|", 2) == 0)
-				break ;
-			printf("%s", expander->cmd);
-			expander = expander->next;
-			if (expander)
+			printf("%s", str[i]);
+			i++;
+			if (str[i])
+				printf(" ");
+		}
+	}
+	else if (str[i])
+	{
+		while (str[i])
+		{
+			printf("%s", str[i]);
+			i++;
+			if (str[i])
 				printf(" ");
 		}
 		printf("\n");
 	}
 }
 
-void	ms_echo(t_expander *expander)
+void	ms_echo(t_cmd *cmd)
 {
-	if (!ft_strncmp(expander->cmd, "echo", 5))
+	int	i;
+
+	i = 0;
+	if (!ft_strncmp(cmd->args[i], "echo", 5))
 	{
-		expander = expander->next;
-		if (!expander)
+		i++;
+		if (!cmd->args[i])
 			return ;
-		echo_monitor(expander);
+		echo_monitor(cmd->args, i);
 	}
 }
