@@ -3,31 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   path_checker.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 15:12:38 by maandria          #+#    #+#             */
-/*   Updated: 2024/11/18 12:45:26 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/03 16:31:47 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-char    **path_list(t_export **export)
+char    **path_list(char **env)
 {
-    t_export *tmp;
+	int		i;
     char    *list = NULL;
     char    **pl;
 
-    tmp = *export;
-    while (tmp->next)
+	i = 0;
+    while (env[i])
     {
-        if (ft_strncmp(tmp->env, "PATH=", 5) == 0)
+        if (ft_strncmp(env[i], "PATH=", 5) == 0)
         {
-            list = tmp->env;
+            list = env[i];
             break ;
         }
         else
-            tmp = tmp->next;
+            i++;
     }
 
     pl = ft_split(list + 5, ':');

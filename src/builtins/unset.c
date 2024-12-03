@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 09:04:24 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/15 06:29:23 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/03 16:15:57 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,20 +66,20 @@ void	remove_env(t_export **export, char *str)
 	}
 }
 
-void	ms_unset(t_export **export, t_expander *expander)
+void	ms_unset(t_export **export, char **str)
 {
-	t_expander	*token;
+	int	i;
 
-	token = expander;
-	if (!ft_strcmp(token->cmd, "unset"))
+	i = 0;
+	if (!ft_strcmp(str[0], "unset"))
 	{
-		token = token->next;
-		if (token)
+		i++;
+		if (str[i])
 		{
-			while (token)
+			while (str[i])
 			{
-				remove_env(export, token->cmd);
-				token = token->next;
+				remove_env(export, str[i]);
+				i++;
 			}
 		}
 	}

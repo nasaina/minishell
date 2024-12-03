@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:51:47 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/03 15:37:17 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/03 16:34:11 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	isbuiltin(t_ast *ast)
 {
-	const char	**builtins;
 	int			i;
+	const char	**builtins;
 
 	if (!ast)
 		return (0);
@@ -33,7 +33,7 @@ int	isbuiltin(t_ast *ast)
 
 char	*check_path(char **pathlist, t_ast *ast)
 {
-	int	i;
+	int		i;
 	char	*path;
 	char	*command;
 	char	*tmp;
@@ -75,16 +75,16 @@ char	*check_access(t_ast *ast)
 	return (NULL);
 }
 
-void	exec_cmd(t_ast *ast, t_export *export, char **env)
+void	exec_cmd(t_ast *ast, char **env)
 {
-	pid_t	pid;
-	int	status;
+	int		status;
 	char	*path;
+	pid_t	pid;
 
 	if (ast->cmd->args[0][0] == '/' || ast->cmd->args[0][0] == '.')
 		path = check_access(ast);
 	else
-		path = check_path(path_list(&export), ast);
+		path = check_path(path_list(env), ast);
 	pid = fork();
 	if (pid < 0)
 		perror("fork");
@@ -94,9 +94,9 @@ void	exec_cmd(t_ast *ast, t_export *export, char **env)
 			do_redir(ast->cmd);
 		if (execve(path, &ast->cmd->args[0], env) == -1)
 		{
-				if (path == NULL || &ast->cmd->args[0] == NULL)
-					exit (EXIT_FAILURE);
-				perror("execve");
+			if (path == NULL || &ast->cmd->args[0] == NULL)
+				exit (EXIT_FAILURE);
+			perror("execve");
 		}
 		exit (EXIT_FAILURE);
 	}
@@ -104,14 +104,14 @@ void	exec_cmd(t_ast *ast, t_export *export, char **env)
 		waitpid(pid, &status, 0);
 }
 
-void	check_cmd(t_ast *ast, t_export *export, t_expander *expander, char **env)
+void	check_cmd(t_ast *ast, t_export *export, char **env)
 {
 	if (isbuiltin(ast))
 	{
 		if (ast->cmd->redir)
 			do_redir(ast->cmd);
-		ms_builtins(ast, export, expander);
+		ms_builtins(ast, export);
 	}
 	else
-		exec_cmd(ast, export, env);
+		exec_cmd(ast, env);
 }

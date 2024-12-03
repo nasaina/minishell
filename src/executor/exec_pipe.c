@@ -6,11 +6,12 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 13:29:57 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/03 15:41:03 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/03 16:40:08 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
 void	pipe_check(t_ast *ast, t_export *export, t_expander *expander, char *str, char **env)
 {
 	if (ast->type == 1)
@@ -18,7 +19,7 @@ void	pipe_check(t_ast *ast, t_export *export, t_expander *expander, char *str, c
 		exec_pipe(ast, export, expander, str, env);
 	}
 	else
-		check_cmd(ast, export, expander, env);
+		check_cmd(ast, export, env);
 }
 
 void	exec_pipe(t_ast *ast, t_export *export, t_expander *expander, char *str, char **env)
