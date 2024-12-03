@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 07:48:44 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/15 06:30:32 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/03 16:17:10 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,5 @@ char		*ms_getenv(char *str, t_export *export);
 char		*ms_get(char *str, t_export *export);
 void		add_expanders_back(t_expander **args, char *str, t_type type);
 void		free_expander(t_expander *expander);
-void		ms_unset(t_export **export, t_expander *expander);
 
 #endif
