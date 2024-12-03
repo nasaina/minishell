@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 13:02:10 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/18 11:46:49 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/11/23 13:55:06 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

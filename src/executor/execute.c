@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:51:47 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/23 10:07:24 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/11/27 14:44:21 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
