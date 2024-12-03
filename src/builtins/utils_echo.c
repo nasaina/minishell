@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:54:57 by maandria          #+#    #+#             */
-/*   Updated: 2024/11/22 16:58:09 by maandria         ###   ########.fr       */
+/*   Updated: 2024/11/27 11:29:28 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void	echo_monitor(t_expander *expander)
 	{
 		while (expander)
 		{
+			if (ft_strncmp(expander->cmd, "|", 2) == 0)
+				break ;
 			printf("%s", expander->cmd);
 			expander = expander->next;
 			if (expander)

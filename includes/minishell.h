@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:32:07 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/18 13:16:40 by maandria         ###   ########.fr       */
+/*   Updated: 2024/11/27 14:18:39 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@ void	handle_sigquit(int sig);
 void	free_chunks(t_chunk *lst);
 void	ms_pwd(t_ast *ast);
 void	ms_cd(t_ast *ast);
+void	exec_pipe(t_ast *ast, t_export *export, t_expander *expander, char *str, char **env);
+void	pipe_check(t_ast *ast, t_export *export, t_expander *expander, char *str, char **env);
+void	pipe_fd(t_ast *ast, t_export *export, t_expander *expander, char *str, char **env);
 char	*get_variable(char *str);
 // char	*expander(char *str, char **envp);
 int		str_isnum(char *str);
