@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:51:47 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/03 16:34:11 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/04 13:37:43 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	*check_access(t_ast *ast)
 		path  = ast->cmd->args[0];
 		return (path);
 	}
-	if (command != NULL)
+	else
 		perror(command);
 	return (NULL);
 }
@@ -96,7 +96,7 @@ void	exec_cmd(t_ast *ast, char **env)
 		{
 			if (path == NULL || &ast->cmd->args[0] == NULL)
 				exit (EXIT_FAILURE);
-			perror("execve");
+			perror((const char *)(ast->cmd->args[0]));
 		}
 		exit (EXIT_FAILURE);
 	}

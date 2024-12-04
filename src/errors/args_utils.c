@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 15:41:49 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/27 15:36:31 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/04 13:00:01 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,7 @@ int	is_void(char *str)
 
 	i = 0;
 	if (str != NULL && str[i] == '\0')
-	{
-		free(str);
 		return (1);
-	}
 	else if (str != NULL && str[i] == 32)
 	{
 		while (str[i] == 32)
