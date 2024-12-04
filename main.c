@@ -67,7 +67,7 @@ int	main(int ac, char **av, char **env)
 		if (expander)
 		{
 			ast = parse_args(expander);
-			pipe_check(ast, export, expander, str, env);
+			pipe_check(ast, export, env);
 			free_expander(expander);
 		}
 		else

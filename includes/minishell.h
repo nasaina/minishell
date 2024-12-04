@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:32:07 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/03 16:34:17 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/04 13:25:10 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,8 @@ void	handle_sigquit(int sig);
 void	free_chunks(t_chunk *lst);
 void	ms_pwd(t_ast *ast);
 void	ms_cd(t_ast *ast);
-void	exec_pipe(t_ast *ast, t_export *export, t_expander *expander, char *str, char **env);
-void	pipe_check(t_ast *ast, t_export *export, t_expander *expander, char *str, char **env);
-void	pipe_fd(t_ast *ast, t_export *export, t_expander *expander, char *str, char **env);
+void	exec_pipe(t_ast *ast, t_export *export, char **env);
+void	pipe_check(t_ast *ast, t_export *export, char **env);
 int		str_isnum(char *str);
 int		table_isnum(char **str);
 void	ms_echo(t_cmd *cmd);
@@ -47,6 +46,8 @@ void	ms_env(char **str, t_export *export);
 void	ms_unset(t_export **export, char **str);
 void	ms_builtins(t_ast *ast, t_export *export);
 void	ms_export(char **env, t_chunk *chunks);
+void	exec_pipe_left(t_ast *ast, t_export *export, char **env, int *pipe_fds);
+void	exec_pipe_right(t_ast *ast, t_export *export, char **env, int *pipe_fds);
 char 	*var_remove(char *str);
 void	do_redir(t_cmd *cmd);
 
