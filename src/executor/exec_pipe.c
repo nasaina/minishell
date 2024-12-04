@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 13:29:57 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/04 13:29:56 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/04 15:44:30 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,20 +41,21 @@ void	exec_pipe(t_ast *ast, t_export *export, char **env)
 	else
 	{
 		pid_right = fork();
-		 if (pid_right == 0)
+		if (pid_right == 0)
 		{ 
 			if (ast->right)
 				exec_pipe_right(ast->right, export, env, pipe_fds);
 		}
 		waitpid(pid_left, &status, 0);
+		// waitpid(pid_right, &status, 0);
 	}
 }
 void	exec_pipe_left(t_ast *ast, t_export *export, char **env, int *pipe_fds)
 {
 	close(pipe_fds[0]);
 	dup2(pipe_fds[1], 1);
-	pipe_check(ast, export, env);
 	close(pipe_fds[1]);
+	pipe_check(ast, export, env);
 	exit(EXIT_FAILURE);
 }
 
@@ -62,7 +63,7 @@ void	exec_pipe_right(t_ast *ast, t_export *export, char **env, int *pipe_fds)
 {
 	close(pipe_fds[1]);
 	dup2(pipe_fds[0], 0);
-	pipe_check(ast, export, env);
 	close(pipe_fds[0]);
+	pipe_check(ast, export, env);
 	exit (EXIT_FAILURE);
 }
