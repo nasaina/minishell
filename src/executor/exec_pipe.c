@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 13:29:57 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/04 15:44:30 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/05 15:31:20 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,11 @@ void	exec_pipe(t_ast *ast, t_export *export, char **env)
 	int		status;
 	int		pipe_fds[2];
 
-	pipe(pipe_fds);
+	if (pipe(pipe_fds) < 0)
+	{
+		perror("pipe");
+		exit(EXIT_FAILURE);
+	}
 	pid_left = fork();
 	if (pid_left < 0)
 		perror("fork");
@@ -38,17 +42,18 @@ void	exec_pipe(t_ast *ast, t_export *export, char **env)
 		if (ast->left)
 			exec_pipe_left(ast->left, export, env, pipe_fds);
 	}
-	else
-	{
-		pid_right = fork();
-		if (pid_right == 0)
-		{ 
-			if (ast->right)
-				exec_pipe_right(ast->right, export, env, pipe_fds);
-		}
-		waitpid(pid_left, &status, 0);
-		// waitpid(pid_right, &status, 0);
+	pid_right = fork();
+	if (pid_right < 0)
+		perror("fork");
+	else if (pid_right == 0)
+	{ 
+		if (ast->right)
+			exec_pipe_right(ast->right, export, env, pipe_fds);
 	}
+	close(pipe_fds[0]);
+	close(pipe_fds[1]);
+	waitpid(pid_left, &status, 0);
+	waitpid(pid_right, &status, 0);
 }
 void	exec_pipe_left(t_ast *ast, t_export *export, char **env, int *pipe_fds)
 {
