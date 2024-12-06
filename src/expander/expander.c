@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:17:43 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/06 14:10:45 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/06 16:15:00 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*get_var_name(char *str, int i)
 	if (str[i] == '$')
 		i++;
 	j = i;
-	while (str[i] != 32 && str[i] != 34 && str[i])
+	while (str[i] != 32 && str[i] != 34 && str[i] != 39 && str[i])
 	{
 		i++;
 		len++;
@@ -94,14 +94,11 @@ char	*str_insert(char *str, int count, int *i)
 char	*join_char(char *str, char c)
 {
 	char	*result;
+	char	*value;
 	int		len;
 
 	if (!str)
-	{
-		result = malloc(2);
-		result[0] = c;
-		result[1] = 0;
-	}
+		result = ft_strdup(&c);
 	else
 	{
 		len = ft_strlen(str);
@@ -110,16 +107,19 @@ char	*join_char(char *str, char c)
 		result[len] = c;
 		result[len + 1] = 0;
 	}
-	return (result);
+	value = ft_strdup(result);
+	free(result);
+	return (value);
 }
 
 char	*expander(char *str, t_export *export)
 {
-	int		i;
-	char	*result;
-	char	*value;
-	char	*name;
-	size_t	j;
+	int			i;
+	char		*result;
+	char		*value;
+	char		*name;
+	size_t		j;
+	static int	status;
 
 	i = 0;
 	result = NULL;
@@ -127,7 +127,9 @@ char	*expander(char *str, t_export *export)
 		return (NULL);
 	while (str[i])
 	{
-		if (str[i] == '\'')
+		if (str[i] == '"')
+			status = 1;
+		if (str[i] == '\'' && status == 0)
 		{
 			result = join_char(result, str[i]);
 			i++;
@@ -163,22 +165,22 @@ char	*expander(char *str, t_export *export)
 		result = join_char(result, str[i]);
 		i++;
 	}
-	free(str);
 	return (result);
 }
 
-t_chunk	*expanded(char *str, t_export *export, t_type type)
+t_chunk	*expanded(char *str, t_type type)
 {
-	int		i;
-	static int		is_quote;
-	int		count;
-	char	*tmp;
-	char	*result;
-	char	**split = NULL;
-	t_chunk	*chunks = NULL;
+	int			i;
+	int			count;
+	char		*tmp;
+	char		*result;
+	char		**split;
+	static int	is_quote;
+	t_chunk		*chunks;
 
 	i = 0;
-	(void)export;
+	chunks = NULL;
+	split = NULL;
 	result = NULL;
 	if (!str)
 		return (NULL);
@@ -226,35 +228,36 @@ t_chunk	*expanded(char *str, t_export *export, t_type type)
 		free(split);
 	}
 	else
-	{
 		add_chunks_back(&chunks, result, WORD);
-	}
 	free(result);
 	return (chunks);
 }
 
 t_expander	*expand_str(t_chunk *chunks, t_export *export)
 {
-	t_expander	*expanders = NULL;
+	t_expander	*expanders;
 	t_chunk		*tmp;
 	t_chunk		*exp;
+	t_chunk		*temp;
 	char		*result;
 
 	tmp = chunks;
+	expanders = NULL;
 	if (!tmp)
 		return (NULL);
 	while (tmp)
 	{
 		exp = NULL;
 		result = expander(tmp->str, export);
-		exp = expanded(result, export, tmp->type);
-		free(result);
-		while (exp)
+		exp = expanded(result, tmp->type);
+		temp = exp;
+		while (temp)
 		{
-			add_expanders_back(&expanders, exp->str, exp->type);
-			exp = exp->next;
+			add_expanders_back(&expanders, temp->str, temp->type);
+			temp = temp->next;
 		}
 		tmp = tmp->next;
 	}
+	free_chunks(chunks);
 	return (expanders);
 }
