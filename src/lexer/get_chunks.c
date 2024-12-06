@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 10:35:17 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/15 06:29:55 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/04 12:42:51 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_chunk	*create_chunks(char *str, t_type type)
 	if (!chunks)
 		return (NULL);
 	chunks->type = type;
-	chunks->str = str;
+	chunks->str = ft_strdup(str);
 	chunks->next = NULL;
 	return (chunks);
 }

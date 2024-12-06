@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:32:07 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/04 13:25:10 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/06 10:30:44 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,6 @@ void	exec_pipe_left(t_ast *ast, t_export *export, char **env, int *pipe_fds);
 void	exec_pipe_right(t_ast *ast, t_export *export, char **env, int *pipe_fds);
 char 	*var_remove(char *str);
 void	do_redir(t_cmd *cmd);
+void	remove_env(t_export **export, char *str);
 
 #endif

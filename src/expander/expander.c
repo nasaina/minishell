@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:17:43 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/23 10:35:22 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/06 09:47:00 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,13 +141,13 @@ char	*expander(char *str, t_export *export)
 		{
 			name = get_var_name(str, i);
 			i++;
-			j = 0;
 			value = ms_getenv(name, export);
 			if (value)
 			{
 				result = ft_strjoin(result, value);
 				free(value);
 			}
+			j = 0;
 			while (j < ft_strlen(name))
 			{
 				j++;
@@ -162,12 +162,15 @@ char	*expander(char *str, t_export *export)
 	return (result);
 }
 
-char	*expanded(char *str, t_export *export)
+t_chunk	*expanded(char *str, t_export *export)
 {
 	int		i;
+	static int		is_quote;
 	int		count;
 	char	*tmp;
 	char	*result;
+	char	**split = NULL;
+	t_chunk	*chunks = NULL;
 
 	i = 0;
 	(void)export;
@@ -179,6 +182,7 @@ char	*expanded(char *str, t_export *export)
 		if (str[i] == '\'')
 		{
 			i++;
+			is_quote = 1;
 			count = quote_simple(str, i);
 			tmp = str_insert(str, count, &i);
 			if (str[i] == '\'')
@@ -187,6 +191,7 @@ char	*expanded(char *str, t_export *export)
 		else if (str[i] == '\"')
 		{
 			i++;
+			is_quote = 1;
 			count = quote_double(str, i);
 			tmp = str_insert(str, count, &i);
 			if (str[i] == '\"')
@@ -194,20 +199,40 @@ char	*expanded(char *str, t_export *export)
 		}
 		else
 		{
+			is_quote = 0;
 			count = no_quote(str, i);
 			tmp = str_insert(str, count, &i);
 		}
 		result = ft_strjoin(result, tmp);
 		free(tmp);
 	}
-	return (result);
+	if (is_quote == 0)
+	{
+		i = 0;
+		split = ft_split(result, 32);
+		if (!split)
+			return (NULL);
+		while (split[i])
+		{
+			add_chunks_back(&chunks, split[i], WORD);
+			free(split[i]);
+			i++;
+		}
+		free(split);
+	}
+	else
+	{
+		add_chunks_back(&chunks, result, WORD);
+	}
+	free(result);
+	return (chunks);
 }
 
 t_expander	*expand_str(t_chunk *chunks, t_export *export)
 {
 	t_expander	*expanders = NULL;
 	t_chunk		*tmp;
-	char		*str;
+	t_chunk		*exp;
 	char		*result;
 
 	tmp = chunks;
@@ -215,9 +240,15 @@ t_expander	*expand_str(t_chunk *chunks, t_export *export)
 		return (NULL);
 	while (tmp)
 	{
-		str = expander(tmp->str, export);
-		result = expanded(str, export);
-		add_expanders_back(&expanders, result, tmp->type);
+		exp = NULL;
+		result = expander(tmp->str, export);
+		exp = expanded(result, export);
+		free(result);
+		while (exp)
+		{
+			add_expanders_back(&expanders, exp->str, exp->type);
+			exp = exp->next;
+		}
 		tmp = tmp->next;
 	}
 	return (expanders);

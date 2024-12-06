@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:37:04 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/15 06:29:11 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/06 09:50:46 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_export	*get_export(char *str)
 	export = malloc(sizeof(t_export));
 	if (!export)
 		return (NULL);
-	export->env = str;
+	export->env = ft_strdup(str);
 	export->next = NULL;
 	return (export);
 }

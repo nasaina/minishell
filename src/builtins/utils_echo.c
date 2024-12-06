@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_echo.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:54:57 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/04 15:50:14 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/04 13:04:15 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

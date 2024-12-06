@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:58:43 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/15 06:29:20 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/06 10:25:05 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,19 +89,89 @@ void	print_export(t_export *export)
 	}
 }
 
-void	ms_printenv(t_ast *ast, t_export *export)
+char	*export_name(char *str)
 {
-	int	i;
+	int		i;
+	char	*name;
 
 	i = 0;
-	if (!ft_strcmp(ast->cmd->args[i], "export"))
+	while (str[i] && str[i] != '=')
+		i++;
+	name = malloc(i + 1);
+	i = 0;
+	while (str[i] && str[i] != '=')
+	{
+		name[i] = str[i];
+		i++;
+	}
+	name[i] = 0;
+	return (name);
+}
+
+void	is_double(t_export **export, char *name)
+{
+	t_export	*tmp;
+	char		*str;
+	
+	tmp = *export;
+	str = NULL;
+	while (tmp && tmp->next)
+	{
+		str = export_name(tmp->next->env);
+		if (!ft_strcmp(name, str))
+			remove_env(export, name);
+		tmp = tmp->next;
+	}
+}
+
+int	double_input(char **str, int i, char *args)
+{
+	char	*name;
+
+	i++;
+	if (!str[i])
+		return (0);
+	while (str[i])
+	{
+		name = export_name(str[i]);
+		if (!ft_strcmp(args, name))
+		{
+			free(name);
+			return (1);
+		}
+		i++;
+	}
+	free(name);
+	return (0);
+}
+
+void	ms_printenv(t_ast *ast, t_export *export)
+{
+	int			i;
+	char		*name;
+	char		**args;
+	t_export	*tmp;
+	
+	i = 0;
+	name = NULL;
+	args = ast->cmd->args;
+	if (!ft_strcmp(args[i], "export"))
 	{
 		i++;
-		if (ast->cmd->args[i])
+		if (args[i])
 		{
-			while (ast->cmd->args[i])
+			while (args[i])
 			{
-				export_back(&export, ast->cmd->args[i]);
+				tmp = export;
+				name = export_name(args[i]);
+				if (double_input(args, i, name))
+				{
+					i++;
+					continue ;
+				}
+				is_double(&tmp, name);
+				free(name);
+				export_back(&tmp, args[i]);
 				i++;
 			}
 		}
