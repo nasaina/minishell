@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 11:38:08 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/23 10:04:44 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/06 11:16:34 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	count_cmd(t_expander *expander)
 	i = 1;
 	while (expander)
 	{
-		if (expander->cmd[0] == 124)
+		if (expander->type == PIPE)
 			i++;
 		expander = expander->next;
 	}
@@ -42,9 +42,7 @@ int	count_token(t_expander *expander)
 t_redir	*get_redir(t_expander **expander, t_redir *redir)
 {
 	t_type	type;
-	/*int		i;*/
 
-	/*i = 0;*/
 	type = (*expander)->type;
 	*expander = (*expander)->next;
 	add_redir_back(&redir, (*expander)->cmd, type);

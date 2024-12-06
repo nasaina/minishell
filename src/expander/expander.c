@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:17:43 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/06 09:47:00 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/06 11:40:10 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ char	*expander(char *str, t_export *export)
 	return (result);
 }
 
-t_chunk	*expanded(char *str, t_export *export)
+t_chunk	*expanded(char *str, t_export *export, t_type type)
 {
 	int		i;
 	static int		is_quote;
@@ -214,7 +214,7 @@ t_chunk	*expanded(char *str, t_export *export)
 			return (NULL);
 		while (split[i])
 		{
-			add_chunks_back(&chunks, split[i], WORD);
+			add_chunks_back(&chunks, split[i], type);
 			free(split[i]);
 			i++;
 		}
@@ -242,7 +242,7 @@ t_expander	*expand_str(t_chunk *chunks, t_export *export)
 	{
 		exp = NULL;
 		result = expander(tmp->str, export);
-		exp = expanded(result, export);
+		exp = expanded(result, export, tmp->type);
 		free(result);
 		while (exp)
 		{
