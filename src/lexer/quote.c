@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 11:04:22 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/18 13:13:49 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/06 14:27:35 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ void	single_quote(char *str, int *i, int *count)
 	}
 }
 
-int qword_len(char *str, int i)
+int	qword_len(char *str, int i)
 {
-	int count;
+	int	count;
 
 	count = 0;
 	while (str[i] != 32 && str[i] && is_word(str[i]))

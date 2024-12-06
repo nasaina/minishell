@@ -1,10 +1,11 @@
 #include <minishell.h>
 
-void	start_signal(int ac, char **av, char **env)
+void	start_signal(int ac, char **av, char **env, t_export *export)
 {
 	ignore_args(ac, av, env);
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
+	free_export(export);
 }
 
 void	print_ast(t_ast *ast)
@@ -45,10 +46,47 @@ void	prinexp(t_expander *expander)
 	}
 }
 
+int	redir_ok(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (isredirection(str[i]) && str[i] == str[i + 1])
+			return (1);
+		if (isredirection(str[i]) && !isredirection(str[i + 1]))
+			return (1);
+		if (str[i] == '<' && str[i + 1] == '>')
+			return (0);
+		if (isredirection(str[i] && isredirection(str[i + 1])
+			&& isredirection(str[i + 2])))
+			return (0);
+		i++;
+	}
+	return (0);
+}
+
+int	redir_null(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (isredirection(str[i]) && !str[i + 1])
+		{
+			printf("Syntax error\n");
+			free(str);
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
 int	main(int ac, char **av, char **env)
 {
-	(void)ac;
-	(void)av;
 	char	*str = NULL;
 	t_chunk	*chunks = NULL;
 	t_export	*export = NULL;
@@ -56,7 +94,7 @@ int	main(int ac, char **av, char **env)
 	t_ast		*ast = NULL;
 
 	export = ms_envcpy(env);
-	start_signal(ac, av, env);
+	start_signal(ac, av, env, export);
 	while (1)
 	{
 		str = ft_readline(str);
@@ -68,11 +106,9 @@ int	main(int ac, char **av, char **env)
 		{
 			ast = parse_args(expander);
 			pipe_check(ast, export, env);
-			free_expander(expander);
 		}
 		else
 			continue ;
-		free(str);
 	}
 	free_export(export);
 }
