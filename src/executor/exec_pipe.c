@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 13:29:57 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/05 15:31:20 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/06 12:56:59 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 void	pipe_check(t_ast *ast, t_export *export, char **env)
 {
 	if (ast->type == 1)
-	{
 		exec_pipe(ast, export, env);
-	}
 	else
 		check_cmd(ast, export, env);
 }
@@ -55,6 +53,7 @@ void	exec_pipe(t_ast *ast, t_export *export, char **env)
 	waitpid(pid_left, &status, 0);
 	waitpid(pid_right, &status, 0);
 }
+
 void	exec_pipe_left(t_ast *ast, t_export *export, char **env, int *pipe_fds)
 {
 	close(pipe_fds[0]);

@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:17:43 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/06 11:40:10 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/06 14:10:45 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	quote_double(char *str, int i)
 	int	count;
 
 	count = 0;
-	while (str[i] && str[i] != '\"')
+	while (str[i] && str[i] != '"')
 	{
 		i++;
 		count++;
@@ -137,10 +137,15 @@ char	*expander(char *str, t_export *export)
 				i++;
 			}
 		}
-		if (str[i] == '$')
+		if (str[i] == '$' && str[i + 1] != '"' && str[i + 1])
 		{
 			name = get_var_name(str, i);
 			i++;
+			if (isdigit(name[0]))
+			{
+				i++;
+				continue ;
+			}
 			value = ms_getenv(name, export);
 			if (value)
 			{
@@ -179,22 +184,22 @@ t_chunk	*expanded(char *str, t_export *export, t_type type)
 		return (NULL);
 	while (str[i])
 	{
-		if (str[i] == '\'')
+		if (str[i] == '"')
+		{
+			i++;
+			is_quote = 1;
+			count = quote_double(str, i);
+			tmp = str_insert(str, count, &i);
+			if (str[i] == '"')
+				i++;
+		}
+		else if (str[i] == '\'')
 		{
 			i++;
 			is_quote = 1;
 			count = quote_simple(str, i);
 			tmp = str_insert(str, count, &i);
 			if (str[i] == '\'')
-				i++;
-		}
-		else if (str[i] == '\"')
-		{
-			i++;
-			is_quote = 1;
-			count = quote_double(str, i);
-			tmp = str_insert(str, count, &i);
-			if (str[i] == '\"')
 				i++;
 		}
 		else

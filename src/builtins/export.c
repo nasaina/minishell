@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:58:43 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/06 10:25:05 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/06 13:38:30 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,12 +145,59 @@ int	double_input(char **str, int i, char *args)
 	return (0);
 }
 
+int is_invalidname(char *str)
+{
+	if (!isalpha(str[0]) && str[0] != '_')
+		return (1);
+	return (0);
+}
+
+int	check_input(char **args, int i, char *name)
+{
+	if (is_invalidname(name))
+	{
+		ft_putstr_fd("minishell: export: `", 2);
+		ft_putstr_fd(args[i], 2);
+		ft_putstr_fd("': not a valid identifier\n", 2);
+		return (1);
+	}
+	if (double_input(args, i, name))
+		return (1);
+	return (0);
+}
+
+void	add_input(t_export *export, int i, char **args)
+{
+	t_export 	*tmp;
+	char		*name;
+
+	name = NULL;
+	if (args[i])
+	{
+		while (args[i])
+		{
+			tmp = export;
+			name = export_name(args[i]);
+			if (check_input(args, i, name))
+			{
+				i++;
+				continue ;
+			}
+			is_double(&tmp, name);
+			free(name);
+			export_back(&tmp, args[i]);
+			i++;
+		}
+	}
+	else
+		print_export(export);
+}
+
 void	ms_printenv(t_ast *ast, t_export *export)
 {
 	int			i;
 	char		*name;
 	char		**args;
-	t_export	*tmp;
 	
 	i = 0;
 	name = NULL;
@@ -158,24 +205,6 @@ void	ms_printenv(t_ast *ast, t_export *export)
 	if (!ft_strcmp(args[i], "export"))
 	{
 		i++;
-		if (args[i])
-		{
-			while (args[i])
-			{
-				tmp = export;
-				name = export_name(args[i]);
-				if (double_input(args, i, name))
-				{
-					i++;
-					continue ;
-				}
-				is_double(&tmp, name);
-				free(name);
-				export_back(&tmp, args[i]);
-				i++;
-			}
-		}
-		else
-			print_export(export);
+		add_input(export, i, args);
 	}
 }
