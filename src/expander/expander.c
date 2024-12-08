@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:17:43 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/08 15:22:40 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/08 16:14:20 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ char	*expander(char *str, t_export *export)
 	char		*result;
 	char		*value;
 	char		*name;
-	size_t		j;
+	int		j;
 	static int	status;
 
 	i = 0;
@@ -155,7 +155,7 @@ char	*expander(char *str, t_export *export)
 				free(value);
 			}
 			j = 0;
-			while (j < ft_strlen(name))
+			while (j < (int)ft_strlen(name))
 			{
 				j++;
 				i++;
