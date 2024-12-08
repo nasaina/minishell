@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 14:22:23 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/08 16:16:16 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/08 16:35:09 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,10 @@ void	add_heredoc_back(t_heredoc **heredoc, char *str)
 int	get_input(t_cmd *cmd)
 {
 	char		*str;
-	t_heredoc	*heredoc;
-	t_heredoc	*tmp;
 	int			fd[2];
 
 	str = NULL;
-	heredoc = NULL;
+	pipe(fd);
 	while (1)
 	{
 		str = readline("heredoc > ");
@@ -64,17 +62,10 @@ int	get_input(t_cmd *cmd)
 			break ;
 		else
 		{
-			add_heredoc_back(&heredoc, str);
+			ft_putstr_fd(str, fd[1]);
+			ft_putstr_fd("\n", fd[1]);
 			continue ;
 		}
-	}
-	pipe(fd);
-	tmp = heredoc;
-	while (tmp)
-	{
-		write(fd[1], tmp->str, ft_strlen(tmp->str));
-		write(fd[1], "\n", 2);
-		tmp = tmp->next;
 	}
 	close(fd[1]);
 	return (fd[0]);
