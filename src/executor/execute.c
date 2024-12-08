@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:51:47 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/06 13:10:04 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/08 15:40:39 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,13 @@ void	exec_cmd(t_ast *ast, char **env)
 	char	*path;
 	pid_t	pid;
 
-	if (ast->cmd->args[0][0] == '/' || ast->cmd->args[0][0] == '.')
-		path = check_access(ast);
-	else
-		path = check_path(path_list(env), ast);
+	if (ast->cmd->args)
+	{
+		if ((ast->cmd->args[0][0] == '/' || ast->cmd->args[0][0] == '.'))
+			path = check_access(ast);
+		else
+			path = check_path(path_list(env), ast);
+	}
 	pid = fork();
 	if (pid < 0)
 		perror("fork");

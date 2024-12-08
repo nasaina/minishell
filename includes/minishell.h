@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:32:07 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/06 10:35:16 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/08 15:21:25 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,13 @@ typedef struct s_lexer
 	char			c;
 	struct s_lexer	*next;
 }	t_lexer;
+
+typedef struct s_heredoc
+{
+	char				*str;
+	struct s_heredoc	*next;
+}	t_heredoc;
+
 
 const char	**init_builtins(void);
 int		handle_eof(char *str);
@@ -51,5 +58,7 @@ void	exec_pipe_right(t_ast *ast, t_export *export, char **env, int *pipe_fds);
 char 	*var_remove(char *str);
 void	do_redir(t_cmd *cmd);
 void	remove_env(t_export **export, char *str);
+t_heredoc	*get_input(t_cmd *cmd);
+void	free_ast(t_ast *ast);
 
 #endif
