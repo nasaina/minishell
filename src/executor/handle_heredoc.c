@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 14:22:23 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/08 15:45:13 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/08 16:16:16 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,12 @@ void	add_heredoc_back(t_heredoc **heredoc, char *str)
 		*heredoc = element;
 }
 
-t_heredoc	*get_input(t_cmd *cmd)
+int	get_input(t_cmd *cmd)
 {
 	char		*str;
 	t_heredoc	*heredoc;
+	t_heredoc	*tmp;
+	int			fd[2];
 
 	str = NULL;
 	heredoc = NULL;
@@ -66,5 +68,14 @@ t_heredoc	*get_input(t_cmd *cmd)
 			continue ;
 		}
 	}
-	return (heredoc);
+	pipe(fd);
+	tmp = heredoc;
+	while (tmp)
+	{
+		write(fd[1], tmp->str, ft_strlen(tmp->str));
+		write(fd[1], "\n", 2);
+		tmp = tmp->next;
+	}
+	close(fd[1]);
+	return (fd[0]);
 }
