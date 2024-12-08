@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:21:58 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/03 15:07:07 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/08 15:09:36 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,6 @@ void	do_redir(t_cmd *cmd)
 		dup2(fd, STDOUT_FILENO);
 		close(fd);
 	}
+	else if (cmd->redir->type == HEREDOC)
+		get_input(cmd);
 }

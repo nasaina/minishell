@@ -1,11 +1,8 @@
 #include <minishell.h>
 
-void	start_signal(int ac, char **av, char **env, t_export *export)
+void	start_signal(int ac, char **av, char **env)
 {
 	ignore_args(ac, av, env);
-	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, SIG_IGN);
-	free_export(export);
 }
 
 void	print_ast(t_ast *ast)
@@ -94,7 +91,7 @@ int	main(int ac, char **av, char **env)
 	t_ast		*ast = NULL;
 
 	export = ms_envcpy(env);
-	start_signal(ac, av, env, export);
+	start_signal(ac, av, env);
 	while (1)
 	{
 		str = ft_readline(str);
@@ -105,10 +102,14 @@ int	main(int ac, char **av, char **env)
 		if (expander)
 		{
 			ast = parse_args(expander);
+			free_expander(expander);
 			pipe_check(ast, export, env);
+			free_ast(ast);
 		}
 		else
 			continue ;
 	}
 	free_export(export);
+	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, SIG_IGN);
 }

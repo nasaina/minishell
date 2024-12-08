@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 15:32:25 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/22 15:35:51 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/08 15:13:52 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_expander	*create_expander(char *str, t_type type)
 	if (!expander)
 		return (NULL);
 	expander->type = type;
-	expander->cmd = str;
+	expander->cmd = ft_strdup(str);
 	expander->next = NULL;
 	return (expander);
 }

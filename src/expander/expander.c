@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:17:43 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/06 16:15:00 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/08 15:22:40 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,6 +258,7 @@ t_expander	*expand_str(t_chunk *chunks, t_export *export)
 		}
 		tmp = tmp->next;
 	}
+	free_chunks(exp);
 	free_chunks(chunks);
 	return (expanders);
 }
