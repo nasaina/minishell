@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 13:02:10 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/23 13:55:06 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/10 15:51:13 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,6 @@ int		is_variable(char *str);
 void	add_chunks_back(t_chunk **args, char *str, t_type type);
 void	add_chunks_front(t_chunk **args, char *str, t_type type);
 t_chunk	*lexing(char *str);
+int	count_args(int count, char *str, int i, t_type *type);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:32:07 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/10 13:22:54 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/10 15:53:59 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct s_lexer
 
 typedef struct s_heredoc
 {
+	int					status;
 	char				*str;
 	struct s_heredoc	*next;
 }	t_heredoc;
@@ -60,7 +61,9 @@ void	exec_pipe_right(t_ast *ast, t_export *export, char **env, int *pipe_fds);
 char 	*var_remove(char *str);
 void	do_redir(t_cmd *cmd);
 void	remove_env(t_export **export, char *str);
-int		get_input(t_cmd *cmd);
 void	free_ast(t_ast *ast);
+int		get_input(t_redir *heredoc, t_export *export);
+int		heredoc_check(t_chunk *chunks);
+t_redir	*expand_hdoc(char *str);
 
 #endif

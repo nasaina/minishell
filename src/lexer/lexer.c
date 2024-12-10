@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 09:34:29 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/06 16:07:59 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/10 15:55:57 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,5 @@ t_chunk	*lexing(char *str)
 		while (str[i] == 32)
 			i++;
 	}
-	free(str);
 	return (chunks);
 }
