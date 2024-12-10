@@ -1,8 +1,8 @@
 #include <minishell.h>
 
-const char	**init_builtins(void)
+char	**init_builtins(void)
 {
-	static const char	*builtins[] = {
+	static char	*builtins[] = {
 	"cd",
 	"echo",
 	"env",

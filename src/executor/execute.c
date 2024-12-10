@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:51:47 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/08 15:40:39 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/10 14:16:34 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	isbuiltin(t_ast *ast)
 {
 	int			i;
-	const char	**builtins;
+	char	**builtins;
 
 	if (!ast)
 		return (0);
@@ -31,48 +31,15 @@ int	isbuiltin(t_ast *ast)
 	return (0);
 }
 
-char	*check_path(char **pathlist, t_ast *ast)
+char	*take_path(t_ast *ast, char **env)
 {
-	int		i;
 	char	*path;
-	char	*command;
-	char	*tmp;
 
-	i = 0;
-	command = ft_strjoin("/", ast->cmd->args[0]);
-
-	while (pathlist[i])
-	{
-		if (access(ft_strjoin(pathlist[i], command), F_OK) == 0)
-		{
-			tmp = ft_strjoin(pathlist[i], "/");
-			path  = ft_strjoin(tmp, ast->cmd->args[0]);
-			free(tmp);
-			return (path);
-		}
+		if (ft_strchr(ast->cmd->args[0], '/'))
+			path = check_access(ast);
 		else
-			i++;
-	}
-	if (ast->cmd->args[0] != NULL)
-		perror(ast->cmd->args[0]);
-	return (NULL);
-}
-
-char	*check_access(t_ast *ast)
-{
-	char	*path;
-	char	*command;
-
-	command = ast->cmd->args[0];
-	path = NULL;
-	if (access(command, F_OK) == 0)
-	{
-		path  = ast->cmd->args[0];
-		return (path);
-	}
-	else
-		perror(command);
-	return (NULL);
+			path = check_path(path_list(env), ast);
+	return (path);
 }
 
 void	exec_cmd(t_ast *ast, char **env)
@@ -81,13 +48,9 @@ void	exec_cmd(t_ast *ast, char **env)
 	char	*path;
 	pid_t	pid;
 
+	path = NULL;
 	if (ast->cmd->args)
-	{
-		if ((ast->cmd->args[0][0] == '/' || ast->cmd->args[0][0] == '.'))
-			path = check_access(ast);
-		else
-			path = check_path(path_list(env), ast);
-	}
+		path = take_path(ast, env);
 	pid = fork();
 	if (pid < 0)
 		perror("fork");
