@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:21:58 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/10 14:49:49 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/10 17:00:04 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,13 @@ void	do_redir(t_cmd *cmd)
 			fd = open(redir->file, O_RDONLY | O_WRONLY | O_APPEND, 0644);
 			dup2(fd, STDOUT_FILENO);
 			close(fd);
+		}
+		else if (redir->type == HEREDOC)
+		{
+			fd = open(".tmp", O_RDONLY);
+			dup2(fd, STDIN_FILENO);
+			close(fd);
+			unlink(".tmp");
 		}
 		redir = redir->next;
 	}
