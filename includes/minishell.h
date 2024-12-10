@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:32:07 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/08 16:11:15 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/10 13:22:54 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ typedef struct s_heredoc
 }	t_heredoc;
 
 
-const char	**init_builtins(void);
+char	**init_builtins(void);
+char	*check_path(char **pathlist, t_ast *ast);
+char	*check_access(t_ast *ast);
 int		handle_eof(char *str);
 int		isbuiltin(t_ast *ast);
 void	exec_cmd(t_ast *ast, char **env);

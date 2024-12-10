@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:31:44 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/03 16:32:12 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/10 13:22:34 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,5 @@ t_export	*ms_envcpy(char **env);
 void		export_back(t_export **export, char *str);
 void		free_export(t_export *export);
 char    	**path_list(char **env);
-const char	**init_builtins(void);
 
 #endif

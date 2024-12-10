@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 13:29:57 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/06 12:56:59 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/10 12:59:49 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	pipe_check(t_ast *ast, t_export *export, char **env)
 {
 	if (ast->type == 1)
-		exec_pipe(ast, export, env);
+			exec_pipe(ast, export, env);
 	else
 		check_cmd(ast, export, env);
 }
@@ -36,18 +36,12 @@ void	exec_pipe(t_ast *ast, t_export *export, char **env)
 	if (pid_left < 0)
 		perror("fork");
 	else if (pid_left == 0)
-	{
-		if (ast->left)
-			exec_pipe_left(ast->left, export, env, pipe_fds);
-	}
+		exec_pipe_left(ast->left, export, env, pipe_fds);
 	pid_right = fork();
 	if (pid_right < 0)
 		perror("fork");
-	else if (pid_right == 0)
-	{ 
-		if (ast->right)
+	else if (pid_right == 0) 
 			exec_pipe_right(ast->right, export, env, pipe_fds);
-	}
 	close(pipe_fds[0]);
 	close(pipe_fds[1]);
 	waitpid(pid_left, &status, 0);
@@ -56,18 +50,24 @@ void	exec_pipe(t_ast *ast, t_export *export, char **env)
 
 void	exec_pipe_left(t_ast *ast, t_export *export, char **env, int *pipe_fds)
 {
-	close(pipe_fds[0]);
-	dup2(pipe_fds[1], 1);
-	close(pipe_fds[1]);
-	pipe_check(ast, export, env);
-	exit(EXIT_FAILURE);
+	if (ast)
+	{
+		close(pipe_fds[0]);
+		dup2(pipe_fds[1], 1);
+		close(pipe_fds[1]);
+		pipe_check(ast, export, env);
+	}
+	exit(EXIT_SUCCESS);
 }
 
 void	exec_pipe_right(t_ast *ast, t_export *export, char **env, int *pipe_fds)
 {
-	close(pipe_fds[1]);
-	dup2(pipe_fds[0], 0);
-	close(pipe_fds[0]);
-	pipe_check(ast, export, env);
-	exit (EXIT_FAILURE);
+	if (ast)
+	{
+		close(pipe_fds[1]);
+		dup2(pipe_fds[0], 0);
+		close(pipe_fds[0]);
+		pipe_check(ast, export, env);
+	}
+	exit (EXIT_SUCCESS);
 }
