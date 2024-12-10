@@ -82,25 +82,15 @@ int	redir_null(char *str)
 	return (0);
 }
 
-void	handle_heredoc(void)
-{
-	int	fd;
-
-	fd = open(".tmp", O_RDONLY);
-	dup2(fd, STDIN_FILENO);
-	close(fd);
-	unlink(".tmp");
-}
-
 void	heredoc_built(char *str, t_export *export)
 {
-	t_redir *heredoc;
-	pid_t	hd_pid;
 	int		status;
+	pid_t	hd_pid;
+	t_redir *heredoc;
 
 	hd_pid = fork();
 	if (hd_pid < 0)
-		printf("test\n");
+		perror("fork");
 	else if (hd_pid == 0)
 	{
 		heredoc = expand_hdoc(str);
@@ -109,7 +99,7 @@ void	heredoc_built(char *str, t_export *export)
 			get_input(heredoc, export);
 			heredoc = heredoc->next;
 		}
-		handle_heredoc();
+		exit (0);
 	}
 	waitpid(hd_pid, &status, 0);
 }
@@ -124,8 +114,8 @@ int	main(int ac, char **av, char **env)
 
 	export = ms_envcpy(env);
 	start_signal(ac, av, env);
-	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, SIG_IGN);
+	// signal(SIGINT, handle_sigint);
+	// signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		str = ft_readline(str);
