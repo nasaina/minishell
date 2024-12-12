@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:51:47 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/10 14:16:34 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/12 12:42:08 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	exec_cmd(t_ast *ast, char **env)
 	else if (pid == 0)
 	{
 		if (ast->cmd->redir)
-			do_redir(ast->cmd);
+			do_redir(ast);
 		if (execve(path, &ast->cmd->args[0], env) == -1)
 		{
 			if (path == NULL || &ast->cmd->args[0] == NULL)
@@ -80,7 +80,7 @@ void	check_cmd(t_ast *ast, t_export *export, char **env)
 		fd_in = dup(STDIN_FILENO);
 		fd_out = dup(STDOUT_FILENO);
 		if (ast->cmd->redir)
-			do_redir(ast->cmd);
+			do_redir(ast);
 		ms_builtins(ast, export);
 		dup2(fd_in, STDIN_FILENO);
 		dup2(fd_out, STDOUT_FILENO);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:32:07 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/10 15:53:59 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/12 12:41:38 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,10 @@ void	ms_export(char **env, t_chunk *chunks);
 void	exec_pipe_left(t_ast *ast, t_export *export, char **env, int *pipe_fds);
 void	exec_pipe_right(t_ast *ast, t_export *export, char **env, int *pipe_fds);
 char 	*var_remove(char *str);
-void	do_redir(t_cmd *cmd);
+void	do_redir(t_ast *ast);
 void	remove_env(t_export **export, char *str);
 void	free_ast(t_ast *ast);
-int		get_input(t_redir *heredoc, t_export *export);
+int		get_input(t_redir *heredoc, t_export *export, char *file);
 int		heredoc_check(t_chunk *chunks);
 t_redir	*expand_hdoc(char *str);
 
