@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:51:47 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/12 12:42:08 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/12 14:58:46 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,16 @@ char	*take_path(t_ast *ast, char **env)
 	return (path);
 }
 
+void	exec_fork(t_ast *ast, char *path, char **env)
+{
+	if (execve(path, &ast->cmd->args[0], env) == -1)
+	{
+		if (path == NULL || &ast->cmd->args[0] == NULL)
+			exit (EXIT_FAILURE);
+		perror((const char *)(ast->cmd->args[0]));
+	}
+}
+
 void	exec_cmd(t_ast *ast, char **env)
 {
 	int		status;
@@ -49,7 +59,7 @@ void	exec_cmd(t_ast *ast, char **env)
 	pid_t	pid;
 
 	path = NULL;
-	if (ast->cmd->args)
+	if (ast->cmd->args && ast->cmd->args[0])
 		path = take_path(ast, env);
 	pid = fork();
 	if (pid < 0)
@@ -58,12 +68,8 @@ void	exec_cmd(t_ast *ast, char **env)
 	{
 		if (ast->cmd->redir)
 			do_redir(ast);
-		if (execve(path, &ast->cmd->args[0], env) == -1)
-		{
-			if (path == NULL || &ast->cmd->args[0] == NULL)
-				exit (EXIT_FAILURE);
-			perror((const char *)(ast->cmd->args[0]));
-		}
+		if (ast->cmd->args && ast->cmd->args[0])
+			exec_fork(ast, path, env);
 		exit (EXIT_FAILURE);
 	}
 	else
