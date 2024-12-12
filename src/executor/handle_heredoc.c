@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 14:22:23 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/11 14:45:54 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/12 16:34:40 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,12 +139,31 @@ int	is_expandable(char	*str)
 	return (0);
 }
 
-char	*expand_heredoc(char *file, char *str, t_export *export)
+char	*hdoc_expander(char *str, t_export *export)
 {
 	int		i;
-	int		j;
-	char	*name;
 	char	*value;
+	char	*name;
+	char	*result;
+
+	i = 0;
+	result = NULL;
+	while (str[i])
+	{
+		if (str[i] == '$' && str[i + 1] != '"' && str[i + 1])
+		{
+			if (name_token(str, &i, &name))
+				continue ;
+			value = export_value(&result, &i, export, name);
+		}
+		result = join_char(result, str[i]);
+		i++;
+	}
+	return (result);
+}
+
+char	*expand_heredoc(char *file, char *str, t_export *export)
+{
 	char	*result;
 
 	if (!str)
@@ -154,35 +173,7 @@ char	*expand_heredoc(char *file, char *str, t_export *export)
 	result = NULL;
 	if (is_variable(str))
 	{
-		i = 0;
-		while (str[i])
-		{
-			if (str[i] == '$' && str[i + 1] != '"' && str[i + 1] != '\'' && str[i + 1])
-			{
-				name = get_var_name(str, i);
-				i++;
-				if (isdigit(name[0]))
-				{
-					i++;
-					continue ;
-				}
-				value = ms_getenv(name, export);
-				if (value)
-				{
-					result = ft_strjoin(result, value);
-					free(value);
-				}
-				j = 0;
-				while (j < (int)ft_strlen(name))
-				{
-					j++;
-					i++;
-				}
-				free (name);
-			}
-			result = join_char(result, str[i]);
-			i++;
-		}
+		result = hdoc_expander(str, export);
 		return (result);
 	}
 	return (str);
