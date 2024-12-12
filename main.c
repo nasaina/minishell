@@ -82,13 +82,17 @@ int	redir_null(char *str)
 	return (0);
 }
 
-void	heredoc_built(char *str, t_export *export)
+char	*heredoc_built(char *str, t_export *export)
 {
 	int		status;
 	pid_t	hd_pid;
 	t_redir *heredoc;
+	char	*file;
+	int		i;
 
+	file = NULL;
 	hd_pid = fork();
+	i = 1;
 	if (hd_pid < 0)
 		perror("fork");
 	else if (hd_pid == 0)
@@ -96,12 +100,19 @@ void	heredoc_built(char *str, t_export *export)
 		heredoc = expand_hdoc(str);
 		while (heredoc)
 		{
-			get_input(heredoc, export);
+			if (heredoc->type == PIPE)
+			{
+				i++;
+				heredoc = heredoc->next;
+			}
+			file = ft_strjoin(".tmp", ft_itoa(i));
+			get_input(heredoc, export, file);
 			heredoc = heredoc->next;
 		}
 		exit (0);
 	}
 	waitpid(hd_pid, &status, 0);
+	return (file);
 }
 
 int	main(int ac, char **av, char **env)
@@ -127,8 +138,7 @@ int	main(int ac, char **av, char **env)
 		expander = expand_str(chunks, export);
 		if (expander)
 		{
-			ast = parse_args(expander);
-			free_expander(expander);
+			ast = parse_args(expander, 1);
 			pipe_check(ast, export, env);
 			free_ast(ast);
 		}

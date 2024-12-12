@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 11:38:37 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/15 06:30:45 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/12 13:03:20 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_cmd
 
 typedef struct s_ast
 {
+	int				file;
 	t_asttype		type;
 	t_cmd			*cmd;
 	struct s_ast	*left;
@@ -46,7 +47,7 @@ typedef struct s_ast
 int		count_cmd(t_expander *expander);
 int		count_token(t_expander *expander);
 t_cmd	*get_cmd(t_expander **expander);
-t_ast	*parse_args(t_expander *expander);
+t_ast	*parse_args(t_expander *expander, int file);
 void	add_redir_back(t_redir **redir, char *file, t_type type);
 void	free_redir(t_redir *redir);
 void	ms_printenv(t_ast *ast, t_export *export);

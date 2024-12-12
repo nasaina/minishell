@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 14:22:23 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/10 16:23:02 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/11 14:45:54 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,8 @@ t_redir	*expand_hdoc(char *str)
 			add_redir_back(&heredoc, chunks->next->str, HEREDOC);
 			chunks = chunks->next;
 		}
+		if (chunks->type == PIPE)
+			add_redir_back(&heredoc, "PIPE", PIPE);
 		chunks = chunks->next;
 	}
 	return (heredoc);
@@ -216,18 +218,15 @@ char	*ignore_quote(char	*str)
 	return (result);
 }
 
-int	get_input(t_redir *heredoc, t_export *export)
+int	get_input(t_redir *heredoc, t_export *export, char *file)
 {
 	char	*str;
 	char	*expander;
 	char	*name;
 	int		fd;
-	int		status;
 
 	str = NULL;
-	fd = open(".tmp", O_CREAT | O_WRONLY | O_TRUNC, 0777);
-	if (is_expandable(heredoc->file))
-		status = 0;
+	fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0777);
 	name = ignore_quote(heredoc->file);
 	while (1)
 	{
