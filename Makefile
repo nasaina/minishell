@@ -14,7 +14,7 @@ LIBFT = libft/libft.a
 
 SRC_SIG = $(addprefix src/signals/, handle_signals.c)
 
-SRC_EXP = $(addprefix src/expander/, expander.c get_var.c create_expander.c)
+SRC_EXP = $(addprefix src/expander/, expander.c get_var.c create_expander.c token_count.c str_duplicate.c handle_quote.c)
 
 SRC_PARS = $(addprefix src/parser/, parser.c create_redir.c)
 
