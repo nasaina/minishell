@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:55:34 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/13 12:57:02 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/13 13:11:09 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ void	is_double(t_export **export, char *name)
 		str = export_name(tmp->next->env);
 		if (!ft_strcmp(name, str))
 			remove_env(export, name);
+		free(str);
 		tmp = tmp->next;
 	}
 }

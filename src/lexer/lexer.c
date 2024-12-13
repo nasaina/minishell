@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 09:34:29 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/13 12:47:51 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/13 16:45:53 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	is_word(char c)
 
 int	count_args(int count, char *str, int i, t_type *type)
 {
-	if (!str)
+	if (!str && !str[i])
 		return (0);
 	if ((str[i]) == '>')
 		count = is_append(str, i, type);
@@ -50,6 +50,8 @@ t_chunk	*lexing(char *str)
 
 	i = 0;
 	chunks = NULL;
+	if (!str && !str[i])
+		return (NULL);
 	while (str[i])
 	{
 		while (str[i] == 32)
@@ -58,8 +60,11 @@ t_chunk	*lexing(char *str)
 		wrd = str_insert(str, count, &i);
 		add_chunks_back(&chunks, wrd, type);
 		free(wrd);
-		while (str[i] == 32)
-			i++;
+		if (i < (int)ft_strlen(str))
+		{
+			while (str[i] == 32)
+				i++;
+		}
 	}
 	return (chunks);
 }

@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:32:07 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/13 13:04:42 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/13 13:54:01 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,12 @@ int			check_input(char **args, int i, char *name);
 int			double_input(char **str, int i, char *args);
 int			is_invalidname(char *str);
 char		*export_name(char *str);
+int			hdoc_oneword(char *str, int i, t_type *type);
+int			hdoc_count(int count, char *str, int i, t_type *type);
+t_chunk		*hdoc_token(char *str);
+int			is_variable(char *str);
+int			heredoc_check(t_chunk *chunks);
+t_redir		*expand_hdoc(char *str);
+char		*join_free(char *s1, char *s2);
 
 #endif
