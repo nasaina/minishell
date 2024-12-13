@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 09:34:29 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/13 12:08:45 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/13 12:47:51 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int	count_args(int count, char *str, int i, t_type *type)
 t_chunk	*lexing(char *str)
 {
 	int		i;
-	int		j;
 	int		count;
 	char	*wrd;
 	t_chunk	*chunks;
@@ -56,11 +55,7 @@ t_chunk	*lexing(char *str)
 		while (str[i] == 32)
 			i++;
 		count = count_args(count, str, i, &type);
-		j = 0;
-		wrd = malloc(count + 1);
-		while (j < count)
-			wrd[j++] = str[i++];
-		wrd[j] = '\0';
+		wrd = str_insert(str, count, &i);
 		add_chunks_back(&chunks, wrd, type);
 		free(wrd);
 		while (str[i] == 32)

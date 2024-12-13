@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 15:43:31 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/23 10:07:57 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/13 12:48:40 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,5 @@ int		is_redirok(char *str, int i);
 int		check_redirection(char *str);
 char	*ft_readline(char *str);
 void	ignore_args(int ac, char **av, char **env);
-
 
 #endif

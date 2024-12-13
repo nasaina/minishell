@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 09:04:24 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/03 16:15:57 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/13 12:58:04 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	len_to_equal(char *str)
 	return (i);
 }
 
-char *var_remove(char *str)
+char	*var_remove(char *str)
 {
 	int		count;
 	int		i;
@@ -60,7 +60,7 @@ void	remove_env(t_export **export, char *str)
 		free(to_remove);
 	}
 	else
-	{		
+	{	
 		free(to_remove);
 		remove_env(&(*export)->next, str);
 	}
