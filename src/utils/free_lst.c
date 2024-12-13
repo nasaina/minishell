@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 09:08:39 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/08 15:21:12 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/13 11:51:31 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,13 @@ void	free_redir(t_redir *redir)
 
 void	free_ast(t_ast *ast)
 {
+	int	i;
+
 	if (!ast)
-		return;
+		return ;
 	if (ast->type == AST_CMD)
 	{
-		int i = 0;
+		i = 0;
 		while (ast->cmd->args[i])
 		{
 			free(ast->cmd->args[i]);
