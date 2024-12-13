@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 13:02:10 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/10 15:51:13 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/13 12:49:04 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ int		one_word(char *str, int i, t_type *type);
 int		is_append(char *str, int i, t_type *type);
 int		is_heredoc(char *str, int i, t_type *type);
 int		is_word(char c);
-int 	qword_len(char *str, int i);
+int		qword_len(char *str, int i);
 int		is_quote(char *str, int i, t_type *type);
 int		is_variable(char *str);
 void	add_chunks_back(t_chunk **args, char *str, t_type type);
 void	add_chunks_front(t_chunk **args, char *str, t_type type);
 t_chunk	*lexing(char *str);
-int	count_args(int count, char *str, int i, t_type *type);
+int		count_args(int count, char *str, int i, t_type *type);
 
 #endif
