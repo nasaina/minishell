@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   args_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 15:41:49 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/04 13:00:01 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/14 14:13:05 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ void	ignore_args(int ac, char **av, char **env)
 	(void)env;
 }
 
-char	*ft_readline(char *str)
+char	*ft_readline(char *str, t_export *export)
 {
 	str = readline(">  ");
 	if (str != NULL && str[0] != '\0')
 		add_history(str);
-	handle_eof(str);
+	handle_eof(str, export);
 	return (str);
 }
 

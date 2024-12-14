@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 14:22:23 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/13 15:32:29 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/14 12:54:46 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int	is_expandable(char	*str)
 char	*hdoc_expander(char *str, t_export *export)
 {
 	int		i;
-	char	*value;
 	char	*name;
 	char	*result;
 
@@ -43,10 +42,14 @@ char	*hdoc_expander(char *str, t_export *export)
 		{
 			if (name_token(str, &i, &name))
 				continue ;
-			value = export_value(&result, &i, export, name);
+			export_value(&result, &i, export, name);
 		}
-		result = join_char(result, str[i]);
-		i++;
+		if (str[i])
+		{
+		
+			result = join_char(result, str[i]);
+			i++;
+		}
 	}
 	return (result);
 }
@@ -57,15 +60,12 @@ char	*expand_heredoc(char *file, char *str, t_export *export)
 
 	if (!str)
 		return (NULL);
-	if (is_expandable(file))
-		return (str);
 	result = NULL;
-	if (is_variable(str))
-	{
+	if (!is_expandable(file) && is_variable(str))
 		result = hdoc_expander(str, export);
-		return (result);
-	}
-	return (str);
+	else
+		result = ft_strdup(str);
+	return (result);
 }
 
 int	quote_count(char *str)
@@ -109,7 +109,7 @@ char	*ignore_quote(char	*str)
 	return (result);
 }
 
-int	get_input(t_redir *heredoc, t_export *export, char *file)
+void	get_input(t_redir *heredoc, t_export *export, char *file)
 {
 	char	*str;
 	char	*expander;
@@ -132,13 +132,14 @@ int	get_input(t_redir *heredoc, t_export *export, char *file)
 		{
 			expander = expand_heredoc(heredoc->file, str, export);
 			if (expander)
+			{
 				ft_putstr_fd(expander, fd);
+				free(expander);
+			}
 			ft_putstr_fd("\n", fd);
-			free(str);
-			str = NULL;
-			continue ;
 		}
+		free(str);
+		str = NULL;
 	}
 	close(fd);
-	return (fd);
 }

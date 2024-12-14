@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 11:35:29 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/13 11:35:57 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/14 12:43:02 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ char	*str_insert(char *str, int count, int *i)
 char	*join_char(char *str, char c)
 {
 	char	*result;
-	char	*value;
 	int		len;
 
 	if (!str)
@@ -42,12 +41,11 @@ char	*join_char(char *str, char c)
 		len = ft_strlen(str);
 		result = malloc(len + 2);
 		ft_strlcpy(result, str, len + 1);
+		free(str);
 		result[len] = c;
 		result[len + 1] = 0;
 	}
-	value = ft_strdup(result);
-	free(result);
-	return (value);
+	return (result);
 }
 
 int	char_isquote(char c)

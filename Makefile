@@ -18,7 +18,7 @@ SRC_EXP = $(addprefix src/expander/, expander.c get_var.c create_expander.c toke
 
 SRC_PARS = $(addprefix src/parser/, parser.c create_redir.c)
 
-SRC_ERR = $(addprefix src/errors/, error.c args_utils.c)
+SRC_ERR = $(addprefix src/errors/, error.c args_utils.c err_quote.c)
 
 SRC_BUILT = $(addprefix src/builtins/, directory.c builtins.c export.c create_t_export.c export_env.c unset.c utils_echo.c init_builtins.c print_export.c)
 

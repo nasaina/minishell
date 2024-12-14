@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 09:34:29 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/13 16:45:53 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/14 14:09:43 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,17 +54,19 @@ t_chunk	*lexing(char *str)
 		return (NULL);
 	while (str[i])
 	{
-		while (str[i] == 32)
+		while (str[i] == 32 && str[i])
 			i++;
-		count = count_args(count, str, i, &type);
-		wrd = str_insert(str, count, &i);
-		add_chunks_back(&chunks, wrd, type);
-		free(wrd);
 		if (i < (int)ft_strlen(str))
 		{
-			while (str[i] == 32)
-				i++;
+			count = count_args(count, str, i, &type);
+			wrd = str_insert(str, count, &i);
+			add_chunks_back(&chunks, wrd, type);
+			free(wrd);
+			if (i >= (int)ft_strlen(str))
+				break ;
 		}
+		while (str[i] == 32 && str[i])
+			i++;
 	}
 	return (chunks);
 }
