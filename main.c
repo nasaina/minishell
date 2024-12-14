@@ -3,6 +3,8 @@
 void	start_signal(int ac, char **av, char **env)
 {
 	ignore_args(ac, av, env);
+	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 void	print_ast(t_ast *ast)
@@ -86,9 +88,12 @@ void	do_heredoc(char *str, t_export *export, int i)
 {
 	char 	*file;
 	t_redir	*heredoc;
+	t_redir	*tmp;
 
 	file = NULL;
-	heredoc = expand_hdoc(str);
+	tmp = expand_hdoc(str);
+	free(str);
+	heredoc = tmp;
 	while (heredoc)
 	{
 		if (heredoc->type == PIPE)
@@ -101,6 +106,8 @@ void	do_heredoc(char *str, t_export *export, int i)
 		free(file);
 		heredoc = heredoc->next;
 	}
+	free_redir(tmp);
+	free_export(export);
 	exit (0);
 }
 
@@ -138,30 +145,33 @@ int	one_hd(char *str)
 
 int	main(int ac, char **av, char **env)
 {
-	char	*str = NULL;
-	t_chunk	*chunks = NULL;
+	char	*str;
+	t_chunk	*chunks;
 	t_export	*export = NULL;
-	t_expander	*expander = NULL;
-	t_ast		*ast = NULL;
+	t_expander	*expander;
+	t_ast		*ast;
 
 	export = ms_envcpy(env);
 	start_signal(ac, av, env);
-	// signal(SIGINT, handle_sigint);
-	// signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
-		str = ft_readline(str);
+		str = NULL;
+		str = ft_readline(str, export);
 		if (is_void(str) && is_error(str))
 			continue ;
 		if (one_hd(str))
 			heredoc_built(str, export);
+		chunks = NULL;
 		chunks = lexing(str);
 		free(str);
-		str = NULL;
+		expander = NULL;
 		expander = expand_str(chunks, export);
+		free_chunks(chunks);
 		if (expander)
 		{
+			ast = NULL;
 			ast = parse_args(expander, 1);
+			free_expander(expander);
 			pipe_check(ast, export, env);
 			free_ast(ast);
 		}

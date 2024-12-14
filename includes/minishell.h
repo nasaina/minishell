@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:32:07 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/13 13:54:01 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/14 14:12:44 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef struct s_heredoc
 char		**init_builtins(void);
 char		*check_path(char **pathlist, t_ast *ast);
 char		*check_access(t_ast *ast);
-int			handle_eof(char *str);
+int			handle_eof(char *str, t_export *export);
 int			isbuiltin(t_ast *ast);
 void		exec_cmd(t_ast *ast, char **env);
 void		check_cmd(t_ast *ast, t_export *export, char **env);
@@ -63,7 +63,7 @@ char		*var_remove(char *str);
 void		do_redir(t_ast *ast);
 void		remove_env(t_export **export, char *str);
 void		free_ast(t_ast *ast);
-int			get_input(t_redir *heredoc, t_export *export, char *file);
+void		get_input(t_redir *heredoc, t_export *export, char *file);
 int			heredoc_check(t_chunk *chunks);
 t_redir		*expand_hdoc(char *str);
 t_export	*ms_envcpy(char **env);

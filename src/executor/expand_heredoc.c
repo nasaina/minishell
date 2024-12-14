@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 13:30:07 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/13 15:13:38 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/14 12:13:11 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,9 +103,11 @@ t_redir	*expand_hdoc(char *str)
 {
 	t_redir	*heredoc;
 	t_chunk	*chunks;
+	t_chunk	*tmp;
 
-	chunks = hdoc_token(str);
+	tmp = hdoc_token(str);
 	heredoc = NULL;
+	chunks = tmp;
 	while (chunks && chunks->next)
 	{
 		if (chunks->type == HEREDOC)
@@ -117,6 +119,7 @@ t_redir	*expand_hdoc(char *str)
 			add_redir_back(&heredoc, "PIPE", PIPE);
 		chunks = chunks->next;
 	}
+	free_chunks(tmp);
 	return (heredoc);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:51:47 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/12 14:58:46 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/14 13:16:10 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,12 @@ void	exec_fork(t_ast *ast, char *path, char **env)
 	if (execve(path, &ast->cmd->args[0], env) == -1)
 	{
 		if (path == NULL || &ast->cmd->args[0] == NULL)
+		{
+			free_ast(ast);
 			exit (EXIT_FAILURE);
+		}
 		perror((const char *)(ast->cmd->args[0]));
+		free_ast(ast);
 	}
 }
 

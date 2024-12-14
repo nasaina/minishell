@@ -6,13 +6,13 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:17:43 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/13 11:50:34 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/14 14:06:36 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-char	*export_value(char **result, int *i, t_export *export, char *name)
+void	export_value(char **result, int *i, t_export *export, char *name)
 {
 	char	*value;
 	int		j;
@@ -30,14 +30,12 @@ char	*export_value(char **result, int *i, t_export *export, char *name)
 		*i += 1;
 	}
 	free (name);
-	return (value);
 }
 
 char	*expander(char *str, t_export *export)
 {
 	int			i;
 	char		*result;
-	char		*value;
 	char		*name;
 	int			status;
 
@@ -54,9 +52,11 @@ char	*expander(char *str, t_export *export)
 		{
 			if (name_token(str, &i, &name))
 				continue ;
-			value = export_value(&result, &i, export, name);
+			export_value(&result, &i, export, name);
 		}
 		result = join_char(result, str[i]);
+		if (i >= (int)ft_strlen(str))
+			break ;
 		i++;
 	}
 	return (result);
@@ -101,6 +101,7 @@ t_chunk	*expanded(char *str, t_type type, t_export *export)
 	str_expanded = expander(str, export);
 	result = get_command(str_expanded);
 	is_quote = dquote_status(str_expanded);
+	free(str_expanded);
 	chunks = expand_token(result, is_quote, type);
 	return (chunks);
 }
@@ -127,8 +128,7 @@ t_expander	*expand_str(t_chunk *chunks, t_export *export)
 			temp = temp->next;
 		}
 		tmp = tmp->next;
+		free_chunks(exp);
 	}
-	free_chunks(exp);
-	free_chunks(chunks);
 	return (expanders);
 }

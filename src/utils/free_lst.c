@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 09:08:39 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/13 11:51:31 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/14 13:09:58 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,9 @@ void	free_ast(t_ast *ast)
 		}
 		free(ast->cmd->args);
 		free_redir(ast->cmd->redir);
+		free(ast->cmd);
 	}
 	free_ast(ast->left);
 	free_ast(ast->right);
+	free(ast);
 }

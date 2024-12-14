@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_signals.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:31:27 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/10 14:54:26 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/14 14:15:18 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,19 @@ void	ft_exit(char **str)
 	}
 }
 
-int	handle_eof(char *str)
+int	handle_eof(char *str, t_export *export)
 {
 	char	**take_set;
 
 	if (str == NULL || !ft_strncmp(str, "exit", 5))
 	{
+		free_export(export);
 		printf("exit\n");
 		exit (0);
 	}
 	else if (ft_strncmp(str, "exit", 4) == 0 && str[4] == 32)
 	{
+		free_export(export);
 		take_set = ft_split(str, ' ');
 		printf("exit\n");
 		if (!table_isnum(take_set))
