@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:54:57 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/14 14:48:56 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/15 10:32:04 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ void	echo_monitor(char **str, int i)
 				printf(" ");
 		}
 	}
+	else if (!str[i])
+		printf("\n");
 	else if (str[i])
 	{
 		while (str[i])
