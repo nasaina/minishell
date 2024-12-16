@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:51:47 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/14 13:16:10 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/16 14:52:16 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,18 +47,22 @@ void	exec_fork(t_ast *ast, char *path, char **env)
 	if (execve(path, &ast->cmd->args[0], env) == -1)
 	{
 		if (path == NULL || &ast->cmd->args[0] == NULL)
+    {
+      free_ast(ast);
+			exit (127);
+    }
+		else
 		{
-			free_ast(ast);
-			exit (EXIT_FAILURE);
+			perror((const char *)(ast->cmd->args[0]));
+      free_ast(ast);
+			exit(126);
 		}
-		perror((const char *)(ast->cmd->args[0]));
-		free_ast(ast);
 	}
 }
 
-void	exec_cmd(t_ast *ast, char **env)
+int	exec_cmd(t_ast *ast, char **env)
 {
-	int		status;
+	int		status = -1;
 	char	*path;
 	pid_t	pid;
 
@@ -78,12 +82,17 @@ void	exec_cmd(t_ast *ast, char **env)
 	}
 	else
 		waitpid(pid, &status, 0);
+	if ( WIFEXITED(status) )
+        status = WEXITSTATUS(status);
+		
+	return (status);
 }
 
-void	check_cmd(t_ast *ast, t_export *export, char **env)
+int	check_cmd(t_ast *ast, t_export *export, char **env)
 {
 	int	fd_in;
 	int	fd_out;
+	int	status = -1;
 
 	if (isbuiltin(ast))
 	{
@@ -91,12 +100,13 @@ void	check_cmd(t_ast *ast, t_export *export, char **env)
 		fd_out = dup(STDOUT_FILENO);
 		if (ast->cmd->redir)
 			do_redir(ast);
-		ms_builtins(ast, export);
+		status = ms_builtins(ast, export, env);
 		dup2(fd_in, STDIN_FILENO);
 		dup2(fd_out, STDOUT_FILENO);
 		close(fd_in);
 		close(fd_out);
 	}
 	else
-		exec_cmd(ast, env);
+		status = exec_cmd(ast, env);
+	return (status);
 }

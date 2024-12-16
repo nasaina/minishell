@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 10:23:51 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/16 12:58:10 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/16 15:19:36 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
