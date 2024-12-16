@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:17:19 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/16 14:20:37 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/16 16:23:42 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ int	handle_exit(t_expander *expander, t_export *export)
 		if (!str_isnum(expander->next->cmd))
 		{
 			free_export(export);
-			ft_putendl_fd("exit : numeric argument required\n", 2);
+			printf("exit\n");
+			ft_putstr_fd("exit : numeric argument required\n", 2);
 			free_expander(expander);
 			exit(2);
 		}

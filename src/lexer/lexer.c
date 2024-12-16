@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 09:34:29 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/16 15:42:38 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/16 16:19:15 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_chunk	*lexing(char *str)
 
 	i = 0;
 	chunks = NULL;
-	if (!str && !str[i])
+	if (!str)
 		return (NULL);
 	while (str[i])
 	{
