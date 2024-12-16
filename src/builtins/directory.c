@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   directory.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:55:42 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/13 16:36:02 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/16 15:40:37 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ char	*get_home(char **env)
 char	*get_cd(char *str, char *last_direcotry, char **env)
 {
 	char	*dir;
+	char	cwd[PATH_MAX];
 
 	dir = NULL;
 	if (!str)
@@ -64,6 +65,8 @@ char	*get_cd(char *str, char *last_direcotry, char **env)
 		dir = last_direcotry;
 		if (!dir)
 			ft_putstr_fd("cd: OLDPWD not set\n", 2);
+		else if (getcwd(cwd, PATH_MAX) != NULL)
+			printf("%s\n", cwd);
 	}
 	else
 		dir = str;
@@ -99,10 +102,7 @@ int	get_oldpwd(t_ast *ast,char *dir, char *last_directory)
 	if (getcwd(cwd, PATH_MAX) != NULL)
 	{
 		if (!chdir(dir))
-		{
 			last_directory = ft_strdup((const char *)cwd);
-			printf("%s\n", last_directory);
-		}
 		else
 		{
 			ft_putstr_fd("cd: ", 1);
