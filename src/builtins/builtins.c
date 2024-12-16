@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 07:15:40 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/13 12:58:24 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/16 14:47:00 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,14 @@ void	ms_env(char **str, t_export *export)
 	}
 }
 
-void	ms_builtins(t_ast *ast, t_export *export)
+int	ms_builtins(t_ast *ast, t_export *export, char **env)
 {
-	ms_echo(ast->cmd);
+	(void)export;
+	return (ms_cd(ast, env));
+	
+	/* ms_echo(ast->cmd);
 	ms_pwd(ast);
 	ms_env(ast->cmd->args, export);
-	ms_cd(ast);
 	ms_printenv(ast, export);
-	ms_unset(&export, ast->cmd->args);
+	ms_unset(&export, ast->cmd->args); */
 }

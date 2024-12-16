@@ -6,13 +6,12 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:55:42 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/13 12:59:28 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/13 16:36:02 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-char	*last_directory = NULL;
 
 void	ms_pwd(t_ast *ast)
 {
@@ -27,21 +26,42 @@ void	ms_pwd(t_ast *ast)
 	}
 }
 
-char	*get_cd(char *str)
+char	*get_home(char **env)
+{
+	int		i;
+	char	*old;
+	char	*last;
+
+	i = 0;
+	old = NULL;
+	while (env[i])
+	{
+		if (ft_strncmp(env[i], "HOME=", 5) == 0)
+		{
+			old = env[i];
+			break ;
+		}
+		else
+			i++;
+	}
+	last = old + 5;
+	return (last);
+}
+
+char	*get_cd(char *str, char *last_direcotry, char **env)
 {
 	char	*dir;
 
 	dir = NULL;
 	if (!str)
 	{
-		dir = getenv("HOME");
+		dir = get_home(env);
 		if (!dir)
 			ft_putstr_fd("cd: HOME environment variable not set\n", 2);
 	}
 	else if (ft_strncmp(str, "-", 2) == 0)
 	{
-		dir = last_directory;
-
+		dir = last_direcotry;
 		if (!dir)
 			ft_putstr_fd("cd: OLDPWD not set\n", 2);
 	}
@@ -50,27 +70,66 @@ char	*get_cd(char *str)
 	return (dir);
 }
 
-void	ms_cd(t_ast *ast)
+char	*last_dir(char **env)
 {
-	char	*dir;
-	char	cwd[PATH_MAX];
+	int		i;
+	char	*old;
+	char	*last;
 
-	if (ft_strcmp(ast->cmd->args[0], "cd") == 0)
+	i = 0;
+	old = NULL;
+	while (env[i])
 	{
-		dir = get_cd(ast->cmd->args[1]);
-		if (getcwd(cwd, PATH_MAX) != NULL)
+		if (ft_strncmp(env[i], "OLDPWD=", 7) == 0)
 		{
-			if (chdir(dir) == 0)
-			{
-				free(last_directory);
-				last_directory = ft_strdup((const char *)cwd); 
-			}
-			else if (!ft_strcmp("(null)", dir))
-				printf("\n");
-			else
-				perror("cd");
+			old = env[i];
+			break ;
 		}
 		else
-			perror("getcwd");
+			i++;
 	}
+	last = old + 7;
+	return (last);
+}
+
+int	get_oldpwd(t_ast *ast,char *dir, char *last_directory)
+{
+	char	cwd[PATH_MAX];
+
+	if (getcwd(cwd, PATH_MAX) != NULL)
+	{
+		if (!chdir(dir))
+		{
+			last_directory = ft_strdup((const char *)cwd);
+			printf("%s\n", last_directory);
+		}
+		else
+		{
+			ft_putstr_fd("cd: ", 1);
+			perror(ast->cmd->args[1]);
+			return (1);
+		}
+	}
+	else
+	{
+		perror("getcwd");
+		return (1);
+	}
+	return (0);
+}
+
+int	ms_cd(t_ast *ast, char **env)
+{
+	char	*dir;
+	char	*last_directory;
+
+	last_directory = NULL;
+	if (!last_directory)
+		last_directory = last_dir(env);
+	if (ft_strcmp(ast->cmd->args[0], "cd") == 0)
+	{
+		dir = get_cd(ast->cmd->args[1], last_directory, env);
+		return(get_oldpwd(ast, dir, last_directory));
+	}
+	return (0);
 }
