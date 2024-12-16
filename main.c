@@ -4,7 +4,7 @@ void	start_signal(int ac, char **av, char **env)
 {
 	ignore_args(ac, av, env);
 	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, handle_sigquit);
 }
 
 void	print_ast(t_ast *ast)
@@ -134,6 +134,8 @@ int	one_hd(char *str)
 	int	i;
 
 	i = 0;
+	if (!str)
+		return (0);
 	while (str[i])
 	{
 		if (str[i] == '<' && str[i + 1] == '<')
@@ -153,10 +155,11 @@ int	main(int ac, char **av, char **env)
 
 	export = ms_envcpy(env);
 	start_signal(ac, av, env);
+	ms_readhistory();
 	while (1)
 	{
 		str = NULL;
-		str = ft_readline(str, export);
+		str = ft_readline(export);
 		if (is_void(str) && is_error(str))
 			continue ;
 		if (one_hd(str))
@@ -169,6 +172,8 @@ int	main(int ac, char **av, char **env)
 		free_chunks(chunks);
 		if (expander)
 		{
+			if (handle_exit(expander, export))
+				continue ;
 			ast = NULL;
 			ast = parse_args(expander, 1);
 			free_expander(expander);

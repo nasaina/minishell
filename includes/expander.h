@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 07:48:44 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/14 12:31:29 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/16 14:11:28 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,7 @@ char		*get_command(char *str);
 char		*str_insert(char *str, int count, int *i);
 char		*join_char(char *str, char c);
 int			ignore_value(char	*str, char **result, int *i, int *status);
+
+int	handle_exit(t_expander *expander, t_export *export);
 
 #endif

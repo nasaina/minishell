@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 15:41:49 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/14 14:13:05 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/16 15:46:24 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,19 @@ void	ignore_args(int ac, char **av, char **env)
 	(void)env;
 }
 
-char	*ft_readline(char *str, t_export *export)
+char	*ft_readline(t_export *export)
 {
+	(void)export;
+	char	*str;
+
+	str = NULL;
 	str = readline(">  ");
 	if (str != NULL && str[0] != '\0')
+	{
+		ms_writehistory(str);
 		add_history(str);
-	handle_eof(str, export);
+	}
+	// handle_eof(str, export);
 	return (str);
 }
 
