@@ -4,7 +4,7 @@ void	start_signal(int ac, char **av, char **env)
 {
 	ignore_args(ac, av, env);
 	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, handle_sigquit);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 void	print_ast(t_ast *ast)
@@ -101,7 +101,7 @@ void	do_heredoc(char *str, t_export *export, int i)
 			i++;
 			heredoc = heredoc->next;
 		}
-		file = join_free(".tmp", ft_itoa(i));
+		file = join_free("/tmp/.tmp", ft_itoa(i));
 		get_input(heredoc, export, file);
 		free(file);
 		heredoc = heredoc->next;

@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:21:58 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/12 13:08:06 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/16 17:15:44 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	do_redir(t_ast *ast)
 	{
 		if (redir->type == HEREDOC)
 		{
-			file = ft_strjoin(".tmp", ft_itoa(ast->file));
+			file = ft_strjoin("/tmp/.tmp", ft_itoa(ast->file));
 			fd = open(file, O_RDONLY);
 			dup2(fd, STDIN_FILENO);
 			close(fd);
