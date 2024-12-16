@@ -28,7 +28,7 @@ SRC_LEX = $(addprefix src/lexer/, lexer.c get_chunks.c check_op.c quote.c)
 
 SRC_UTILS = $(addprefix src/utils/, free_lst.c str_isnum.c export_utils.c join_and_free.c handle_history.c)
 
-SRC_GNL = $(addprefix src/get_next_line/, get_next_line.c get_next_line_utils.c)
+SRC_GNL = $(addprefix src/gnl/, gnl.c gnl_utils.c)
 
 MAIN = main.c
 
