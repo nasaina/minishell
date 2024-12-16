@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 13:29:57 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/13 14:21:52 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/16 14:52:38 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ int	exec_pipe_right(t_ast *ast, t_export *export, char **env, int *pipe_fds)
 		dup2(pipe_fds[0], 0);
 		close(pipe_fds[0]);
 		status = pipe_check(ast, export, env);
+		
 		exit (status);
 	}
 	return (EXIT_FAILURE);

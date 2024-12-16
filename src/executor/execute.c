@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:51:47 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/13 15:53:14 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/16 14:52:16 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int	exec_cmd(t_ast *ast, char **env)
 		waitpid(pid, &status, 0);
 	if ( WIFEXITED(status) )
         status = WEXITSTATUS(status);
+		
 	return (status);
 }
 
