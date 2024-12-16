@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 07:51:39 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/03 15:06:32 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/16 14:40:29 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,6 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# include <get_next_line.h>
 
 #endif
