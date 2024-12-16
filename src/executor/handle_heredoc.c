@@ -6,129 +6,16 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 14:22:23 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/11 14:45:54 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/14 12:54:46 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	hdoc_oneword(char *str, int i, t_type *type)
-{
-	int	count;
-
-	count = 0;
-	while (str[i] != 32 && str[i] && is_word(str[i]))
-	{
-		if (str[i] == 32)
-		{
-			count = 0;
-			i++;
-		}
-		else
-			count++;
-		i++;
-	}
-	*type = WORD;
-	return (count);
-}
-
-int	hdoc_count(int count, char *str, int i, t_type *type)
-{
-	if (!str)
-		return (0);
-	if ((str[i]) == '>')
-		count = is_append(str, i, type);
-	else if (str[i] == '<')
-		count = is_heredoc(str, i, type);
-	else if (str[i] == '|')
-	{
-		count = 1;
-		*type = PIPE;
-	}
-	else
-		count = hdoc_oneword(str, i, type);
-	return (count);
-}
-
-t_chunk	*hdoc_token(char *str)
-{
-	int		i;
-	int		j;
-	int		count;
-	char	*wrd;
-	t_chunk	*chunks;
-	t_type	type;
-
-	i = 0;
-	chunks = NULL;
-	while (str[i])
-	{
-		while (str[i] == 32)
-			i++;
-		count = hdoc_count(count, str, i, &type);
-		j = 0;
-		wrd = malloc(count + 1);
-		while (j < count)
-			wrd[j++] = str[i++];
-		wrd[j] = '\0';
-		add_chunks_back(&chunks, wrd, type);
-		while (str[i] == 32)
-			i++;
-	}
-	free(str);
-	return (chunks);
-}
-
-int	is_variable(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '$')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-int	heredoc_check(t_chunk *chunks)
-{
-	while (chunks)
-	{
-		if (chunks->type == HEREDOC)
-			return (1);
-		chunks = chunks->next;
-	}
-	return (0);
-}
-
-t_redir	*expand_hdoc(char *str)
-{
-	t_redir *heredoc;
-	t_chunk	*chunks;
-
-	chunks = hdoc_token(str);
-	heredoc = NULL;
-	while (chunks && chunks->next)
-	{
-		if (chunks->type == HEREDOC)
-		{
-			add_redir_back(&heredoc, chunks->next->str, HEREDOC);
-			chunks = chunks->next;
-		}
-		if (chunks->type == PIPE)
-			add_redir_back(&heredoc, "PIPE", PIPE);
-		chunks = chunks->next;
-	}
-	return (heredoc);
-}
-
 int	is_expandable(char	*str)
 {
 	int	i;
-	
+
 	i = 0;
 	while (str[i])
 	{
@@ -139,86 +26,90 @@ int	is_expandable(char	*str)
 	return (0);
 }
 
-char	*expand_heredoc(char *file, char *str, t_export *export)
+char	*hdoc_expander(char *str, t_export *export)
 {
 	int		i;
-	int		j;
 	char	*name;
-	char	*value;
+	char	*result;
+
+	i = 0;
+	result = NULL;
+	if(!str && !str[i])
+		return (NULL);
+	while (str[i])
+	{
+		if (str[i] == '$' && !char_isquote(str[i + 1]) && str[i + 1])
+		{
+			if (name_token(str, &i, &name))
+				continue ;
+			export_value(&result, &i, export, name);
+		}
+		if (str[i])
+		{
+		
+			result = join_char(result, str[i]);
+			i++;
+		}
+	}
+	return (result);
+}
+
+char	*expand_heredoc(char *file, char *str, t_export *export)
+{
 	char	*result;
 
 	if (!str)
 		return (NULL);
-	if (is_expandable(file))
-		return (str);
 	result = NULL;
-	if (is_variable(str))
-	{
-		i = 0;
-		while (str[i])
-		{
-			if (str[i] == '$' && str[i + 1] != '"' && str[i + 1] != '\'' && str[i + 1])
-			{
-				name = get_var_name(str, i);
-				i++;
-				if (isdigit(name[0]))
-				{
-					i++;
-					continue ;
-				}
-				value = ms_getenv(name, export);
-				if (value)
-				{
-					result = ft_strjoin(result, value);
-					free(value);
-				}
-				j = 0;
-				while (j < (int)ft_strlen(name))
-				{
-					j++;
-					i++;
-				}
-				free (name);
-			}
-			result = join_char(result, str[i]);
-			i++;
-		}
-		return (result);
-	}
-	return (str);
+	if (!is_expandable(file) && is_variable(str))
+		result = hdoc_expander(str, export);
+	else
+		result = ft_strdup(str);
+	return (result);
 }
 
+int	quote_count(char *str)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (str[i])
+	{
+		if (char_isquote(str[i]))
+			count++;
+		i++;
+	}
+	return (count);
+}
 
 char	*ignore_quote(char	*str)
 {
 	char	*result;
 	int		count;
 	int		i;
-	
-	i = 0;
-	count = 0;
-	while (str[i])
-	{
-		if (str[i] == '"' || str[i] == '\'')
-			count++;
-		i++;
-	}
+
+	count = quote_count(str);
 	result = malloc(ft_strlen(str) - count + 1);
 	i = 0;
 	count = 0;
 	while (str[i])
 	{
-		if (str[i] == '"' || str[i] == '\'')
+		while (char_isquote(str[i]) && str[i])
 			i++;
-		result[count] = str[i];
-		i++;
-		count++;
+		if (str[i])
+		{
+			result[count] = str[i];
+			count++;
+			i++;
+		}
 	}
 	result[count] = 0;
 	return (result);
 }
 
-int	get_input(t_redir *heredoc, t_export *export, char *file)
+void	get_input(t_redir *heredoc, t_export *export, char *file)
 {
 	char	*str;
 	char	*expander;
@@ -232,16 +123,23 @@ int	get_input(t_redir *heredoc, t_export *export, char *file)
 	{
 		str = readline("heredoc > ");
 		if (!ft_strcmp(name, str))
+		{
+			free(name);
+			free(str);
 			break ;
+		}
 		else
 		{
 			expander = expand_heredoc(heredoc->file, str, export);
 			if (expander)
+			{
 				ft_putstr_fd(expander, fd);
+				free(expander);
+			}
 			ft_putstr_fd("\n", fd);
-			continue ;
 		}
+		free(str);
+		str = NULL;
 	}
 	close(fd);
-	return (fd);
 }

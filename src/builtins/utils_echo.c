@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:54:57 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/04 13:04:15 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/15 10:32:04 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	is_echoflag(char *str)
 	int	i;
 
 	i = 1;
-	if (str[0] == 45)
+	if (str[0] == 45 && str[1] && str[1] == 'n')
 	{
 		while (str[i])
 		{
@@ -33,7 +33,7 @@ int	is_echoflag(char *str)
 
 int	echo_flagonly(char **str)
 {
-	if (is_echoflag(str[0]) && !str[1])
+	if (is_echoflag(str[1]) && !str[2])
 		return (1);
 	return (0);
 }
@@ -54,6 +54,8 @@ void	echo_monitor(char **str, int i)
 				printf(" ");
 		}
 	}
+	else if (!str[i])
+		printf("\n");
 	else if (str[i])
 	{
 		while (str[i])

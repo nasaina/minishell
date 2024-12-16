@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:31:44 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/10 13:22:34 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/14 14:14:35 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXECUTOR_H
-# define EXECUTOR_H
+#ifndef EXEC_H
+# define EXEC_H
 
 # include <minishell.h>
 # include <expander.h>
@@ -26,6 +26,6 @@ int			ft_strcmp(char *s1, char *s2);
 t_export	*ms_envcpy(char **env);
 void		export_back(t_export **export, char *str);
 void		free_export(t_export *export);
-char    	**path_list(char **env);
+char		**path_list(char **env);
 
 #endif

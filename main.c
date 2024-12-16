@@ -3,6 +3,8 @@
 void	start_signal(int ac, char **av, char **env)
 {
 	ignore_args(ac, av, env);
+	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 void	print_ast(t_ast *ast)
@@ -82,11 +84,37 @@ int	redir_null(char *str)
 	return (0);
 }
 
+void	do_heredoc(char *str, t_export *export, int i)
+{
+	char 	*file;
+	t_redir	*heredoc;
+	t_redir	*tmp;
+
+	file = NULL;
+	tmp = expand_hdoc(str);
+	free(str);
+	heredoc = tmp;
+	while (heredoc)
+	{
+		if (heredoc->type == PIPE)
+		{
+			i++;
+			heredoc = heredoc->next;
+		}
+		file = join_free(".tmp", ft_itoa(i));
+		get_input(heredoc, export, file);
+		free(file);
+		heredoc = heredoc->next;
+	}
+	free_redir(tmp);
+	free_export(export);
+	exit (0);
+}
+
 char	*heredoc_built(char *str, t_export *export)
 {
 	int		status;
 	pid_t	hd_pid;
-	t_redir *heredoc;
 	char	*file;
 	int		i;
 
@@ -96,50 +124,55 @@ char	*heredoc_built(char *str, t_export *export)
 	if (hd_pid < 0)
 		perror("fork");
 	else if (hd_pid == 0)
-	{
-		heredoc = expand_hdoc(str);
-		while (heredoc)
-		{
-			if (heredoc->type == PIPE)
-			{
-				i++;
-				heredoc = heredoc->next;
-			}
-			file = ft_strjoin(".tmp", ft_itoa(i));
-			get_input(heredoc, export, file);
-			heredoc = heredoc->next;
-		}
-		exit (0);
-	}
+		do_heredoc(str, export, i);
 	waitpid(hd_pid, &status, 0);
 	return (file);
 }
 
+int	one_hd(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '<' && str[i + 1] == '<')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int	main(int ac, char **av, char **env)
 {
-	char	*str = NULL;
-	t_chunk	*chunks = NULL;
+	char	*str;
+	t_chunk	*chunks;
 	t_export	*export = NULL;
-	t_expander	*expander = NULL;
-	t_ast		*ast = NULL;
+	t_expander	*expander;
+	t_ast		*ast;
 
 	export = ms_envcpy(env);
 	start_signal(ac, av, env);
-	// signal(SIGINT, handle_sigint);
-	// signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
-		str = ft_readline(str);
+		str = NULL;
+		str = ft_readline(str, export);
 		if (is_void(str) && is_error(str))
 			continue ;
-		chunks = lexing(str);
-		if (heredoc_check(chunks))
+		if (one_hd(str))
 			heredoc_built(str, export);
+		chunks = NULL;
+		chunks = lexing(str);
+		free(str);
+		expander = NULL;
 		expander = expand_str(chunks, export);
+		free_chunks(chunks);
 		if (expander)
 		{
+			ast = NULL;
 			ast = parse_args(expander, 1);
-			printf( "%d\n", pipe_check(ast, export, env));
+			free_expander(expander);
+			pipe_check(ast, export, env);
 			free_ast(ast);
 		}
 		else

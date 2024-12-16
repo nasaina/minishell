@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 11:38:37 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/12 13:03:20 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/13 12:52:24 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,10 @@ typedef enum s_asttype
 
 typedef struct s_redir
 {
-	t_type		type;
-	char		*file;
+	t_type			type;
+	char			*file;
 	struct s_redir	*next;
 }	t_redir;
-
 
 typedef struct s_cmd
 {

@@ -1,28 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.h                                            :+:      :+:    :+:   */
+/*   join_and_free.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/17 15:43:31 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/14 14:13:36 by nandrian         ###   ########.fr       */
+/*   Created: 2024/12/13 13:48:51 by nandrian          #+#    #+#             */
+/*   Updated: 2024/12/15 17:05:59 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERROR_H
-# define ERROR_H
+#include <minishell.h>
 
-# include <minishell.h>
 
-int		is_error(char *str);
-int		is_void(char *str);
-int		check_next(char *str, int i);
-int		isredirection(char c);
-int		is_redirok(char *str, int i);
-int		check_redirection(char *str);
-char	*ft_readline(char *str, t_export *export);
-void	ignore_args(int ac, char **av, char **env);
-int		unclosed_quote(char *str);
+char	*join_free(char *s1, char *s2)
+{
+	int		i;
+	int		j;
+	char	*str;
 
-#endif
+	i = 0;
+	j = 0;
+	str = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (!str)
+		return (NULL);
+	while (s1[i])
+	{
+		str[i] = s1[i];
+		i++;
+	}
+	while (s2[j])
+	{
+		str[i] = s2[j];
+		i++;
+		j++;
+	}
+	str[i] = '\0';
+	free(s2);
+	return (str);
+}

@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 09:34:29 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/10 15:55:57 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/14 14:09:43 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	is_word(char c)
 
 int	count_args(int count, char *str, int i, t_type *type)
 {
-	if (!str)
+	if (!str && !str[i])
 		return (0);
 	if ((str[i]) == '>')
 		count = is_append(str, i, type);
@@ -43,7 +43,6 @@ int	count_args(int count, char *str, int i, t_type *type)
 t_chunk	*lexing(char *str)
 {
 	int		i;
-	int		j;
 	int		count;
 	char	*wrd;
 	t_chunk	*chunks;
@@ -51,18 +50,22 @@ t_chunk	*lexing(char *str)
 
 	i = 0;
 	chunks = NULL;
+	if (!str && !str[i])
+		return (NULL);
 	while (str[i])
 	{
-		while (str[i] == 32)
+		while (str[i] == 32 && str[i])
 			i++;
-		count = count_args(count, str, i, &type);
-		j = 0;
-		wrd = malloc(count + 1);
-		while (j < count)
-			wrd[j++] = str[i++];
-		wrd[j] = '\0';
-		add_chunks_back(&chunks, wrd, type);
-		while (str[i] == 32)
+		if (i < (int)ft_strlen(str))
+		{
+			count = count_args(count, str, i, &type);
+			wrd = str_insert(str, count, &i);
+			add_chunks_back(&chunks, wrd, type);
+			free(wrd);
+			if (i >= (int)ft_strlen(str))
+				break ;
+		}
+		while (str[i] == 32 && str[i])
 			i++;
 	}
 	return (chunks);

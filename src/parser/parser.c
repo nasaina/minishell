@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 11:38:08 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/12 13:02:55 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/14 12:19:30 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,5 @@ t_ast	*parse_args(t_expander *expander, int file)
 		root->right = parse_args(expander, file);
 		return (root);
 	}
-	free_expander(expander);
 	return (tmp);
 }
