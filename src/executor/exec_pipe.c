@@ -3,24 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 13:29:57 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/12 13:04:50 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/13 14:21:52 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	pipe_check(t_ast *ast, t_export *export, char **env)
+int	pipe_check(t_ast *ast, t_export *export, char **env)
 {
+	int	status = -1;
+
 	if (ast->type == 1)
-		exec_pipe(ast, export, env);
+		status = exec_pipe(ast, export, env);
 	else
-		check_cmd(ast, export, env);
+		status = check_cmd(ast, export, env);
+	return (status);
 }
 
-void	exec_pipe(t_ast *ast, t_export *export, char **env)
+int	exec_pipe(t_ast *ast, t_export *export, char **env)
 {
 	pid_t	pid_left;
 	pid_t	pid_right;
@@ -40,12 +43,18 @@ void	exec_pipe(t_ast *ast, t_export *export, char **env)
 	pid_right = fork();
 	if (pid_right < 0)
 		perror("fork");
-	else if (pid_right == 0) 
-		exec_pipe_right(ast->right, export, env, pipe_fds);
+	else if (pid_right == 0)
+	{
+			status = exec_pipe_right(ast->right, export, env, pipe_fds);
+			exit(EXIT_FAILURE);
+	}
 	close(pipe_fds[0]);
 	close(pipe_fds[1]);
-	waitpid(pid_left, &status, 0);
+	waitpid(pid_left, NULL, 0);
 	waitpid(pid_right, &status, 0);
+	if ( WIFEXITED(status))
+        status = WEXITSTATUS(status);
+	return (status);
 }
 
 void	exec_pipe_left(t_ast *ast, t_export *export, char **env, int *pipe_fds)
@@ -60,14 +69,17 @@ void	exec_pipe_left(t_ast *ast, t_export *export, char **env, int *pipe_fds)
 	exit(EXIT_SUCCESS);
 }
 
-void	exec_pipe_right(t_ast *ast, t_export *export, char **env, int *pipe_fds)
+int	exec_pipe_right(t_ast *ast, t_export *export, char **env, int *pipe_fds)
 {
+	int		status = -1;
+
 	if (ast)
 	{
 		close(pipe_fds[1]);
 		dup2(pipe_fds[0], 0);
 		close(pipe_fds[0]);
-		pipe_check(ast, export, env);
+		status = pipe_check(ast, export, env);
+		exit (status);
 	}
-	exit (EXIT_SUCCESS);
+	return (EXIT_FAILURE);
 }

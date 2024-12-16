@@ -139,7 +139,7 @@ int	main(int ac, char **av, char **env)
 		if (expander)
 		{
 			ast = parse_args(expander, 1);
-			pipe_check(ast, export, env);
+			printf( "%d\n", pipe_check(ast, export, env));
 			free_ast(ast);
 		}
 		else
