@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:55:42 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/17 15:13:09 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/17 16:08:51 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ char	*get_cd(char *str, char *last_direcotry, t_export *export)
 	else if (ft_strncmp(str, "-", 2) == 0)
 	{
 		dir = last_direcotry;
-		printf("%s********\n", dir);
 		if (!dir)
 			ft_putstr_fd("cd: OLDPWD not set\n", 2);
 		else if (getcwd(cwd, PATH_MAX) != NULL)
@@ -98,7 +97,6 @@ char	*last_dir(t_export *export)
 		last = ft_strdup(old + 7);
 	else
 		return (NULL);
-	printf("#### %s ####\n", last);
 	return (last);
 }
 
@@ -115,7 +113,6 @@ int	get_oldpwd(t_ast *ast,char *dir, char *last_directory, t_export *export)
 			is_double(&export, "OLDPWD");
 			new_dir = ft_strjoin("OLDPWD=", cwd);
 			export_back(&export, new_dir);
-			printf("**%s**\n", new_dir);
 		}
 		else
 		{
@@ -127,7 +124,6 @@ int	get_oldpwd(t_ast *ast,char *dir, char *last_directory, t_export *export)
 		is_double(&export, "PWD");
 		new_dir = ft_strjoin("PWD=", new_dir);
 		export_back(&export, new_dir);
-		printf("--%s--\n", new_dir);
 	}
 	else
 	{
