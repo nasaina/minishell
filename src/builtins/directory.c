@@ -6,49 +6,51 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:55:42 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/16 15:40:37 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/17 13:21:19 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-
-void	ms_pwd(t_ast *ast)
+char	*get_home(t_export *export)
 {
-	char	pwd[PATH_MAX];
+	t_export	*tmp;
+	char		*home;
+	char		*addhome;
 
-	if (!ft_strncmp(ast->cmd->args[0], "pwd", 4))
+	tmp = export;
+	home = NULL;
+	while (tmp)
 	{
-		if (getcwd(pwd, PATH_MAX) != NULL)
-			printf("%s\n", pwd);
-		else
-			perror("getcwd");
-	}
-}
-
-char	*get_home(char **env)
-{
-	int		i;
-	char	*old;
-	char	*last;
-
-	i = 0;
-	old = NULL;
-	while (env[i])
-	{
-		if (ft_strncmp(env[i], "HOME=", 5) == 0)
+		if (ft_strncmp(tmp->env, "HOME=", 5) == 0)
 		{
-			old = env[i];
+			home = tmp->env;
 			break ;
 		}
 		else
-			i++;
+			tmp = tmp->next;
 	}
-	last = old + 5;
-	return (last);
+	if (!home)
+		return (NULL);
+	addhome = ft_strdup(home + 5);
+	return (addhome);
 }
 
-char	*get_cd(char *str, char *last_direcotry, char **env)
+int	check_args(t_ast *ast)
+{
+	char	**tmp;
+	int		i;
+
+	i = 0;
+	tmp = ast->cmd->args;
+	while (tmp[i])
+		i++;
+	if (i > 2)
+		return (1);
+	return (0);
+}
+
+char	*get_cd(char *str, char *last_direcotry, t_export *export)
 {
 	char	*dir;
 	char	cwd[PATH_MAX];
@@ -56,7 +58,7 @@ char	*get_cd(char *str, char *last_direcotry, char **env)
 	dir = NULL;
 	if (!str)
 	{
-		dir = get_home(env);
+		dir = get_home(export);
 		if (!dir)
 			ft_putstr_fd("cd: HOME environment variable not set\n", 2);
 	}
@@ -73,25 +75,26 @@ char	*get_cd(char *str, char *last_direcotry, char **env)
 	return (dir);
 }
 
-char	*last_dir(char **env)
+char	*last_dir(t_export *export)
 {
-	int		i;
-	char	*old;
-	char	*last;
+	t_export	*tmp;
+	char		*old;
+	char		*last;
 
-	i = 0;
+	tmp = export;
 	old = NULL;
-	while (env[i])
+	while (tmp)
 	{
-		if (ft_strncmp(env[i], "OLDPWD=", 7) == 0)
+		if (ft_strncmp(tmp->env, "OLDPWD=", 7) == 0)
 		{
-			old = env[i];
+			old = tmp->env;
 			break ;
 		}
 		else
-			i++;
+			tmp = tmp->next;
 	}
-	last = old + 7;
+	last = ft_strdup(old + 7);
+	printf("#### %s ####\n", last);
 	return (last);
 }
 
@@ -118,17 +121,17 @@ int	get_oldpwd(t_ast *ast,char *dir, char *last_directory)
 	return (0);
 }
 
-int	ms_cd(t_ast *ast, char **env)
+int	ms_cd(t_ast *ast, t_export *export)
 {
 	char	*dir;
 	char	*last_directory;
 
 	last_directory = NULL;
 	if (!last_directory)
-		last_directory = last_dir(env);
+		last_directory = last_dir(export);
 	if (ft_strcmp(ast->cmd->args[0], "cd") == 0)
 	{
-		dir = get_cd(ast->cmd->args[1], last_directory, env);
+		dir = get_cd(ast->cmd->args[1], last_directory, export);
 		return(get_oldpwd(ast, dir, last_directory));
 	}
 	return (0);

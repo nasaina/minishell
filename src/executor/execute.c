@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:51:47 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/16 14:52:16 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/17 11:40:43 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	check_cmd(t_ast *ast, t_export *export, char **env)
 		fd_out = dup(STDOUT_FILENO);
 		if (ast->cmd->redir)
 			do_redir(ast);
-		status = ms_builtins(ast, export, env);
+		status = ms_builtins(ast, export);
 		dup2(fd_in, STDIN_FILENO);
 		dup2(fd_out, STDOUT_FILENO);
 		close(fd_in);
@@ -108,5 +108,6 @@ int	check_cmd(t_ast *ast, t_export *export, char **env)
 	}
 	else
 		status = exec_cmd(ast, env);
+	printf("+++++++ %d +++++++++++\n", status);
 	return (status);
 }
