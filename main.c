@@ -218,7 +218,7 @@ int	main(int ac, char **av, char **env)
 			ast = parse_args(expander, 1);
 			free_expander(expander);
 			pipe_check(ast, export, env);
-			free_ast(ast);
+			// free_ast(ast);
 		}
 		else
 			continue ;
