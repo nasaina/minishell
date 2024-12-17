@@ -3,7 +3,7 @@
 void	start_signal(int ac, char **av, char **env)
 {
 	ignore_args(ac, av, env);
-	signal(SIGINT, handle_sigint);
+	signal(SIGINT, &handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
 }
 
@@ -84,49 +84,86 @@ int	redir_null(char *str)
 	return (0);
 }
 
-void	do_heredoc(char *str, t_export *export, int i)
+t_heredoc	*get_here_data(t_heredoc *heredoc)
 {
-	char 	*file;
-	t_redir	*heredoc;
-	t_redir	*tmp;
+	static t_heredoc	*data = NULL;
 
-	file = NULL;
-	tmp = expand_hdoc(str);
-	free(str);
-	heredoc = tmp;
-	while (heredoc)
-	{
-		if (heredoc->type == PIPE)
-		{
-			i++;
-			heredoc = heredoc->next;
-		}
-		file = join_free("/tmp/.tmp", ft_itoa(i));
-		get_input(heredoc, export, file);
-		free(file);
-		heredoc = heredoc->next;
-	}
-	free_redir(tmp);
-	free_export(export);
-	exit (0);
+	if (heredoc == NULL)
+		return (data);
+	data = heredoc;
+	return (data);
 }
 
-char	*heredoc_built(char *str, t_export *export)
+
+void	init_heredoc(t_export *export, t_heredoc **heredoc)
 {
+	*heredoc = ft_calloc(sizeof(t_heredoc), 1);
+	if (!(*heredoc))
+		return ;
+	(*heredoc)->export = export;
+	(*heredoc)->file = NULL;
+	(*heredoc)->fd = 0;
+}
+
+void	do_heredoc(char *str, t_heredoc *data, int i)
+{
+	t_redir		*tmp;
+
+	data->lst = expand_hdoc(str);
+	free(str);
+	tmp = data->lst;
+	signal(SIGINT, &handle_sigint);
+	signal(SIGQUIT, SIG_IGN);
+	while (tmp)
+	{
+		if (tmp->type == PIPE)
+		{
+			i++;
+			tmp = tmp->next;
+		}
+		data->file = join_free("/tmp/.hd_tmp", ft_itoa(i));
+		data->name = ignore_quote(tmp->file);
+		get_here_data(data);
+		data->fd = get_input(data, tmp);
+		close(data->fd);
+		free(data->file);
+		tmp = tmp->next;
+	}
+	free_redir(data->lst);
+}
+
+int	heredoc_built(char *str, t_export *export)
+{
+	int		i;
 	int		status;
 	pid_t	hd_pid;
-	char	*file;
-	int		i;
+	t_heredoc	*data;
 
-	file = NULL;
+	data = NULL;
+	init_heredoc(export, &data);
 	hd_pid = fork();
 	i = 1;
 	if (hd_pid < 0)
 		perror("fork");
 	else if (hd_pid == 0)
-		do_heredoc(str, export, i);
+	{
+		do_heredoc(str, data, i);
+		free_export(export);
+		free(data);
+		exit(0);
+	}
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	waitpid(hd_pid, &status, 0);
-	return (file);
+	if (WIFEXITED(status))
+	{
+		if (WEXITSTATUS(status) == 130)
+		{
+			free(data);
+			return (130);
+		}
+	}
+	return (0);
 }
 
 int	one_hd(char *str)
@@ -163,7 +200,10 @@ int	main(int ac, char **av, char **env)
 		if (is_void(str) && is_error(str))
 			continue ;
 		if (one_hd(str))
-			heredoc_built(str, export);
+		{
+			if (heredoc_built(str, export) != 0)
+				continue ;
+		}
 		chunks = NULL;
 		chunks = lexing(str);
 		free(str);

@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:17:43 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/16 17:09:13 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/17 13:38:56 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ void	export_value(char **result, int *i, t_export *export, char *name)
 
 char	*expander(char *str, t_export *export)
 {
-	int			i;
-	char		*result;
-	char		*name;
-	int			status;
+	int		i;
+	char	*result;
+	char	*name;
+	int		status;
 
 	result = NULL;
 	status = 0;
@@ -48,7 +48,7 @@ char	*expander(char *str, t_export *export)
 	{
 		if (ignore_value(str, &result, &i, &status))
 			continue ;
-		if (str[i] == '$' && !char_isquote(str[i + 1]) && str[i + 1])
+		if (str[i] == '$' && !char_isquote(str[i + 1]) && str[i + 2])
 		{
 			if (name_token(str, &i, &name))
 				continue ;
@@ -91,10 +91,10 @@ t_chunk	*expand_token(char *result, int is_quote, t_type type)
 
 t_chunk	*expanded(char *str, t_type type, t_export *export)
 {
-	char		*result;
 	int			is_quote;
-	t_chunk		*chunks;
+	char		*result;
 	char		*str_expanded;
+	t_chunk		*chunks;
 
 	if (!str)
 		return (NULL);

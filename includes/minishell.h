@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:32:07 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/17 13:11:23 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/17 13:56:56 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,11 @@ typedef struct s_lexer
 
 typedef struct s_heredoc
 {
-	int					status;
-	char				*str;
-	struct s_heredoc	*next;
+	int			fd;
+	char		*name;
+	char		*file;
+	t_export	*export;
+	t_redir		*lst;
 }	t_heredoc;
 
 char	**init_builtins(void);
@@ -63,7 +65,7 @@ char 	*var_remove(char *str);
 void	do_redir(t_ast *ast);
 void	remove_env(t_export **export, char *str);
 void	free_ast(t_ast *ast);
-void		get_input(t_redir *heredoc, t_export *export, char *file);
+int		get_input(t_heredoc *heredoc, t_redir *tmp);
 int		heredoc_check(t_chunk *chunks);
 t_redir	*expand_hdoc(char *str);
 t_export	*ms_envcpy(char **env);
@@ -82,5 +84,8 @@ int			is_variable(char *str);
 int			heredoc_check(t_chunk *chunks);
 t_redir		*expand_hdoc(char *str);
 char		*join_free(char *s1, char *s2);
+char	*ignore_quote(char	*str);
+void	free_heredoc_data(t_heredoc *heredoc);
+t_heredoc	*get_here_data(t_heredoc *heredoc);
 
 #endif

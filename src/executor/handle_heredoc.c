@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 14:22:23 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/14 12:54:46 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/17 10:38:50 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,37 +109,44 @@ char	*ignore_quote(char	*str)
 	return (result);
 }
 
-void	get_input(t_redir *heredoc, t_export *export, char *file)
+int	get_input(t_heredoc *heredoc, t_redir *tmp)
 {
 	char	*str;
 	char	*expander;
-	char	*name;
-	int		fd;
 
 	str = NULL;
-	fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0777);
-	name = ignore_quote(heredoc->file);
+	heredoc->fd = open(heredoc->file, O_CREAT | O_WRONLY | O_TRUNC, 0777);
 	while (1)
 	{
 		str = readline("heredoc > ");
-		if (!ft_strcmp(name, str))
+		if (!ft_strcmp(heredoc->name, str))
 		{
-			free(name);
+			free(heredoc->name);
 			free(str);
 			break ;
 		}
 		else
 		{
-			expander = expand_heredoc(heredoc->file, str, export);
+			expander = expand_heredoc(tmp->file, str, heredoc->export);
 			if (expander)
 			{
-				ft_putstr_fd(expander, fd);
+				ft_putstr_fd(expander, heredoc->fd);
 				free(expander);
 			}
-			ft_putstr_fd("\n", fd);
+			ft_putstr_fd("\n", heredoc->fd);
 		}
 		free(str);
 		str = NULL;
 	}
-	close(fd);
+	return (heredoc->fd);
+}
+
+void	free_heredoc_data(t_heredoc *heredoc)
+{
+	free_redir(heredoc->lst);
+	free_export(heredoc->export);
+	free(heredoc->name);
+	unlink(heredoc->file);
+	free(heredoc->file);
+	free(heredoc);
 }

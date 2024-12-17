@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:31:27 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/16 15:41:38 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/17 11:15:57 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,22 @@ void	free_split(char **str)
 
 void	handle_sigint(int sig)
 {
-	(void)sig;
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_redisplay();
-	return ;
+	t_heredoc	*heredoc;
+
+	if (sig == SIGINT)
+	{
+		printf("\n");
+		heredoc = get_here_data(NULL);
+		close(heredoc->fd);
+		free_heredoc_data(heredoc);
+		exit(130);
+	}
 }
 
 void	handle_sigquit(int sig)
 {
-	(void)sig;
-	printf("mandeha\n");
-	exit(1);
+	if (sig == SIGQUIT)
+		exit(131);
 }
 
 void	ft_exit(char **str)
