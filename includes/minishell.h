@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:32:07 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/17 13:56:56 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/17 15:18:40 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int			is_variable(char *str);
 int			heredoc_check(t_chunk *chunks);
 t_redir		*expand_hdoc(char *str);
 char		*join_free(char *s1, char *s2);
+char	*join_free1(char *s1, char *s2);
 char	*ignore_quote(char	*str);
 void	free_heredoc_data(t_heredoc *heredoc);
 t_heredoc	*get_here_data(t_heredoc *heredoc);

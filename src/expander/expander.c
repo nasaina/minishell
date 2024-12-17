@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:17:43 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/17 13:38:56 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/17 15:18:50 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	export_value(char **result, int *i, t_export *export, char *name)
 	value = ms_getenv(name, export);
 	if (value)
 	{
-		*result = ft_strjoin(*result, value);
+		*result = join_free1(*result, value);
 		free(value);
 	}
 	j = 0;
