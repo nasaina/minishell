@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:16:46 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/10 14:10:48 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/17 16:10:58 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ char	*check_path(char **pathlist, t_ast *ast)
 
 	i = 0;
 	command = ft_strjoin("/", ast->cmd->args[0]);
-
 	while (pathlist[i])
 	{
 		if (access(ft_strjoin(pathlist[i], command), F_OK) == 0)
