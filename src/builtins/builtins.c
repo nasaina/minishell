@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 07:15:40 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/16 16:57:17 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/17 11:40:14 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,15 +85,14 @@ void	ms_env(char **str, t_export *export)
 	}
 }
 
-int	ms_builtins(t_ast *ast, t_export *export, char **env)
+int	ms_builtins(t_ast *ast, t_export *export)
 {
-	(void)env;
-	ms_cd(ast, env);
-	
+	if (ft_strcmp(ast->cmd->args[0], "cd") == 0)
+		return (ms_cd(ast, export));	
 	ms_echo(ast->cmd);
 	ms_pwd(ast);
 	ms_env(ast->cmd->args, export);
 	ms_printenv(ast, export);
 	ms_unset(&export, ast->cmd->args);
-	return (0);	
+	return (0);
 }
