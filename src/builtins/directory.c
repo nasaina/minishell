@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:55:42 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/17 13:21:19 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/17 15:13:09 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ char	*get_cd(char *str, char *last_direcotry, t_export *export)
 	else if (ft_strncmp(str, "-", 2) == 0)
 	{
 		dir = last_direcotry;
+		printf("%s********\n", dir);
 		if (!dir)
 			ft_putstr_fd("cd: OLDPWD not set\n", 2);
 		else if (getcwd(cwd, PATH_MAX) != NULL)
@@ -93,25 +94,40 @@ char	*last_dir(t_export *export)
 		else
 			tmp = tmp->next;
 	}
-	last = ft_strdup(old + 7);
+	if (old)
+		last = ft_strdup(old + 7);
+	else
+		return (NULL);
 	printf("#### %s ####\n", last);
 	return (last);
 }
 
-int	get_oldpwd(t_ast *ast,char *dir, char *last_directory)
+int	get_oldpwd(t_ast *ast,char *dir, char *last_directory, t_export *export)
 {
 	char	cwd[PATH_MAX];
+	char	*new_dir = 0;
 
 	if (getcwd(cwd, PATH_MAX) != NULL)
 	{
 		if (!chdir(dir))
+		{
 			last_directory = ft_strdup((const char *)cwd);
+			is_double(&export, "OLDPWD");
+			new_dir = ft_strjoin("OLDPWD=", cwd);
+			export_back(&export, new_dir);
+			printf("**%s**\n", new_dir);
+		}
 		else
 		{
 			ft_putstr_fd("cd: ", 1);
 			perror(ast->cmd->args[1]);
 			return (1);
 		}
+		(getcwd(new_dir, PATH_MAX));
+		is_double(&export, "PWD");
+		new_dir = ft_strjoin("PWD=", new_dir);
+		export_back(&export, new_dir);
+		printf("--%s--\n", new_dir);
 	}
 	else
 	{
@@ -127,12 +143,17 @@ int	ms_cd(t_ast *ast, t_export *export)
 	char	*last_directory;
 
 	last_directory = NULL;
+	if (check_args(ast))
+	{
+		ft_putstr_fd("cd: too many arguments\n", 2);
+		return (1);
+	}
 	if (!last_directory)
 		last_directory = last_dir(export);
 	if (ft_strcmp(ast->cmd->args[0], "cd") == 0)
 	{
 		dir = get_cd(ast->cmd->args[1], last_directory, export);
-		return(get_oldpwd(ast, dir, last_directory));
+		return(get_oldpwd(ast, dir, last_directory, export));
 	}
 	return (0);
 }
