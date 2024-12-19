@@ -216,7 +216,10 @@ int	main(int ac, char **av, char **env)
 		if (expander)
 		{
 			if (handle_exit(expander, export))
+			{
+				ms_writestatus(1);
 				continue ;
+			}
 			ast = NULL;
 			ast = parse_args(expander, 1);
 			free_expander(expander);
