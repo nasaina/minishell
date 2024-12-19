@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 16:47:47 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/06 14:59:54 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/19 17:30:04 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,14 @@ int	check_redirection(char *str)
 		{
 			if ((!is_redirok(str, i)) || !check_next(str, i + 1))
 			{
-				printf("Syntax error\n");
+				ft_putstr_fd("Syntax error\n", 2);
 				return (0);
 			}
+		}
+		else if (str[i] == '|' && (!check_next(str, i + 1)))
+		{
+			ft_putstr_fd("Syntax error\n", 2);
+			return (0);
 		}
 		i++;
 	}
