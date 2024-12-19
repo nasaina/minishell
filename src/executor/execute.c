@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:51:47 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/17 16:12:53 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/19 15:07:37 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ int	exec_cmd(t_ast *ast, char **env)
 		waitpid(pid, &status, 0);
 	if ( WIFEXITED(status) )
         status = WEXITSTATUS(status);
-		
 	return (status);
 }
 
@@ -108,6 +107,5 @@ int	check_cmd(t_ast *ast, t_export *export, char **env)
 	}
 	else
 		status = exec_cmd(ast, env);
-	printf("+++++++ execute.c status : %d +++++++++++\n", status);
 	return (status);
 }

@@ -3,23 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 13:29:57 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/16 14:52:38 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/19 16:02:30 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+void	ms_writestatus(int status)
+{
+	int		fd;
+	char	*str;
+
+	fd = open(".ms_status", O_CREAT | O_WRONLY | O_TRUNC, 0777);
+	if (fd == -1)
+		return ;
+	str = ft_itoa(status);
+	ft_putstr_fd(str, fd);
+	free(str);
+	close(fd);
+}
+
 int	pipe_check(t_ast *ast, t_export *export, char **env)
 {
-	int	status = -1;
+	int	status;
 
 	if (ast->type == 1)
 		status = exec_pipe(ast, export, env);
 	else
 		status = check_cmd(ast, export, env);
+	ms_writestatus(status);
 	return (status);
 }
 

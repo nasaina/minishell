@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 11:38:37 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/13 12:52:24 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/19 15:04:47 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_cmd
 typedef struct s_ast
 {
 	int				file;
+	int				status;
 	t_asttype		type;
 	t_cmd			*cmd;
 	struct s_ast	*left;
@@ -49,6 +50,6 @@ t_cmd	*get_cmd(t_expander **expander);
 t_ast	*parse_args(t_expander *expander, int file);
 void	add_redir_back(t_redir **redir, char *file, t_type type);
 void	free_redir(t_redir *redir);
-void	ms_printenv(t_ast *ast, t_export *export);
+int	ms_printenv(t_ast *ast, t_export *export);
 
 #endif

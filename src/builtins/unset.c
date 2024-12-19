@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 09:04:24 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/13 12:58:04 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/19 15:06:21 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	remove_env(t_export **export, char *str)
 	}
 }
 
-void	ms_unset(t_export **export, char **str)
+int	ms_unset(t_export **export, char **str)
 {
 	int	i;
 
@@ -83,4 +83,5 @@ void	ms_unset(t_export **export, char **str)
 			}
 		}
 	}
+	return (0);
 }

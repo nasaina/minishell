@@ -121,7 +121,7 @@ void	do_heredoc(char *str, t_heredoc *data, int i)
 			i++;
 			tmp = tmp->next;
 		}
-		data->file = join_free("/tmp/.hd_tmp", ft_itoa(i));
+		data->file = join_free("/tmp/.hd_tmp", ft_itoa(i), 1);
 		data->name = ignore_quote(tmp->file);
 		get_here_data(data);
 		data->fd = get_input(data, tmp);
@@ -189,6 +189,7 @@ int	main(int ac, char **av, char **env)
 	t_export	*export = NULL;
 	t_expander	*expander;
 	t_ast		*ast;
+	int			heredoc_status;
 
 	export = ms_envcpy(env);
 	start_signal(ac, av, env);
@@ -201,7 +202,9 @@ int	main(int ac, char **av, char **env)
 			continue ;
 		if (one_hd(str))
 		{
-			if (heredoc_built(str, export) != 0)
+			heredoc_status = heredoc_built(str, export);
+			ms_writestatus(heredoc_status);
+			if (heredoc_status)
 				continue ;
 		}
 		chunks = NULL;
@@ -218,7 +221,7 @@ int	main(int ac, char **av, char **env)
 			ast = parse_args(expander, 1);
 			free_expander(expander);
 			pipe_check(ast, export, env);
-			// free_ast(ast);
+			free_ast(ast);
 		}
 		else
 			continue ;

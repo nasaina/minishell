@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:58:43 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/13 12:57:24 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/19 15:03:09 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,16 +59,33 @@ int	is_invalidname(char *str)
 	return (0);
 }
 
-void	add_input(t_export *export, int i, char **args)
+int	check_status(char **args)
+{
+	int	i;
+	char	*name;
+
+	i = 0;
+	while (args[i])
+	{
+		name = NULL;
+		name = export_name(args[i]);
+		if (is_invalidname(name))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	add_input(t_export *export, int i, char **args)
 {
 	t_export	*tmp;
 	char		*name;
 
-	name = NULL;
 	if (args[i])
 	{
 		while (args[i])
 		{
+			name = NULL;
 			tmp = export;
 			name = export_name(args[i]);
 			if (check_input(args, i, name))
@@ -84,9 +101,10 @@ void	add_input(t_export *export, int i, char **args)
 	}
 	else
 		print_export(export);
+	return (check_status(args));
 }
 
-void	ms_printenv(t_ast *ast, t_export *export)
+int	ms_printenv(t_ast *ast, t_export *export)
 {
 	int			i;
 	char		*name;
@@ -98,6 +116,8 @@ void	ms_printenv(t_ast *ast, t_export *export)
 	if (!ft_strcmp(args[i], "export"))
 	{
 		i++;
-		add_input(export, i, args);
+		if (add_input(export, i, args))
+			return (1);
 	}
+	return (0);
 }

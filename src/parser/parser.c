@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 11:38:08 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/14 12:19:30 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/19 15:23:54 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ t_ast	*parse_args(t_expander *expander, int file)
 	if (expander)
 		tmp->cmd = get_cmd(&expander);
 	tmp->file = file;
+	tmp->status = 0;
 	tmp->left = NULL;
 	tmp->right = NULL;
 	if (expander && expander->type == PIPE)
@@ -93,6 +94,7 @@ t_ast	*parse_args(t_expander *expander, int file)
 		root = malloc(sizeof(t_ast));
 		root->type = AST_PIPE;
 		root->cmd = NULL;
+		root->status = 0;
 		root->left = tmp;
 		expander = expander->next;
 		file += 1;
