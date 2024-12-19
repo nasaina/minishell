@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:32:07 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/19 17:12:23 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/19 17:35:46 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,5 +91,6 @@ int	is_status(char *str, int i);
 void	ms_exitstatus(char **result, int *i);
 void	ms_writestatus(int status);
 void	add_quote(char **result);
+t_export	*get_t_env(t_export *export);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:58:43 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/19 16:43:21 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/19 17:27:16 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,10 @@ int	check_status(char **args)
 		name = export_name(args[i]);
 		if (is_invalidname(name))
 		{
-			printf("fsgagad\n");
+			free(name);
 			return (1);
 		}
+		free(name);
 		i++;
 	}
 	return (0);

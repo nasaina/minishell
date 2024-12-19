@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:17:43 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/19 17:17:46 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/19 17:37:19 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,15 @@ void	ms_exitstatus(char **result, int *i)
 	{
 		join_free(*result, "0", 0);
 		add_quote(result);
-		*i += 1;
+		*i += 2;
 		return ;
 	}
 	str = get_next_line(fd);
 	if (!str)
+	{
+		*i += 2;
 		return ;
+	}
 	len = ft_strlen(str);
 	str[len] = 0;
 	add_quote(&str);
@@ -98,11 +101,13 @@ void	add_quote(char **result)
 	free(str);
 }
 
-int	insert_char(char **result, char *str, int *status, int *i, t_export *export)
+int	insert_char(char **result, char *str, int *status, int *i)
 {
-	char	*name;
+	char		*name;
+	t_export	*export;
 
 	name = NULL;
+	export = get_t_env(NULL);
 	if (ignore_value(str, result, i, status))
 		return (1);
 	if (str[*i] == '$' && !is_status(str, *i)
@@ -130,9 +135,10 @@ char	*expander(char *str, t_export *export)
 	if (!str)
 		return (NULL);
 	i = 0;
+	get_t_env(export);
 	while (str[i])
 	{
-		if (insert_char(&result, str, &status, &i, export) == 1)
+		if (insert_char(&result, str, &status, &i) == 1)
 			continue ;
 		if (i >= (int)ft_strlen(str))
 			break ;

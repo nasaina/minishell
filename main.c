@@ -94,6 +94,15 @@ t_heredoc	*get_here_data(t_heredoc *heredoc)
 	return (data);
 }
 
+t_export	*get_t_env(t_export *export)
+{
+	static t_export	*data = NULL;
+
+	if (export == NULL)
+		return (data);
+	data = export;
+	return (data);
+}
 
 void	init_heredoc(t_export *export, t_heredoc **heredoc)
 {
@@ -198,7 +207,9 @@ int	main(int ac, char **av, char **env)
 	{
 		str = NULL;
 		str = ft_readline(export);
-		if (is_void(str) && is_error(str))
+		if (is_error(str))
+			continue ;
+		if (is_void(str))
 			continue ;
 		if (one_hd(str))
 		{
