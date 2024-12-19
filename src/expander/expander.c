@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:17:43 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/19 15:51:18 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/19 16:05:46 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,9 @@ char	*expander(char *str, t_export *export)
 		}
 		if (is_status(str, i))
 			ms_exitstatus(&result, &i);
-		result = join_char(result, str[i]);
 		if (i >= (int)ft_strlen(str))
 			break ;
+		result = join_char(result, str[i]);
 		i++;
 	}
 	return (result);
