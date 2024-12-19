@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:17:19 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/16 16:23:42 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/19 16:52:03 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	handle_exit(t_expander *expander, t_export *export)
 		free_export(export);
 		free_expander(expander);
 		printf("exit\n");
+		unlink(".ms_status");
 		exit(0);
 	}
 	else if (!ft_strcmp(expander->cmd, "exit") && expander->next)
@@ -58,6 +59,7 @@ int	handle_exit(t_expander *expander, t_export *export)
 			printf("exit\n");
 			ft_putstr_fd("exit : numeric argument required\n", 2);
 			free_expander(expander);
+			unlink(".ms_status");
 			exit(2);
 		}
 		if (ft_exit2(expander, export))

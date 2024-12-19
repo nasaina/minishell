@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:17:43 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/19 16:05:46 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/19 16:57:51 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,11 @@ void	ms_exitstatus(char **result, int *i)
 
 	fd = open(".ms_status", O_RDONLY);
 	if (fd == -1)
+	{
+		join_free(*result, "0", 0);
+		*i += 1;
 		return ;
+	}
 	str = get_next_line(fd);
 	if (!str)
 		return ;
@@ -61,11 +65,62 @@ int	is_status(char *str, int i)
 	return (0);
 }
 
+void	add_quote(char **result)
+{
+	char	*str;
+	char	*name;
+	int		len;
+	int		i;
+	int		j;
+
+	name = *result;
+	if (!name)
+		return ;
+	len = (int)ft_strlen(*result);
+	str = malloc(len + 3);
+	if (!str)
+		return ;
+	str[0] = '"';
+	i = 0;
+	j = 1;
+	while (name[i])
+		str[j++] = name[i++];
+	str[j] = '"';
+	str[j + 1] = 0;
+	free(*result);
+	*result = ft_strdup(str);
+	free(str);
+}
+
+int	insert_char(char **result, char *str, int *status, int *i, t_export *export)
+{
+	char	*name;
+
+	name = NULL;
+	if (ignore_value(str, result, i, status))
+		return (1);
+	if (str[*i] == '$' && !is_status(str, *i)
+		&& !char_isquote(str[*i + 1]) && str[*i + 2])
+	{
+		if (name_token(str, i, &name))
+			return (1);
+		export_value(result, i, export, name);
+		// add_quote(result);
+	}
+	if (is_status(str, *i))
+	{
+		ms_exitstatus(result, i);
+		// add_quote(result);
+	}
+	*result = join_char(*result, str[*i]);
+	*i += 1;
+	return (0);
+}
+
 char	*expander(char *str, t_export *export)
 {
 	int		i;
 	char	*result;
-	char	*name;
 	int		status;
 
 	result = NULL;
@@ -75,21 +130,10 @@ char	*expander(char *str, t_export *export)
 	i = 0;
 	while (str[i])
 	{
-		if (ignore_value(str, &result, &i, &status))
+		if (insert_char(&result, str, &status, &i, export) == 1)
 			continue ;
-		if (str[i] == '$' && !is_status(str, i)
-			&& !char_isquote(str[i + 1]) && str[i + 2])
-		{
-			if (name_token(str, &i, &name))
-				continue ;
-			export_value(&result, &i, export, name);
-		}
-		if (is_status(str, i))
-			ms_exitstatus(&result, &i);
 		if (i >= (int)ft_strlen(str))
 			break ;
-		result = join_char(result, str[i]);
-		i++;
 	}
 	return (result);
 }
