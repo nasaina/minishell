@@ -6,11 +6,31 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:17:43 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/17 15:18:50 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/19 15:51:18 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+void	ms_exitstatus(char **result, int *i)
+{
+	int		fd;
+	char	*str;
+	int		len;
+
+	fd = open(".ms_status", O_RDONLY);
+	if (fd == -1)
+		return ;
+	str = get_next_line(fd);
+	if (!str)
+		return ;
+	len = ft_strlen(str);
+	str[len] = 0;
+	*result = join_free(*result, str, 0);
+	free(str);
+	*i += len + 1;
+	close(fd);
+}
 
 void	export_value(char **result, int *i, t_export *export, char *name)
 {
@@ -18,11 +38,10 @@ void	export_value(char **result, int *i, t_export *export, char *name)
 	int		j;
 
 	value = ms_getenv(name, export);
-	if (value)
-	{
-		*result = join_free1(*result, value);
-		free(value);
-	}
+	if (!value)
+		return ;
+	*result = join_free(*result, value, 0);
+	free(value);
 	j = 0;
 	while (j < (int)ft_strlen(name))
 	{
@@ -30,6 +49,16 @@ void	export_value(char **result, int *i, t_export *export, char *name)
 		*i += 1;
 	}
 	free (name);
+}
+
+int	is_status(char *str, int i)
+{
+	if (!str)
+		return (0);
+	if (str[i] == '$' && str[i + 1] == '?'
+		&& (!str[i + 2] || str[i + 2] == '"' || str[i + 2] == '\''))
+		return (1);
+	return (0);
 }
 
 char	*expander(char *str, t_export *export)
@@ -48,12 +77,15 @@ char	*expander(char *str, t_export *export)
 	{
 		if (ignore_value(str, &result, &i, &status))
 			continue ;
-		if (str[i] == '$' && !char_isquote(str[i + 1]) && str[i + 2])
+		if (str[i] == '$' && !is_status(str, i)
+			&& !char_isquote(str[i + 1]) && str[i + 2])
 		{
 			if (name_token(str, &i, &name))
 				continue ;
 			export_value(&result, &i, export, name);
 		}
+		if (is_status(str, i))
+			ms_exitstatus(&result, &i);
 		result = join_char(result, str[i]);
 		if (i >= (int)ft_strlen(str))
 			break ;

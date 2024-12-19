@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 15:41:49 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/16 15:46:24 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/19 15:39:20 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ char	*ft_readline(t_export *export)
 		ms_writehistory(str);
 		add_history(str);
 	}
-	// handle_eof(str, export);
 	return (str);
 }
 

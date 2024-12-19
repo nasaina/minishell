@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 11:38:08 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/17 15:05:18 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/19 14:33:43 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,32 +64,6 @@ int	dquote_status(char *str)
 	return (0);
 }
 
-char	*join_free1(char *s1, char *s2)
-{
-	size_t	i;
-	size_t	j;
-	char	*str;
-
-	i = 0;
-	j = 0;
-	str = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (!str)
-		return (NULL);
-	if (s1)
-	{
-		while (s1[i])
-		{
-			str[i] = s1[i];
-			i++;
-		}
-	}
-	while (s2[j])
-		str[i++] = s2[j++];
-	str[i] = '\0';
-	free(s1);
-	return (str);
-}
-
 char	*get_command(char *str)
 {
 	int		i;
@@ -110,7 +84,7 @@ char	*get_command(char *str)
 			count = no_quote(str, i);
 			tmp = str_insert(str, count, &i);
 		}
-		result = join_free1(result, tmp);
+		result = join_free(result, tmp, 0);
 		free(tmp);
 	}
 	return (result);

@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:32:07 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/17 15:18:40 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/19 16:01:28 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ int		exec_pipe(t_ast *ast, t_export *export, char **env);
 int		pipe_check(t_ast *ast, t_export *export, char **env);
 int		str_isnum(char *str);
 int		table_isnum(char **str);
-void	ms_echo(t_cmd *cmd);
-void	ms_env(char **str, t_export *export);
-void	ms_unset(t_export **export, char **str);
+int		ms_echo(t_cmd *cmd);
+int		ms_env(char **str, t_export *export);
+int		ms_unset(t_export **export, char **str);
 int		ms_builtins(t_ast *ast, t_export *export);
 void	ms_export(char **env, t_chunk *chunks);
 void	exec_pipe_left(t_ast *ast, t_export *export,
@@ -83,10 +83,12 @@ t_chunk		*hdoc_token(char *str);
 int			is_variable(char *str);
 int			heredoc_check(t_chunk *chunks);
 t_redir		*expand_hdoc(char *str);
-char		*join_free(char *s1, char *s2);
-char	*join_free1(char *s1, char *s2);
+char		*join_free(char *s1, char *s2, int status);
 char	*ignore_quote(char	*str);
 void	free_heredoc_data(t_heredoc *heredoc);
 t_heredoc	*get_here_data(t_heredoc *heredoc);
+int	is_status(char *str, int i);
+void	ms_exitstatus(char **result, int *i);
+void	ms_writestatus(int status);
 
 #endif

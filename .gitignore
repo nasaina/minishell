@@ -6,3 +6,4 @@ minishell
 readline.supp
 .gitignore
 .ms_history
+.ms_status

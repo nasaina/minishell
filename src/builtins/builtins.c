@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 07:15:40 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/17 11:40:14 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/19 15:06:53 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,26 +73,35 @@ void	ms_export(char **env, t_chunk *chunks)
 	}
 }
 
-void	ms_env(char **str, t_export *export)
+int	ms_env(char **str, t_export *export)
 {
 	if (ft_strncmp(str[0], "env", 4) == 0)
 	{
+		if (!export)
+		{
+			printf("\n");
+			return (1);
+		}
 		while (export)
 		{
 			printf("%s\n", export->env);
 			export = export->next;
 		}
 	}
+	return (0);
 }
 
 int	ms_builtins(t_ast *ast, t_export *export)
 {
+	int	status;
+
+	status = -1;
 	if (ft_strcmp(ast->cmd->args[0], "cd") == 0)
 		return (ms_cd(ast, export));	
-	ms_echo(ast->cmd);
-	ms_pwd(ast);
-	ms_env(ast->cmd->args, export);
-	ms_printenv(ast, export);
-	ms_unset(&export, ast->cmd->args);
-	return (0);
+	status = ms_echo(ast->cmd);
+	status = ms_pwd(ast);
+	status =  ms_env(ast->cmd->args, export);
+	status = ms_printenv(ast, export);
+	status = ms_unset(&export, ast->cmd->args);
+	return (status);
 }

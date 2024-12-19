@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:54:57 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/16 17:02:30 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/19 14:52:09 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	echo_monitor(char **str, int i)
 	}
 }
 
-void	ms_echo(t_cmd *cmd)
+int	ms_echo(t_cmd *cmd)
 {
 	int	i;
 
@@ -78,8 +78,9 @@ void	ms_echo(t_cmd *cmd)
 		if (!cmd->args[i])
 		{
 			printf("\n");
-			return ;
+			return (0);
 		}
 		echo_monitor(cmd->args, i);
 	}
+	return (0);
 }
