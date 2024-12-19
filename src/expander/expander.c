@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:17:43 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/19 16:57:51 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/19 17:17:46 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	ms_exitstatus(char **result, int *i)
 	if (fd == -1)
 	{
 		join_free(*result, "0", 0);
+		add_quote(result);
 		*i += 1;
 		return ;
 	}
@@ -30,6 +31,7 @@ void	ms_exitstatus(char **result, int *i)
 		return ;
 	len = ft_strlen(str);
 	str[len] = 0;
+	add_quote(&str);
 	*result = join_free(*result, str, 0);
 	free(str);
 	*i += len + 1;
@@ -43,7 +45,11 @@ void	export_value(char **result, int *i, t_export *export, char *name)
 
 	value = ms_getenv(name, export);
 	if (!value)
+	{
+		*i += (int)ft_strlen(name);
 		return ;
+	}
+	add_quote(&value);
 	*result = join_free(*result, value, 0);
 	free(value);
 	j = 0;
@@ -105,13 +111,9 @@ int	insert_char(char **result, char *str, int *status, int *i, t_export *export)
 		if (name_token(str, i, &name))
 			return (1);
 		export_value(result, i, export, name);
-		// add_quote(result);
 	}
 	if (is_status(str, *i))
-	{
 		ms_exitstatus(result, i);
-		// add_quote(result);
-	}
 	*result = join_char(*result, str[*i]);
 	*i += 1;
 	return (0);

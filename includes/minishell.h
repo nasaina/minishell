@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:32:07 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/19 16:01:28 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/19 17:12:23 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,5 +90,6 @@ t_heredoc	*get_here_data(t_heredoc *heredoc);
 int	is_status(char *str, int i);
 void	ms_exitstatus(char **result, int *i);
 void	ms_writestatus(int status);
+void	add_quote(char **result);
 
 #endif
