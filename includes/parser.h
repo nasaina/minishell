@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 11:38:37 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/19 15:04:47 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/20 07:38:32 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,6 @@ t_cmd	*get_cmd(t_expander **expander);
 t_ast	*parse_args(t_expander *expander, int file);
 void	add_redir_back(t_redir **redir, char *file, t_type type);
 void	free_redir(t_redir *redir);
-int	ms_printenv(t_ast *ast, t_export *export);
+int		ms_printenv(t_ast *ast, t_env *env);
 
 #endif

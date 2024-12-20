@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 09:04:24 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/19 15:06:21 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/20 07:47:11 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,29 +44,29 @@ char	*var_remove(char *str)
 	return (to_remove);
 }
 
-void	remove_env(t_export **export, char *str)
+void	remove_env(t_env **env, char *str)
 {
-	t_export	*tmp;
+	t_env	*tmp;
 	char		*to_remove;
 
-	tmp = *export;
+	tmp = *env;
 	if (tmp == NULL)
 		return ;
 	to_remove = var_remove(tmp->env);
 	if (!ft_strcmp(to_remove, str))
 	{
-		*export = tmp->next;
+		*env = tmp->next;
 		free(tmp);
 		free(to_remove);
 	}
 	else
 	{	
 		free(to_remove);
-		remove_env(&(*export)->next, str);
+		remove_env(&(*env)->next, str);
 	}
 }
 
-int	ms_unset(t_export **export, char **str)
+int	ms_unset(t_env **env, char **str)
 {
 	int	i;
 
@@ -78,7 +78,7 @@ int	ms_unset(t_export **export, char **str)
 		{
 			while (str[i])
 			{
-				remove_env(export, str[i]);
+				remove_env(env, str[i]);
 				i++;
 			}
 		}

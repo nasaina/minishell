@@ -6,19 +6,19 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:55:42 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/19 14:49:16 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/20 07:41:31 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-char	*get_home(t_export *export)
+char	*get_home(t_env *env)
 {
-	t_export	*tmp;
+	t_env	*tmp;
 	char		*home;
 	char		*addhome;
 
-	tmp = export;
+	tmp = env;
 	home = NULL;
 	while (tmp)
 	{
@@ -50,7 +50,7 @@ int	check_args(t_ast *ast)
 	return (0);
 }
 
-char	*get_cd(char *str, char *last_direcotry, t_export *export)
+char	*get_cd(char *str, char *last_direcotry, t_env *env)
 {
 	char	*dir;
 	char	cwd[PATH_MAX];
@@ -58,7 +58,7 @@ char	*get_cd(char *str, char *last_direcotry, t_export *export)
 	dir = NULL;
 	if (!str)
 	{
-		dir = get_home(export);
+		dir = get_home(env);
 		if (!dir)
 			ft_putstr_fd("cd: HOME environment variable not set\n", 2);
 	}
@@ -75,13 +75,13 @@ char	*get_cd(char *str, char *last_direcotry, t_export *export)
 	return (dir);
 }
 
-char	*last_dir(t_export *export)
+char	*last_dir(t_env *env)
 {
-	t_export	*tmp;
+	t_env	*tmp;
 	char		*old;
 	char		*last;
 
-	tmp = export;
+	tmp = env;
 	old = NULL;
 	while (tmp)
 	{
@@ -100,7 +100,7 @@ char	*last_dir(t_export *export)
 	return (last);
 }
 
-int	get_oldpwd(t_ast *ast,char *dir, char *last_directory, t_export *export)
+int	get_oldpwd(t_ast *ast,char *dir, char *last_directory, t_env *env)
 {
 	char	cwd[PATH_MAX];
 	char	*new_dir = 0;
@@ -110,9 +110,9 @@ int	get_oldpwd(t_ast *ast,char *dir, char *last_directory, t_export *export)
 		if (!chdir(dir))
 		{
 			last_directory = ft_strdup((const char *)cwd);
-			is_double(&export, "OLDPWD");
+			is_double(&env, "OLDPWD");
 			new_dir = ft_strjoin("OLDPWD=", cwd);
-			export_back(&export, new_dir);
+			env_back(&env, new_dir);
 		}
 		else
 		{
@@ -121,9 +121,9 @@ int	get_oldpwd(t_ast *ast,char *dir, char *last_directory, t_export *export)
 			return (1);
 		}
 		(getcwd(new_dir, PATH_MAX));
-		is_double(&export, "PWD");
+		is_double(&env, "PWD");
 		new_dir = ft_strjoin("PWD=", new_dir);
-		export_back(&export, new_dir);
+		env_back(&env, new_dir);
 	}
 	else
 	{
@@ -133,7 +133,7 @@ int	get_oldpwd(t_ast *ast,char *dir, char *last_directory, t_export *export)
 	return (0);
 }
 
-int	ms_cd(t_ast *ast, t_export *export)
+int	ms_cd(t_ast *ast, t_env *env)
 {
 	char	*dir;
 	char	*last_directory;
@@ -145,11 +145,11 @@ int	ms_cd(t_ast *ast, t_export *export)
 		return (1);
 	}
 	if (!last_directory)
-		last_directory = last_dir(export);
+		last_directory = last_dir(env);
 	if (ft_strcmp(ast->cmd->args[0], "cd") == 0)
 	{
-		dir = get_cd(ast->cmd->args[1], last_directory, export);
-		return(get_oldpwd(ast, dir, last_directory, export));
+		dir = get_cd(ast->cmd->args[1], last_directory, env);
+		return(get_oldpwd(ast, dir, last_directory, env));
 	}
 	return (0);
 }

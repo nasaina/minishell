@@ -45,45 +45,6 @@ void	prinexp(t_expander *expander)
 	}
 }
 
-int	redir_ok(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (isredirection(str[i]) && str[i] == str[i + 1])
-			return (1);
-		if (isredirection(str[i]) && !isredirection(str[i + 1]))
-			return (1);
-		if (str[i] == '<' && str[i + 1] == '>')
-			return (0);
-		if (isredirection(str[i] && isredirection(str[i + 1])
-			&& isredirection(str[i + 2])))
-			return (0);
-		i++;
-	}
-	return (0);
-}
-
-int	redir_null(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (isredirection(str[i]) && !str[i + 1])
-		{
-			printf("Syntax error\n");
-			free(str);
-			return (1);
-		}
-		i++;
-	}
-	return (0);
-}
-
 t_heredoc	*get_here_data(t_heredoc *heredoc)
 {
 	static t_heredoc	*data = NULL;
@@ -94,22 +55,22 @@ t_heredoc	*get_here_data(t_heredoc *heredoc)
 	return (data);
 }
 
-t_export	*get_t_env(t_export *export)
+t_env	*get_t_env(t_env *env)
 {
-	static t_export	*data = NULL;
+	static t_env	*data = NULL;
 
-	if (export == NULL)
+	if (env == NULL)
 		return (data);
-	data = export;
+	data = env;
 	return (data);
 }
 
-void	init_heredoc(t_export *export, t_heredoc **heredoc)
+void	init_heredoc(t_env *env, t_heredoc **heredoc)
 {
 	*heredoc = ft_calloc(sizeof(t_heredoc), 1);
 	if (!(*heredoc))
 		return ;
-	(*heredoc)->export = export;
+	(*heredoc)->env = env;
 	(*heredoc)->file = NULL;
 	(*heredoc)->fd = 0;
 }
@@ -141,7 +102,7 @@ void	do_heredoc(char *str, t_heredoc *data, int i)
 	free_redir(data->lst);
 }
 
-int	heredoc_built(char *str, t_export *export)
+int	heredoc_built(char *str, t_env *env)
 {
 	int		i;
 	int		status;
@@ -149,7 +110,7 @@ int	heredoc_built(char *str, t_export *export)
 	t_heredoc	*data;
 
 	data = NULL;
-	init_heredoc(export, &data);
+	init_heredoc(env, &data);
 	hd_pid = fork();
 	i = 1;
 	if (hd_pid < 0)
@@ -157,7 +118,7 @@ int	heredoc_built(char *str, t_export *export)
 	else if (hd_pid == 0)
 	{
 		do_heredoc(str, data, i);
-		free_export(export);
+		free_env(env);
 		free(data);
 		exit(0);
 	}
@@ -191,29 +152,29 @@ int	one_hd(char *str)
 	return (0);
 }
 
-int	main(int ac, char **av, char **env)
+int	main(int ac, char **av, char **envp)
 {
 	char	*str;
+	int			heredoc_status;
 	t_chunk	*chunks;
-	t_export	*export = NULL;
+	t_env	*env = NULL;
 	t_expander	*expander;
 	t_ast		*ast;
-	int			heredoc_status;
 
-	export = ms_envcpy(env);
-	start_signal(ac, av, env);
+	env = ms_envcpy(envp);
+	start_signal(ac, av, envp);
 	ms_readhistory();
 	while (1)
 	{
 		str = NULL;
-		str = ft_readline(export);
+		str = ft_readline();
 		if (is_error(str))
 			continue ;
 		if (is_void(str))
 			continue ;
 		if (one_hd(str))
 		{
-			heredoc_status = heredoc_built(str, export);
+			heredoc_status = heredoc_built(str, env);
 			ms_writestatus(heredoc_status);
 			if (heredoc_status)
 				continue ;
@@ -222,11 +183,11 @@ int	main(int ac, char **av, char **env)
 		chunks = lexing(str);
 		free(str);
 		expander = NULL;
-		expander = expand_str(chunks, export);
+		expander = expand_str(chunks, env);
 		free_chunks(chunks);
 		if (expander)
 		{
-			if (handle_exit(expander, export))
+			if (handle_exit(expander, env))
 			{
 				ms_writestatus(1);
 				continue ;
@@ -234,11 +195,11 @@ int	main(int ac, char **av, char **env)
 			ast = NULL;
 			ast = parse_args(expander, 1);
 			free_expander(expander);
-			pipe_check(ast, export, env);
+			pipe_check(ast, env, envp);
 			free_ast(ast);
 		}
 		else
 			continue ;
 	}
-	free_export(export);
+	free_env(env);
 }

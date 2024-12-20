@@ -1,38 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_export.c                                     :+:      :+:    :+:   */
+/*   print_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:55:34 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/17 13:53:29 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/20 07:57:59 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-t_export	*ms_envcpy(char **env)
+t_env	*ms_envcpy(char **envp)
 {
-	t_export	*export;
+	t_env	*env;
 	int			i;
 
 	i = 0;
-	export = NULL;
-	while (env[i])
+	env = NULL;
+	while (envp[i])
 	{
-		export_back(&export, env[i]);
+		env_back(&env, envp[i]);
 		i++;
 	}
-	return (export);
+	return (env);
 }
 
-void	sort_env(t_export **export)
+void	sort_env(t_env **env)
 {
-	t_export	*exp_tmp;
+	t_env	*exp_tmp;
 	char		*tmp;
 
-	exp_tmp = *export;
+	exp_tmp = *env;
 	while (exp_tmp->next)
 	{
 		if (ft_strcmp(exp_tmp->env, exp_tmp->next->env) > 0)
@@ -40,25 +40,25 @@ void	sort_env(t_export **export)
 			tmp = exp_tmp->env;
 			exp_tmp->env = exp_tmp->next->env;
 			exp_tmp->next->env = tmp;
-			exp_tmp = *export;
+			exp_tmp = *env;
 		}
 		else
 			exp_tmp = exp_tmp->next;
 	}
 }
 
-void	ft_printenv(t_export *export, int *i)
+void	ft_printenv(t_env *env, int *i)
 {
-	while (export->env[*i] != 61 && export->env[*i])
+	while (env->env[*i] != 61 && env->env[*i])
 	{
-		printf("%c", export->env[*i]);
+		printf("%c", env->env[*i]);
 		*i += 1;
 	}
-	if (export->env[*i] == 61)
+	if (env->env[*i] == 61)
 	{
-		printf("%c", export->env[*i]);
+		printf("%c", env->env[*i]);
 		*i += 1;
-		if (export->env[*i] != 34)
+		if (env->env[*i] != 34)
 			printf("\"");
 	}
 	else
@@ -66,41 +66,41 @@ void	ft_printenv(t_export *export, int *i)
 		printf("\n");
 		return ;
 	}
-	while (export->env[*i])
+	while (env->env[*i])
 	{
-		printf("%c", export->env[*i]);
+		printf("%c", env->env[*i]);
 		*i += 1;
 	}
-	if (export->env[*i - 1] != 34)
+	if (env->env[*i - 1] != 34)
 		printf("\"\n");
 }
 
-void	print_export(t_export *export)
+void	print_env(t_env *env)
 {
 	int	j;
 
-	sort_env(&export);
-	while (export)
+	sort_env(&env);
+	while (env)
 	{
 		j = 0;
 		printf("declare -x ");
-		ft_printenv(export, &j);
-		export = export->next;
+		ft_printenv(env, &j);
+		env = env->next;
 	}
 }
 
-void	is_double(t_export **export, char *name)
+void	is_double(t_env **env, char *name)
 {
-	t_export	*tmp;
+	t_env	*tmp;
 	char		*str;
 
-	tmp = *export;
+	tmp = *env;
 	str = NULL;
 	while (tmp && tmp->next)
 	{
-		str = export_name(tmp->next->env);
+		str = env_name(tmp->next->env);
 		if (!ft_strcmp(name, str))
-			remove_env(export, name);
+			remove_env(env, name);
 		free(str);
 		tmp = tmp->next;
 	}

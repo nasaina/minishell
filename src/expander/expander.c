@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:17:43 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/19 17:37:19 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/20 07:51:01 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	ms_exitstatus(char **result, int *i)
 	if (fd == -1)
 	{
 		join_free(*result, "0", 0);
-		add_quote(result);
 		*i += 2;
 		return ;
 	}
@@ -34,25 +33,23 @@ void	ms_exitstatus(char **result, int *i)
 	}
 	len = ft_strlen(str);
 	str[len] = 0;
-	add_quote(&str);
 	*result = join_free(*result, str, 0);
 	free(str);
 	*i += len + 1;
 	close(fd);
 }
 
-void	export_value(char **result, int *i, t_export *export, char *name)
+void	env_value(char **result, int *i, t_env *env, char *name)
 {
 	char	*value;
 	int		j;
 
-	value = ms_getenv(name, export);
+	value = ms_getenv(name, env);
 	if (!value)
 	{
 		*i += (int)ft_strlen(name);
 		return ;
 	}
-	add_quote(&value);
 	*result = join_free(*result, value, 0);
 	free(value);
 	j = 0;
@@ -104,10 +101,10 @@ void	add_quote(char **result)
 int	insert_char(char **result, char *str, int *status, int *i)
 {
 	char		*name;
-	t_export	*export;
+	t_env	*env;
 
 	name = NULL;
-	export = get_t_env(NULL);
+	env = get_t_env(NULL);
 	if (ignore_value(str, result, i, status))
 		return (1);
 	if (str[*i] == '$' && !is_status(str, *i)
@@ -115,7 +112,7 @@ int	insert_char(char **result, char *str, int *status, int *i)
 	{
 		if (name_token(str, i, &name))
 			return (1);
-		export_value(result, i, export, name);
+		env_value(result, i, env, name);
 	}
 	if (is_status(str, *i))
 		ms_exitstatus(result, i);
@@ -124,7 +121,7 @@ int	insert_char(char **result, char *str, int *status, int *i)
 	return (0);
 }
 
-char	*expander(char *str, t_export *export)
+char	*expander(char *str, t_env *env)
 {
 	int		i;
 	char	*result;
@@ -135,7 +132,7 @@ char	*expander(char *str, t_export *export)
 	if (!str)
 		return (NULL);
 	i = 0;
-	get_t_env(export);
+	get_t_env(env);
 	while (str[i])
 	{
 		if (insert_char(&result, str, &status, &i) == 1)
@@ -173,7 +170,7 @@ t_chunk	*expand_token(char *result, int is_quote, t_type type)
 	return (chunks);
 }
 
-t_chunk	*expanded(char *str, t_type type, t_export *export)
+t_chunk	*expanded(char *str, t_type type, t_env *env)
 {
 	int			is_quote;
 	char		*result;
@@ -182,7 +179,7 @@ t_chunk	*expanded(char *str, t_type type, t_export *export)
 
 	if (!str)
 		return (NULL);
-	str_expanded = expander(str, export);
+	str_expanded = expander(str, env);
 	is_quote = dquote_status(str_expanded);
 	result = get_command(str_expanded);
 	free(str_expanded);
@@ -190,29 +187,29 @@ t_chunk	*expanded(char *str, t_type type, t_export *export)
 	return (chunks);
 }
 
-t_expander	*expand_str(t_chunk *chunks, t_export *export)
+t_expander	*expand_str(t_chunk *chunks, t_env *env)
 {
-	t_expander	*expanders;
+	t_expander	*expander;
 	t_chunk		*tmp;
-	t_chunk		*exp;
+	t_chunk		*token;
 	t_chunk		*temp;
 
 	tmp = chunks;
-	expanders = NULL;
+	expander = NULL;
 	if (!tmp)
 		return (NULL);
 	while (tmp)
 	{
-		exp = NULL;
-		exp = expanded(tmp->str, tmp->type, export);
-		temp = exp;
+		token = NULL;
+		token = expanded(tmp->str, tmp->type, env);
+		temp = token;
 		while (temp)
 		{
-			add_expanders_back(&expanders, temp->str, temp->type);
+			add_expanders_back(&expander, temp->str, temp->type);
 			temp = temp->next;
 		}
 		tmp = tmp->next;
-		free_chunks(exp);
+		free_chunks(token);
 	}
-	return (expanders);
+	return (expander);
 }

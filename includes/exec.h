@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:31:44 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/14 14:14:35 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/20 07:43:01 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,16 @@
 # include <minishell.h>
 # include <expander.h>
 
-typedef struct s_export
+typedef struct s_env
 {
 	char			*env;
-	struct s_export	*next;
-}	t_export;
+	struct s_env	*next;
+}	t_env;
 
 int			ft_strcmp(char *s1, char *s2);
-t_export	*ms_envcpy(char **env);
-void		export_back(t_export **export, char *str);
-void		free_export(t_export *export);
+t_env	*ms_envcpy(char **env);
+void		env_back(t_env **env, char *str);
+void		free_env(t_env *env);
 char		**path_list(char **env);
 
 #endif

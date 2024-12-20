@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:51:47 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/19 15:07:37 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/20 07:36:08 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,20 @@ int	isbuiltin(t_ast *ast)
 	return (0);
 }
 
-char	*take_path(t_ast *ast, char **env)
+char	*take_path(t_ast *ast, char **envp)
 {
 	char	*path;
 
 		if (ft_strchr(ast->cmd->args[0], '/'))
 			path = check_access(ast);
 		else
-			path = check_path(path_list(env), ast);
+			path = check_path(path_list(envp), ast);
 	return (path);
 }
 
-void	exec_fork(t_ast *ast, char *path, char **env)
+void	exec_fork(t_ast *ast, char *path, char **envp)
 {
-	if (execve(path, &ast->cmd->args[0], env) == -1)
+	if (execve(path, &ast->cmd->args[0], envp) == -1)
 	{
 		if (path == NULL || &ast->cmd->args[0] == NULL)
     	{
@@ -60,7 +60,7 @@ void	exec_fork(t_ast *ast, char *path, char **env)
 	}
 }
 
-int	exec_cmd(t_ast *ast, char **env)
+int	exec_cmd(t_ast *ast, char **envp)
 {
 	int		status = -1;
 	char	*path;
@@ -68,7 +68,7 @@ int	exec_cmd(t_ast *ast, char **env)
 
 	path = NULL;
 	if (ast->cmd->args && ast->cmd->args[0])
-		path = take_path(ast, env);
+		path = take_path(ast, envp);
 	pid = fork();
 	if (pid < 0)
 		perror("fork");
@@ -77,7 +77,7 @@ int	exec_cmd(t_ast *ast, char **env)
 		if (ast->cmd->redir)
 			do_redir(ast);
 		if (ast->cmd->args && ast->cmd->args[0])
-			exec_fork(ast, path, env);
+			exec_fork(ast, path, envp);
 		exit (EXIT_FAILURE);
 	}
 	else
@@ -87,7 +87,7 @@ int	exec_cmd(t_ast *ast, char **env)
 	return (status);
 }
 
-int	check_cmd(t_ast *ast, t_export *export, char **env)
+int	check_cmd(t_ast *ast, t_env *env, char **envp)
 {
 	int	fd_in;
 	int	fd_out;
@@ -99,13 +99,13 @@ int	check_cmd(t_ast *ast, t_export *export, char **env)
 		fd_out = dup(STDOUT_FILENO);
 		if (ast->cmd->redir)
 			do_redir(ast);
-		status = ms_builtins(ast, export);
+		status = ms_builtins(ast, env);
 		dup2(fd_in, STDIN_FILENO);
 		dup2(fd_out, STDOUT_FILENO);
 		close(fd_in);
 		close(fd_out);
 	}
 	else
-		status = exec_cmd(ast, env);
+		status = exec_cmd(ast, envp);
 	return (status);
 }
