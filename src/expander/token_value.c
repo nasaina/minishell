@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 08:10:25 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/20 13:49:29 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/20 14:12:53 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,12 @@ t_chunk	*expanded(char *str, t_type type, t_env *env)
 	if (!str)
 		return (NULL);
 	str_expanded = expander(str, env);
+	if (!str_expanded)
+		return (NULL);
 	is_quote = dquote_status(str_expanded);
 	result = get_command(str_expanded);
+	if (!result)
+		return (NULL);
 	free(str_expanded);
 	chunks = expand_token(result, is_quote, type);
 	return (chunks);

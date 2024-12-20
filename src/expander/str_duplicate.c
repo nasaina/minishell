@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 11:35:29 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/20 13:49:01 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/20 14:08:52 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,11 @@ int	ignore_value(char	*str, char **result, int *i, int *status)
 			*result = join_char(*result, str[*i]);
 			*i += 1;
 		}
+	}
+	if (str[*i] && str[*i] == '$' && str[*i + 1] && str[*i + 1] == '$')
+	{
+		*i += 2;
+		return (1);
 	}
 	if (str[*i] == '$' && char_isquote(str[*i + 1]) && str[*i + 2])
 	{
