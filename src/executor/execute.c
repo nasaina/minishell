@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:51:47 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/20 10:55:45 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/20 14:01:45 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,36 +31,52 @@ int	isbuiltin(t_ast *ast)
 	return (0);
 }
 
-char	*take_path(t_ast *ast, char **envp)
+char	*take_path(t_ast *ast, t_env *env)
 {
 	char	*path;
-
-		if (is_command(ast))
-			path = check_access(ast);
-		else
-			path = check_path(path_list(envp), ast);
+	
+	path = NULL;
+	if (is_command(ast))
+		path = check_access(ast);
+	else
+		path = check_path(path_list(env), ast);
 	return (path);
 }
 
-void	exec_fork(t_ast *ast, char *path, char **envp)
+void	exec_fork(t_ast *ast, char *path, t_env *env)
 {
-	if (execve(path, &ast->cmd->args[0], envp) == -1)
+	char	**envp;
+
+	envp = take_env(env);
+	if (!path)
 	{
-		if (path == NULL || &ast->cmd->args[0] == NULL)
-    	{
-      		free_ast(ast);
-			exit (127);
-    	}
-		else
-		{
+		free_ast(ast);
+		free_tab(envp);
+		free_env(env);
+		exit (127);
+	}
+	if (execve(path, ast->cmd->args, envp) == -1)
+	{
+		// if (path == NULL || ast->cmd->args == NULL)
+    	// {
+      	// 	free_ast(ast);
+		// 	free_tab(envp);
+		// 	free_env(env);
+		// 	exit (127);
+    	// }
+		// else
+		// {
 			perror((const char *)(ast->cmd->args[0]));
 			free_ast(ast);
+			free(path);
+			free_tab(envp);
+			free_env(env);
 			exit(126);
-		}
+		// }
 	}
 }
 
-int	exec_cmd(t_ast *ast, char **envp)
+int	exec_cmd(t_ast *ast, t_env *env)
 {
 	int		status = -1;
 	char	*path;
@@ -68,7 +84,7 @@ int	exec_cmd(t_ast *ast, char **envp)
 
 	path = NULL;
 	if (ast->cmd->args && ast->cmd->args[0])
-		path = take_path(ast, envp);
+		path = take_path(ast, env);
 	pid = fork();
 	if (pid < 0)
 		perror("fork");
@@ -77,17 +93,23 @@ int	exec_cmd(t_ast *ast, char **envp)
 		if (ast->cmd->redir)
 			do_redir(ast);
 		if (ast->cmd->args && ast->cmd->args[0])
-			exec_fork(ast, path, envp);
+			exec_fork(ast, path, env);
+		free_ast(ast);
+		free_env(env);
+		free(path);
 		exit (EXIT_FAILURE);
 	}
 	else
+	{
+		free(path);
 		waitpid(pid, &status, 0);
+	}
 	if ( WIFEXITED(status) )
         status = WEXITSTATUS(status);
 	return (status);
 }
 
-int	check_cmd(t_ast *ast, t_env *env, char **envp)
+int	check_cmd(t_ast *ast, t_env *env)
 {
 	int	fd_in;
 	int	fd_out;
@@ -106,6 +128,6 @@ int	check_cmd(t_ast *ast, t_env *env, char **envp)
 		close(fd_out);
 	}
 	else
-		status = exec_cmd(ast, envp);
+		status = exec_cmd(ast, env);
 	return (status);
 }

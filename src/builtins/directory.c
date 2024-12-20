@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   directory.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:55:42 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/20 14:02:04 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/20 11:09:08 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 char	*get_home(t_env *env)
 {
 	t_env	*tmp;
-	char		*home;
-	char		*addhome;
+	char	*home;
+	char	*addhome;
 
 	tmp = env;
 	home = NULL;

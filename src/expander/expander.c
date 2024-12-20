@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:17:43 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/20 13:56:19 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/20 14:23:29 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,15 +80,18 @@ int	insert_char(char **result, char *str, int *status, int *i)
 	env = get_t_env(NULL);
 	if (str[*i] && ignore_value(str, result, i, status))
 		return (1);
-	if (str[*i] && str[*i] == '$' && !is_status(str, *i)
-		&& str[*i + 1] && !char_isquote(str[*i + 1]) && str[*i + 2])
+	if (str[*i] && is_status(str, *i))
+	{
+		ms_exitstatus(result, i);
+		return (0);
+	}
+	else if (str[*i] && str[*i] == '$' && !is_status(str, *i)
+		&& str[*i + 1] && !char_isquote(str[*i + 1]))
 	{
 		if (name_token(str, i, &name))
 			return (1);
 		env_value(result, i, env, name);
 	}
-	if (str[*i] && is_status(str, *i))
-		ms_exitstatus(result, i);
 	if (*i >= (int)ft_strlen(str))
 		return (0);
 	*result = join_char(*result, str[*i]);

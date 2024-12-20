@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_exit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:17:19 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/20 07:48:57 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/20 14:06:20 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

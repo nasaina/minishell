@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:32:07 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/20 10:55:20 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/20 13:37:42 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ char		**init_builtins(void);
 char		*check_path(char **pathlist, t_ast *ast);
 char		*check_access(t_ast *ast);
 int			isbuiltin(t_ast *ast);
-int			exec_cmd(t_ast *ast, char **env);
-int			check_cmd(t_ast *ast, t_env *env, char **envp);
+int			exec_cmd(t_ast *ast, t_env *env);
+int			check_cmd(t_ast *ast, t_env *env);
 void		handle_sigint(int sig);
 void		handle_sigquit(int sig);
 void		free_chunks(t_chunk *lst);
@@ -104,5 +104,7 @@ int			check_args(t_ast *ast);
 void		change_env_pwd(t_env *env);
 void		change_env_oldpwd(t_env *env, char *cwd);
 int			is_command(t_ast *ast);
+char		**take_env(t_env *env);
+void		free_tab(char **str);
 
 #endif

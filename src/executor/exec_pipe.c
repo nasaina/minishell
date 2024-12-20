@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 13:29:57 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/20 08:03:27 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/20 12:05:06 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	pipe_check(t_ast *ast, t_env *env, char **envp)
 	if (ast->type == 1)
 		status = exec_pipe(ast, env, envp);
 	else
-		status = check_cmd(ast, env, envp);
+		status = check_cmd(ast, env);
 	ms_writestatus(status);
 	return (status);
 }
