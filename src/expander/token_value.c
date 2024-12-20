@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_value.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 08:10:25 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/20 14:12:53 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/20 14:19:07 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
