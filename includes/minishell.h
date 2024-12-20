@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:32:07 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/20 10:34:59 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/20 10:55:20 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,6 @@ void		free_heredoc_data(t_heredoc *heredoc);
 int			check_args(t_ast *ast);
 void		change_env_pwd(t_env *env);
 void		change_env_oldpwd(t_env *env, char *cwd);
+int			is_command(t_ast *ast);
 
 #endif

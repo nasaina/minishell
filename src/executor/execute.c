@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:51:47 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/20 07:33:10 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/20 10:55:45 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*take_path(t_ast *ast, char **envp)
 {
 	char	*path;
 
-		if (ft_strchr(ast->cmd->args[0], '/'))
+		if (is_command(ast))
 			path = check_access(ast);
 		else
 			path = check_path(path_list(envp), ast);
