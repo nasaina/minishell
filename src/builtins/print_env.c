@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:55:34 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/20 07:57:59 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/20 08:17:29 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_env	*ms_envcpy(char **envp)
 {
 	t_env	*env;
-	int			i;
+	int		i;
 
 	i = 0;
 	env = NULL;
@@ -29,21 +29,21 @@ t_env	*ms_envcpy(char **envp)
 
 void	sort_env(t_env **env)
 {
-	t_env	*exp_tmp;
-	char		*tmp;
+	t_env	*env_tmp;
+	char	*tmp;
 
-	exp_tmp = *env;
-	while (exp_tmp->next)
+	env_tmp = *env;
+	while (env_tmp->next)
 	{
-		if (ft_strcmp(exp_tmp->env, exp_tmp->next->env) > 0)
+		if (ft_strcmp(env_tmp->env, env_tmp->next->env) > 0)
 		{
-			tmp = exp_tmp->env;
-			exp_tmp->env = exp_tmp->next->env;
-			exp_tmp->next->env = tmp;
-			exp_tmp = *env;
+			tmp = env_tmp->env;
+			env_tmp->env = env_tmp->next->env;
+			env_tmp->next->env = tmp;
+			env_tmp = *env;
 		}
 		else
-			exp_tmp = exp_tmp->next;
+			env_tmp = env_tmp->next;
 	}
 }
 
@@ -92,7 +92,7 @@ void	print_env(t_env *env)
 void	is_double(t_env **env, char *name)
 {
 	t_env	*tmp;
-	char		*str;
+	char	*str;
 
 	tmp = *env;
 	str = NULL;

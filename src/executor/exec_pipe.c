@@ -6,25 +6,11 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 13:29:57 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/20 07:36:53 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/20 08:03:27 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-void	ms_writestatus(int status)
-{
-	int		fd;
-	char	*str;
-
-	fd = open(".ms_status", O_CREAT | O_WRONLY | O_TRUNC, 0777);
-	if (fd == -1)
-		return ;
-	str = ft_itoa(status);
-	ft_putstr_fd(str, fd);
-	free(str);
-	close(fd);
-}
 
 int	pipe_check(t_ast *ast, t_env *env, char **envp)
 {

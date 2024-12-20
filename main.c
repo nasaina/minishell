@@ -168,9 +168,7 @@ int	main(int ac, char **av, char **envp)
 	{
 		str = NULL;
 		str = ft_readline();
-		if (is_error(str))
-			continue ;
-		if (is_void(str))
+		if (is_error(str) || is_void(str))
 			continue ;
 		if (one_hd(str))
 		{

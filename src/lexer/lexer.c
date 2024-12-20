@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 09:34:29 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/16 16:19:15 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/20 08:16:02 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,12 @@ int	count_args(int count, char *str, int i, t_type *type)
 	return (count);
 }
 
+void	skip_space(char *str, int *i)
+{
+	while (str[*i] == 32 && str[*i])
+		*i += 1;
+}
+
 t_chunk	*lexing(char *str)
 {
 	int		i;
@@ -54,19 +60,16 @@ t_chunk	*lexing(char *str)
 		return (NULL);
 	while (str[i])
 	{
-		while (str[i] == 32 && str[i])
-			i++;
-		if (i < (int)ft_strlen(str))
-		{
-			count = count_args(count, str, i, &type);
-			wrd = str_insert(str, count, &i);
-			add_chunks_back(&chunks, wrd, type);
-			free(wrd);
-			if (i >= (int)ft_strlen(str))
-				break ;
-		}
-		while (str[i] == 32 && str[i])
-			i++;
+		skip_space(str, &i);
+		if (i >= (int)ft_strlen(str))
+			break ;
+		count = count_args(count, str, i, &type);
+		wrd = str_insert(str, count, &i);
+		add_chunks_back(&chunks, wrd, type);
+		free(wrd);
+		if (i >= (int)ft_strlen(str))
+			break ;
+		skip_space(str, &i);
 	}
 	return (chunks);
 }

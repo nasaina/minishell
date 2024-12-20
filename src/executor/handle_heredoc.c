@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 14:22:23 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/20 07:37:29 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/20 08:29:49 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*hdoc_expander(char *str, t_env *env)
 
 	i = 0;
 	result = NULL;
-	if(!str && !str[i])
+	if (!str && !str[i])
 		return (NULL);
 	while (str[i])
 	{
@@ -46,7 +46,6 @@ char	*hdoc_expander(char *str, t_env *env)
 		}
 		if (str[i])
 		{
-		
 			result = join_char(result, str[i]);
 			i++;
 		}
@@ -54,87 +53,40 @@ char	*hdoc_expander(char *str, t_env *env)
 	return (result);
 }
 
-char	*expand_heredoc(char *file, char *str, t_env *env)
+int	get_heredoc_value(t_heredoc **heredoc, char *str, t_redir *tmp)
 {
-	char	*result;
+	char	*expander;
 
-	if (!str)
-		return (NULL);
-	result = NULL;
-	if (!is_expandable(file) && is_variable(str))
-		result = hdoc_expander(str, env);
+	if (!ft_strcmp((*heredoc)->name, str))
+	{
+		free((*heredoc)->name);
+		free(str);
+		return (1);
+	}
 	else
-		result = ft_strdup(str);
-	return (result);
-}
-
-int	quote_count(char *str)
-{
-	int	i;
-	int	count;
-
-	i = 0;
-	count = 0;
-	while (str[i])
 	{
-		if (char_isquote(str[i]))
-			count++;
-		i++;
-	}
-	return (count);
-}
-
-char	*ignore_quote(char	*str)
-{
-	char	*result;
-	int		count;
-	int		i;
-
-	count = quote_count(str);
-	result = malloc(ft_strlen(str) - count + 1);
-	i = 0;
-	count = 0;
-	while (str[i])
-	{
-		while (char_isquote(str[i]) && str[i])
-			i++;
-		if (str[i])
+		expander = expand_heredoc(tmp->file, str, (*heredoc)->env);
+		if (expander)
 		{
-			result[count] = str[i];
-			count++;
-			i++;
+			ft_putstr_fd(expander, (*heredoc)->fd);
+			free(expander);
 		}
+		ft_putstr_fd("\n", (*heredoc)->fd);
 	}
-	result[count] = 0;
-	return (result);
+	return (0);
 }
 
 int	get_input(t_heredoc *heredoc, t_redir *tmp)
 {
 	char	*str;
-	char	*expander;
 
 	str = NULL;
 	heredoc->fd = open(heredoc->file, O_CREAT | O_WRONLY | O_TRUNC, 0777);
 	while (1)
 	{
 		str = readline("heredoc > ");
-		if (!ft_strcmp(heredoc->name, str))
-		{
-			free(heredoc->name);
-			free(str);
+		if (get_heredoc_value(&heredoc, str, tmp))
 			break ;
-		}
-		else
-		{
-			expander = expand_heredoc(tmp->file, str, heredoc->env);
-			if (expander)
-			{
-				ft_putstr_fd(expander, heredoc->fd);
-				free(expander);
-			}
-			ft_putstr_fd("\n", heredoc->fd);
-		}
 		free(str);
 		str = NULL;
 	}
