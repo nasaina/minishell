@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   directory.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:55:42 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/20 07:41:31 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/20 10:38:12 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,6 @@ char	*get_home(t_env *env)
 	return (addhome);
 }
 
-int	check_args(t_ast *ast)
-{
-	char	**tmp;
-	int		i;
-
-	i = 0;
-	tmp = ast->cmd->args;
-	while (tmp[i])
-		i++;
-	if (i > 2)
-		return (1);
-	return (0);
-}
-
 char	*get_cd(char *str, char *last_direcotry, t_env *env)
 {
 	char	*dir;
@@ -68,7 +54,7 @@ char	*get_cd(char *str, char *last_direcotry, t_env *env)
 		if (!dir)
 			ft_putstr_fd("cd: OLDPWD not set\n", 2);
 		else if (getcwd(cwd, PATH_MAX) != NULL)
-			printf("%s\n", cwd);
+			printf("%s\n", last_direcotry);
 	}
 	else
 		dir = str;
@@ -103,16 +89,15 @@ char	*last_dir(t_env *env)
 int	get_oldpwd(t_ast *ast,char *dir, char *last_directory, t_env *env)
 {
 	char	cwd[PATH_MAX];
-	char	*new_dir = 0;
+	char	*new_dir;
 
+	new_dir = NULL;
 	if (getcwd(cwd, PATH_MAX) != NULL)
 	{
 		if (!chdir(dir))
 		{
 			last_directory = ft_strdup((const char *)cwd);
-			is_double(&env, "OLDPWD");
-			new_dir = ft_strjoin("OLDPWD=", cwd);
-			env_back(&env, new_dir);
+			change_env_oldpwd(env, cwd);
 		}
 		else
 		{
@@ -120,10 +105,7 @@ int	get_oldpwd(t_ast *ast,char *dir, char *last_directory, t_env *env)
 			perror(ast->cmd->args[1]);
 			return (1);
 		}
-		(getcwd(new_dir, PATH_MAX));
-		is_double(&env, "PWD");
-		new_dir = ft_strjoin("PWD=", new_dir);
-		env_back(&env, new_dir);
+		change_env_pwd(env);
 	}
 	else
 	{

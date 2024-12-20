@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   args_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 15:41:49 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/20 08:36:32 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/20 07:52:24 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,19 @@ int	is_void(char *str)
 		if (str[i] == '\0')
 			return (1);
 	}
+	return (0);
+}
+
+int	check_args(t_ast *ast)
+{
+	char	**tmp;
+	int		i;
+
+	i = 0;
+	tmp = ast->cmd->args;
+	while (tmp[i])
+		i++;
+	if (i > 2)
+		return (1);
 	return (0);
 }
