@@ -1,27 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export_utils.c                                     :+:      :+:    :+:   */
+/*   create_t_env.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/08 14:56:23 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/19 10:00:11 by nandrian         ###   ########.fr       */
+/*   Created: 2024/10/08 12:37:04 by nandrian          #+#    #+#             */
+/*   Updated: 2024/12/06 09:50:46 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	ft_strcmp(char *s1, char *s2)
+t_env	*get_env(char *str)
 {
-	int	i;
+	t_env	*env;
 
-	i = 0;
-	if (!s1 || !s2)
-		return (1);
-	while (s1[i] && s1[i] == s2[i])
-		i++;
-	if (s1[i] == s2[i])
-		return (0);
-	return (s1[i] - s2[i]);
+	env = malloc(sizeof(t_env));
+	if (!env)
+		return (NULL);
+	env->env = ft_strdup(str);
+	env->next = NULL;
+	return (env);
+}
+
+t_env	*env_last(t_env *env)
+{
+	while (env->next)
+		env = env->next;
+	return (env);
+}
+
+void	env_back(t_env **env, char *str)
+{
+	t_env	*element;
+	t_env	*tmp;
+
+	element = get_env(str);
+	if (*env)
+	{
+		tmp = env_last(*env);
+		tmp->next = element;
+	}
+	else
+		*env = element;
 }

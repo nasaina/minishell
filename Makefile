@@ -20,13 +20,13 @@ SRC_PARS = $(addprefix src/parser/, parser.c create_redir.c)
 
 SRC_ERR = $(addprefix src/errors/, error.c args_utils.c err_quote.c)
 
-SRC_BUILT = $(addprefix src/builtins/, directory.c builtins.c export.c create_t_export.c export_env.c unset.c utils_echo.c init_builtins.c print_export.c handle_exit.c pwd.c)
+SRC_BUILT = $(addprefix src/builtins/, directory.c builtins.c export.c create_t_env.c export_env.c unset.c utils_echo.c init_builtins.c print_env.c handle_exit.c pwd.c)
 
 SRC_EXEC = $(addprefix src/executor/, execute.c path_checker.c exec_pipe.c redir.c handle_heredoc.c path_access.c expand_heredoc.c)
 
 SRC_LEX = $(addprefix src/lexer/, lexer.c get_chunks.c check_op.c quote.c)
 
-SRC_UTILS = $(addprefix src/utils/, free_lst.c str_isnum.c export_utils.c join_and_free.c handle_history.c)
+SRC_UTILS = $(addprefix src/utils/, free_lst.c str_isnum.c ft_strcmp.c join_and_free.c handle_history.c)
 
 SRC_GNL = $(addprefix src/gnl/, gnl.c gnl_utils.c)
 

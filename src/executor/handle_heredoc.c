@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 14:22:23 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/17 10:38:50 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/20 07:37:29 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	is_expandable(char	*str)
 	return (0);
 }
 
-char	*hdoc_expander(char *str, t_export *export)
+char	*hdoc_expander(char *str, t_env *env)
 {
 	int		i;
 	char	*name;
@@ -42,7 +42,7 @@ char	*hdoc_expander(char *str, t_export *export)
 		{
 			if (name_token(str, &i, &name))
 				continue ;
-			export_value(&result, &i, export, name);
+			env_value(&result, &i, env, name);
 		}
 		if (str[i])
 		{
@@ -54,7 +54,7 @@ char	*hdoc_expander(char *str, t_export *export)
 	return (result);
 }
 
-char	*expand_heredoc(char *file, char *str, t_export *export)
+char	*expand_heredoc(char *file, char *str, t_env *env)
 {
 	char	*result;
 
@@ -62,7 +62,7 @@ char	*expand_heredoc(char *file, char *str, t_export *export)
 		return (NULL);
 	result = NULL;
 	if (!is_expandable(file) && is_variable(str))
-		result = hdoc_expander(str, export);
+		result = hdoc_expander(str, env);
 	else
 		result = ft_strdup(str);
 	return (result);
@@ -127,7 +127,7 @@ int	get_input(t_heredoc *heredoc, t_redir *tmp)
 		}
 		else
 		{
-			expander = expand_heredoc(tmp->file, str, heredoc->export);
+			expander = expand_heredoc(tmp->file, str, heredoc->env);
 			if (expander)
 			{
 				ft_putstr_fd(expander, heredoc->fd);
@@ -144,7 +144,7 @@ int	get_input(t_heredoc *heredoc, t_redir *tmp)
 void	free_heredoc_data(t_heredoc *heredoc)
 {
 	free_redir(heredoc->lst);
-	free_export(heredoc->export);
+	free_env(heredoc->env);
 	free(heredoc->name);
 	unlink(heredoc->file);
 	free(heredoc->file);

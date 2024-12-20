@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 07:50:56 by nandrian          #+#    #+#             */
-/*   Updated: 2024/11/22 15:15:12 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/20 07:59:31 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,23 +35,23 @@ char	*get_value(char *str)
 	return (value);
 }
 
-char	*ms_getenv(char *name, t_export *export)
+char	*ms_getenv(char *name, t_env *env)
 {
-	char	*env;
+	char	*str;
 	char	*value;
 
 	value = NULL;
-	while (export)
+	while (env)
 	{
-		env = var_remove(export->env);
-		if (!ft_strcmp(name, env))
+		str = var_remove(env->env);
+		if (!ft_strcmp(name, str))
 		{
-			free(env);
-			value = get_value(export->env);
+			free(str);
+			value = get_value(env->env);
 			return (value);
 		}
-		free(env);
-		export = export->next;
+		free(str);
+		env = env->next;
 	}
 	return (value);
 }

@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 15:41:49 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/19 15:39:20 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/20 07:40:13 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,15 @@ int	is_error(char *str)
 	return (0);
 }
 
-void	ignore_args(int ac, char **av, char **env)
+void	ignore_args(int ac, char **av, char **envp)
 {
 	(void)ac;
 	(void)av;
-	(void)env;
+	(void)envp;
 }
 
-char	*ft_readline(t_export *export)
+char	*ft_readline(void)
 {
-	(void)export;
 	char	*str;
 
 	str = NULL;

@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 09:08:39 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/14 13:09:58 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/20 07:37:59 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,20 +44,20 @@ void	free_expander(t_expander *expander)
 	free(expander);
 }
 
-void	free_export(t_export *export)
+void	free_env(t_env *env)
 {
-	t_export	*tmp;
+	t_env	*tmp;
 
-	if (!export)
+	if (!env)
 		return ;
-	while (export)
+	while (env)
 	{
-		tmp = export;
-		export = export->next;
+		tmp = env;
+		env = env->next;
 		free(tmp->env);
 		free(tmp);
 	}
-	free(export);
+	free(env);
 }
 
 void	free_redir(t_redir *redir)
