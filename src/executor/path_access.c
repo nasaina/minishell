@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:16:46 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/17 16:10:58 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/20 10:54:30 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,14 @@ char	*check_access(t_ast *ast)
 	else
 		perror(command);
 	return (NULL);
+}
+
+int	is_command(t_ast *ast)
+{
+	char	*cmd;
+
+	cmd = ast->cmd->args[0];
+	if (access(cmd, F_OK) == 0)
+		return (1);
+	return (0);
 }
