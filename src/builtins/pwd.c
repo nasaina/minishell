@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 11:24:31 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/17 14:37:29 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/20 10:34:28 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,25 @@ int	ms_pwd(t_ast *ast)
 		}
 	}
 	return (0);
+}
+
+void	change_env_pwd(t_env *env)
+{
+	char	cwd[PATH_MAX];
+	char	*new_dir;
+
+	getcwd(cwd, PATH_MAX);
+	is_double(&env, "PWD");
+	new_dir = ft_strjoin("PWD=", cwd);
+	env_back(&env, new_dir);
+}
+
+void	change_env_oldpwd(t_env *env, char *cwd)
+{
+	char	*new_dir;
+
+	new_dir = NULL;
+	is_double(&env, "OLDPWD");
+	new_dir = ft_strjoin("OLDPWD=", cwd);
+	env_back(&env, new_dir);
 }
