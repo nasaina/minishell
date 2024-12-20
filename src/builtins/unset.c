@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 09:04:24 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/20 07:47:11 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/20 08:18:03 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*var_remove(char *str)
 void	remove_env(t_env **env, char *str)
 {
 	t_env	*tmp;
-	char		*to_remove;
+	char	*to_remove;
 
 	tmp = *env;
 	if (tmp == NULL)
@@ -60,7 +60,7 @@ void	remove_env(t_env **env, char *str)
 		free(to_remove);
 	}
 	else
-	{	
+	{
 		free(to_remove);
 		remove_env(&(*env)->next, str);
 	}

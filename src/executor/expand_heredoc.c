@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 13:30:07 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/14 12:13:11 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/20 08:35:34 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,20 +74,6 @@ t_chunk	*hdoc_token(char *str)
 	return (chunks);
 }
 
-int	is_variable(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '$')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
 int	heredoc_check(t_chunk *chunks)
 {
 	while (chunks)
@@ -122,4 +108,3 @@ t_redir	*expand_hdoc(char *str)
 	free_chunks(tmp);
 	return (heredoc);
 }
-
