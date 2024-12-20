@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 08:10:25 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/20 08:10:33 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/20 13:49:29 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ char	*expander(char *str, t_env *env)
 	get_t_env(env);
 	while (str[i])
 	{
+		if (i >= (int)ft_strlen(str))
+			break ;
 		if (insert_char(&result, str, &status, &i) == 1)
 			continue ;
 		if (i >= (int)ft_strlen(str))
