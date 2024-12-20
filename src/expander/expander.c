@@ -21,18 +21,15 @@ void	env_value(char **result, int *i, t_env *env, char *name)
 	if (!value)
 	{
 		*i += (int)ft_strlen(name);
-		free(name);
 		return ;
 	}
 	*result = join_free(*result, value, 0);
-	free(value);
 	j = 0;
 	while (j < (int)ft_strlen(name))
 	{
 		j++;
 		*i += 1;
 	}
-	free(name);
 }
 
 int	is_status(char *str, int i)
@@ -89,8 +86,12 @@ int	insert_char(char **result, char *str, int *status, int *i)
 		&& str[*i + 1] && !char_isquote(str[*i + 1]))
 	{
 		if (name_token(str, i, &name))
+		{
+			free(name);
 			return (1);
+		}
 		env_value(result, i, env, name);
+		free(name);
 	}
 	if (*i >= (int)ft_strlen(str))
 		return (0);
