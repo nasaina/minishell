@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 15:12:38 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/20 12:51:32 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/21 13:54:14 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,9 @@ char	**path_list(t_env *env)
 		else
 			tmp = tmp->next;
 	}
+	if (!list)
+		return (NULL);
 	pl = ft_split(list + 5, ':');
-	int	i = 0;
-	while (pl[i])
-		i++;
 	return (pl);
 }
 

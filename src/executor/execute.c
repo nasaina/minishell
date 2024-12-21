@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:51:47 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/20 14:01:45 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/21 14:35:45 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	exec_fork(t_ast *ast, char *path, t_env *env)
 	envp = take_env(env);
 	if (!path)
 	{
+		perror((const char *)(ast->cmd->args[0]));
 		free_ast(ast);
 		free_tab(envp);
 		free_env(env);
@@ -57,22 +58,12 @@ void	exec_fork(t_ast *ast, char *path, t_env *env)
 	}
 	if (execve(path, ast->cmd->args, envp) == -1)
 	{
-		// if (path == NULL || ast->cmd->args == NULL)
-    	// {
-      	// 	free_ast(ast);
-		// 	free_tab(envp);
-		// 	free_env(env);
-		// 	exit (127);
-    	// }
-		// else
-		// {
-			perror((const char *)(ast->cmd->args[0]));
-			free_ast(ast);
-			free(path);
-			free_tab(envp);
-			free_env(env);
-			exit(126);
-		// }
+		perror((const char *)(ast->cmd->args[0]));
+		free_ast(ast);
+		free(path);
+		free_tab(envp);
+		free_env(env);
+		exit(126);
 	}
 }
 

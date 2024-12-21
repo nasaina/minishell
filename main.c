@@ -194,7 +194,8 @@ int	main(int ac, char **av, char **envp)
 			ast = parse_args(expander, 1);
 			free_expander(expander);
 			pipe_check(ast, env, envp);
-			free_ast(ast);
+			if (ast)
+				free_ast(ast);
 		}
 		else
 			continue ;
