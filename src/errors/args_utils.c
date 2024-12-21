@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   args_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 15:41:49 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/20 07:52:24 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/21 15:31:53 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ int	is_void(char *str)
 	i = 0;
 	if (str != NULL && str[i] == '\0')
 		return (1);
-	else if (str != NULL && str[i] == 32)
+	else if (str != NULL && (str[i] == 32 || str[i] == '\t'))
 	{
-		while (str[i] == 32)
+		while ((str[i] == 32 || str[i] == '\t') && str[i])
 			i++;
 		if (str[i] == '\0')
 			return (1);
