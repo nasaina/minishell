@@ -168,6 +168,12 @@ int	main(int ac, char **av, char **envp)
 	{
 		str = NULL;
 		str = ft_readline();
+		if (!str)
+		{
+			printf("exit\n");
+			free_env(env);
+			exit(0);
+		}
 		if (is_error(str) || is_void(str))
 			continue ;
 		if (one_hd(str))

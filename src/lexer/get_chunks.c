@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 10:35:17 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/04 12:42:51 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/21 14:21:28 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	add_chunks_back(t_chunk **args, char *str, t_type type)
 	t_chunk	*element;
 	t_chunk	*tmp;
 
+	if (!str)
+		return ;
 	element = create_chunks(str, type);
 	if (*args)
 	{
