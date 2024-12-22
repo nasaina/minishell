@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 07:48:44 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/20 08:13:09 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/22 08:49:35 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char		*handle_squote(char *str, int *i);
 void		env_value(char **result, int *i, t_env *env, char *name);
 void		add_expanders_back(t_expander **args, char *str, t_type type);
 void		free_expander(t_expander *expander);
-t_chunk		*expanded(char *str, t_type type, t_env *env);
 t_expander	*expand_str(t_chunk *chunks, t_env *env);
+int			split_token(char **result, t_chunk *token, int *status, char **split);
 
 #endif
