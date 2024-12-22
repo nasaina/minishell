@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_exit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:17:19 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/20 14:06:20 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/22 13:54:23 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,9 @@ int	handle_exit(t_expander *expander, t_env *env)
 	}
 	else if (!ft_strcmp(expander->cmd, "exit") && expander->next)
 	{
-		if (!str_isnum(expander->next->cmd))
+		if (str_isnum(expander->next->cmd))
 		{
 			free_env(env);
-			printf("exit\n");
-			ft_putstr_fd("exit : numeric argument required\n", 2);
 			free_expander(expander);
 			unlink(".ms_status");
 			exit(2);

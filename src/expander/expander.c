@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:17:43 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/22 08:51:44 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/22 14:09:27 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,80 +23,11 @@ void	env_value(char **result, int *i, t_env *env, char *name)
 		*i += (int)ft_strlen(name);
 		return ;
 	}
-	*result = join_free(*result, value, 0);
-	free(value);
+	*result = join_free(*result, value, 2);
 	j = 0;
 	while (j < (int)ft_strlen(name))
 	{
 		j++;
 		*i += 1;
 	}
-}
-
-int	is_status(char *str, int i)
-{
-	if (!str)
-		return (0);
-	if (str[i] == '$' && str[i + 1] == '?')
-		return (1);
-	return (0);
-}
-
-void	add_quote(char **result)
-{
-	char	*str;
-	char	*name;
-	int		len;
-	int		i;
-	int		j;
-
-	name = *result;
-	if (!name)
-		return ;
-	len = (int)ft_strlen(*result);
-	str = malloc(len + 3);
-	if (!str)
-		return ;
-	str[0] = '"';
-	i = 0;
-	j = 1;
-	while (name[i])
-		str[j++] = name[i++];
-	str[j] = '"';
-	str[j + 1] = 0;
-	free(*result);
-	*result = ft_strdup(str);
-	free(str);
-}
-
-int	insert_char(char **result, char *str, int *status, int *i)
-{
-	char	*name;
-	t_env	*env;
-
-	name = NULL;
-	env = get_t_env(NULL);
-	if (str[*i] && ignore_value(str, result, i, status))
-		return (1);
-	if (str[*i] && is_status(str, *i))
-	{
-		ms_exitstatus(result, i);
-		return (0);
-	}
-	else if (str[*i] && str[*i] == '$' && !is_status(str, *i)
-		&& str[*i + 1] && !char_isquote(str[*i + 1]))
-	{
-		if (name_token(str, i, &name))
-		{
-			free(name);
-			return (1);
-		}
-		env_value(result, i, env, name);
-		free(name);
-	}
-	if (*i >= (int)ft_strlen(str))
-		return (0);
-	*result = join_char(*result, str[*i]);
-	*i += 1;
-	return (0);
 }

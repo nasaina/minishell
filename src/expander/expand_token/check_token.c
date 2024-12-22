@@ -1,46 +1,53 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_signals.c                                   :+:      :+:    :+:   */
+/*   check_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/13 16:31:27 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/22 15:02:19 by nandrian         ###   ########.fr       */
+/*   Created: 2024/12/22 11:08:53 by nandrian          #+#    #+#             */
+/*   Updated: 2024/12/22 14:14:25 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	free_split(char **str)
+int	is_nword(char *str)
 {
 	int	i;
 
 	i = 0;
 	while (str[i])
 	{
-		free(str[i]);
+		if (str[i] == '\'' || str[i] == '$' || str[i] == '"')
+			return (1);
 		i++;
 	}
-	free(str);
+	return (0);
 }
 
-void	handle_sigint(int sig)
+int	check_split(char **str)
 {
-	t_heredoc	*heredoc;
+	if (!str[1])
+		return (1);
+	return (0);
+}
 
-	if (sig == SIGINT)
+int	token_nword(char *str, t_chunk **token, t_type type)
+{
+	if (!is_nword(str))
 	{
-		printf("\n");
-		heredoc = get_here_data(NULL);
-		close(heredoc->fd);
-		free_heredoc_data(heredoc);
-		exit(130);
+		add_chunks_back(token, str, type);
+		return (1);
 	}
+	return (0);
 }
 
-void	handle_sigquit(int sig)
+void	assemble_token(char *str, char *result, t_chunk **token, int i)
 {
-	if (sig == SIGQUIT)
-		exit(131);
+	if (!str[i])
+	{
+		add_chunks_back(token, result, WORD);
+		free(result);
+	}
 }

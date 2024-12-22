@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 08:03:05 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/22 09:15:45 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/22 10:41:39 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,16 @@ void	ms_exitstatus(char **result, int *i)
 	fd = open(".ms_status", O_RDONLY);
 	if (fd == -1)
 	{
-		join_free(*result, "0", 0);
-		*i += 2;
+		*result = join_free(*result, ft_itoa(0), 2);
+		*i += 1;
 		return ;
 	}
 	str = get_next_line(fd);
 	if (!str)
 	{
-		*i += 2;
+		*result = join_free(*result, ft_itoa(0), 2);
+		*i += 1;
+		close(fd);
 		return ;
 	}
 	len = ft_strlen(str);

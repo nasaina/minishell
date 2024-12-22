@@ -3,14 +3,62 @@
 /*                                                        :::      ::::::::   */
 /*   str_isnum.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:03:14 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/20 14:17:29 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/22 13:53:40 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+void	print_numerror(char *str)
+{
+	printf("exit\n");
+	ft_putstr_fd("minishell: exit: ", 2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd(" : numeric argument required\n", 2);
+}
+
+int	check_str(char *str, int *i)
+{
+	while (str[*i] && (str[*i] == 32 || str[*i] == '\t'))
+		*i += 1;
+	if (str[*i] && !ft_isdigit(str[*i]))
+	{
+		print_numerror(str);
+		return (1);
+	}
+	while (str[*i] && str[*i] != 32 && str[*i] != '\t')
+		*i += 1;
+	while (str[*i] && (str[*i] == 32 || str[*i] == '\t'))
+		*i += 1;
+	return (0);
+}
+
+int	check_ifalpha(char *str, int *i)
+{
+	if (str[*i] == 32 || str[*i] == '\t')
+	{
+		if (check_str(str, i))
+			return (1);
+		if (str[*i])
+		{
+			print_numerror(str);
+			return (1);
+		}
+		else
+			return (0);
+	}
+	else if (!ft_isdigit(str[*i]) && str[*i] != 32 && str[*i] != '\t')
+	{
+		print_numerror(str);
+		return (1);
+	}
+	else
+		*i += 1;
+	return (0);
+}
 
 int	str_isnum(char *str)
 {
@@ -19,23 +67,10 @@ int	str_isnum(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == 32 || str[i] == '\t')
-		{
-			while (str[i] && (str[i] == 32 || str[i] == '\t'))
-				i++;
-			while (str[i] && str[i] != 32 && str[i] != '\t')
-				i++;
-			while (str[i] && (str[i] == 32 || str[i] == '\t'))
-				i++;
-			if (str[i])
-			{
-				printf("too many args\n");
-				exit(2);
-			}
-		}
-		i++;
+		if (check_ifalpha(str, &i))
+			return (1);
 	}
-	return (1);
+	return (0);
 }
 
 int	table_isnum(char **str)

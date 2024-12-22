@@ -102,11 +102,29 @@ void	do_heredoc(char *str, t_heredoc *data, int i)
 	free_redir(data->lst);
 }
 
+int	check_hdstatus(int status, t_heredoc *data)
+{
+	if (WIFEXITED(status))
+	{
+		if (WEXITSTATUS(status) == 130)
+		{
+			free(data);
+			return (130);
+		}
+		else
+		{
+			free(data);
+			return (0);
+		}
+	}
+	return (0);
+}
+
 int	heredoc_built(char *str, t_env *env)
 {
-	int		i;
-	int		status;
-	pid_t	hd_pid;
+	int			i;
+	int			status;
+	pid_t		hd_pid;
 	t_heredoc	*data;
 
 	data = NULL;
@@ -125,15 +143,7 @@ int	heredoc_built(char *str, t_env *env)
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	waitpid(hd_pid, &status, 0);
-	if (WIFEXITED(status))
-	{
-		if (WEXITSTATUS(status) == 130)
-		{
-			free(data);
-			return (130);
-		}
-	}
-	return (0);
+	return (check_hdstatus(status, data));
 }
 
 int	one_hd(char *str)
@@ -171,6 +181,7 @@ int	main(int ac, char **av, char **envp)
 		if (!str)
 		{
 			printf("exit\n");
+			unlink(".ms_status");
 			free_env(env);
 			exit(0);
 		}
