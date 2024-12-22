@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 07:51:39 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/16 14:40:29 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/22 17:12:06 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <libft.h>
 # include <lexer.h>
 # include <expander.h>
+# include <heredoc.h>
 # include <exec.h>
 # include <error.h>
 # include <parser.h>

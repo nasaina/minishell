@@ -6,48 +6,39 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 13:30:07 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/20 08:35:34 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/22 17:02:55 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	hdoc_oneword(char *str, int i, t_type *type)
+int	check_hdstatus(int status, t_heredoc *data)
 {
-	int	count;
-
-	count = 0;
-	while (str[i] != 32 && str[i] && is_word(str[i]))
+	if (WIFEXITED(status))
 	{
-		if (str[i] == 32)
+		if (WEXITSTATUS(status) == 130)
 		{
-			count = 0;
-			i++;
+			free(data);
+			return (130);
 		}
 		else
-			count++;
-		i++;
+		{
+			free(data);
+			return (0);
+		}
 	}
-	*type = WORD;
-	return (count);
+	return (0);
 }
 
-int	hdoc_count(int count, char *str, int i, t_type *type)
+int	heredoc_check(t_chunk *chunks)
 {
-	if (!str)
-		return (0);
-	if ((str[i]) == '>')
-		count = is_append(str, i, type);
-	else if (str[i] == '<')
-		count = is_heredoc(str, i, type);
-	else if (str[i] == '|')
+	while (chunks)
 	{
-		count = 1;
-		*type = PIPE;
+		if (chunks->type == HEREDOC)
+			return (1);
+		chunks = chunks->next;
 	}
-	else
-		count = hdoc_oneword(str, i, type);
-	return (count);
+	return (0);
 }
 
 t_chunk	*hdoc_token(char *str)
@@ -60,11 +51,12 @@ t_chunk	*hdoc_token(char *str)
 
 	i = 0;
 	chunks = NULL;
+	type = 0;
 	while (str[i])
 	{
 		while (str[i] == 32)
 			i++;
-		count = hdoc_count(count, str, i, &type);
+		count = hdoc_count(str, i, &type);
 		wrd = str_insert(str, count, &i);
 		add_chunks_back(&chunks, wrd, type);
 		free(wrd);
@@ -72,17 +64,6 @@ t_chunk	*hdoc_token(char *str)
 			i++;
 	}
 	return (chunks);
-}
-
-int	heredoc_check(t_chunk *chunks)
-{
-	while (chunks)
-	{
-		if (chunks->type == HEREDOC)
-			return (1);
-		chunks = chunks->next;
-	}
-	return (0);
 }
 
 t_redir	*expand_hdoc(char *str)
