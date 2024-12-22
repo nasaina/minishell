@@ -1,28 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_builtins.c                                    :+:      :+:    :+:   */
+/*   execute_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/22 09:36:50 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/22 10:13:37 by maandria         ###   ########.fr       */
+/*   Created: 2024/12/22 10:19:54 by maandria          #+#    #+#             */
+/*   Updated: 2024/12/22 10:29:14 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-char	**init_builtins(void)
+void	do_fork(t_ast *ast, t_env *env, char *path)
 {
-	static char	*builtins[8];
-
-	builtins[0] = "cd";
-	builtins[1] = "echo";
-	builtins[2] = "env";
-	builtins[3] = "exit";
-	builtins[4] = "export";
-	builtins[5] = "pwd";
-	builtins[6] = "unset";
-	builtins[7] = NULL;
-	return (builtins);
+	if (ast->cmd->redir)
+			do_redir(ast);
+		if (ast->cmd->args && ast->cmd->args[0])
+			exec_fork(ast, path, env);
 }

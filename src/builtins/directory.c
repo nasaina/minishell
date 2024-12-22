@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:55:42 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/20 11:09:08 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/22 09:49:05 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ char	*get_cd(char *str, char *last_direcotry, t_env *env)
 char	*last_dir(t_env *env)
 {
 	t_env	*tmp;
-	char		*old;
-	char		*last;
+	char	*old;
+	char	*last;
 
 	tmp = env;
 	old = NULL;
@@ -86,7 +86,7 @@ char	*last_dir(t_env *env)
 	return (last);
 }
 
-int	get_oldpwd(t_ast *ast,char *dir, char *last_directory, t_env *env)
+int	get_oldpwd(t_ast *ast, char *dir, char *last_directory, t_env *env)
 {
 	char	cwd[PATH_MAX];
 	char	*new_dir;
@@ -131,7 +131,7 @@ int	ms_cd(t_ast *ast, t_env *env)
 	if (ft_strcmp(ast->cmd->args[0], "cd") == 0)
 	{
 		dir = get_cd(ast->cmd->args[1], last_directory, env);
-		return(get_oldpwd(ast, dir, last_directory, env));
+		return (get_oldpwd(ast, dir, last_directory, env));
 	}
 	return (0);
 }

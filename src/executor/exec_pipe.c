@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 13:29:57 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/21 14:30:26 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/22 11:15:12 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,15 @@ int	exec_pipe(t_ast *ast, t_env *env, char **envp)
 		perror("fork");
 	else if (pid_right == 0)
 	{
-			status = exec_pipe_right(ast->right, env, envp, pipe_fds);
-			exit(EXIT_FAILURE);
+		status = exec_pipe_right(ast->right, env, envp, pipe_fds);
+		exit(EXIT_FAILURE);
 	}
 	close(pipe_fds[0]);
 	close(pipe_fds[1]);
 	waitpid(pid_left, NULL, 0);
 	waitpid(pid_right, &status, 0);
-	if ( WIFEXITED(status))
-        status = WEXITSTATUS(status);
+	if (WIFEXITED(status))
+		status = WEXITSTATUS(status);
 	return (status);
 }
 
@@ -72,15 +72,15 @@ void	exec_pipe_left(t_ast *ast, t_env *env, char **envp, int *pipe_fds)
 
 int	exec_pipe_right(t_ast *ast, t_env *env, char **envp, int *pipe_fds)
 {
-	int		status = -1;
+	int		status;
 
+	status = -1;
 	if (ast)
 	{
 		close(pipe_fds[1]);
 		dup2(pipe_fds[0], 0);
 		close(pipe_fds[0]);
 		status = pipe_check(ast, env, envp);
-		
 		exit (status);
 	}
 	return (EXIT_FAILURE);
