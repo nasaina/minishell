@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 13:29:57 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/22 11:15:12 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/22 14:33:50 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,17 @@ int	exec_pipe(t_ast *ast, t_env *env, char **envp)
 	}
 	pid_left = fork();
 	if (pid_left < 0)
-		perror("fork");
+		perror("fork(left)");
 	else if (pid_left == 0)
 		exec_pipe_left(ast->left, env, envp, pipe_fds);
 	pid_right = fork();
 	if (pid_right < 0)
-		perror("fork");
+		perror("fork(right)");
 	else if (pid_right == 0)
-	{
 		status = exec_pipe_right(ast->right, env, envp, pipe_fds);
-		exit(EXIT_FAILURE);
-	}
 	close(pipe_fds[0]);
 	close(pipe_fds[1]);
-	waitpid(pid_left, NULL, 0);
+	waitpid(pid_left, &status, 0);
 	waitpid(pid_right, &status, 0);
 	if (WIFEXITED(status))
 		status = WEXITSTATUS(status);
@@ -63,7 +60,11 @@ void	exec_pipe_left(t_ast *ast, t_env *env, char **envp, int *pipe_fds)
 	if (ast)
 	{
 		close(pipe_fds[0]);
-		dup2(pipe_fds[1], 1);
+		if (dup2(pipe_fds[1], 1) == -1)
+		{
+			perror("dup2(left)");
+			exit(EXIT_FAILURE);
+		}
 		close(pipe_fds[1]);
 		pipe_check(ast, env, envp);
 	}
@@ -78,7 +79,11 @@ int	exec_pipe_right(t_ast *ast, t_env *env, char **envp, int *pipe_fds)
 	if (ast)
 	{
 		close(pipe_fds[1]);
-		dup2(pipe_fds[0], 0);
+		if (dup2(pipe_fds[0], 0))
+		{
+			perror("dup2(right)");
+			exit(EXIT_FAILURE);
+		}
 		close(pipe_fds[0]);
 		status = pipe_check(ast, env, envp);
 		exit (status);

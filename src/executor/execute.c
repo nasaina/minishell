@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:51:47 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/21 14:35:45 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/22 15:06:51 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,18 +43,19 @@ char	*take_path(t_ast *ast, t_env *env)
 	return (path);
 }
 
-void	exec_fork(t_ast *ast, char *path, t_env *env)
+int	exec_fork(t_ast *ast, char *path, t_env *env)
 {
 	char	**envp;
+	int		status;
 
+	status = -1;
 	envp = take_env(env);
 	if (!path)
 	{
-		perror((const char *)(ast->cmd->args[0]));
 		free_ast(ast);
 		free_tab(envp);
 		free_env(env);
-		exit (127);
+		return (127);
 	}
 	if (execve(path, ast->cmd->args, envp) == -1)
 	{
@@ -63,8 +64,9 @@ void	exec_fork(t_ast *ast, char *path, t_env *env)
 		free(path);
 		free_tab(envp);
 		free_env(env);
-		exit(126);
+		return (126);
 	}
+	return (0);
 }
 
 int	exec_cmd(t_ast *ast, t_env *env)
@@ -81,12 +83,7 @@ int	exec_cmd(t_ast *ast, t_env *env)
 		perror("fork");
 	else if (pid == 0)
 	{
-		if (ast->cmd->redir)
-			do_redir(ast);
-		if (ast->cmd->args && ast->cmd->args[0])
-			exec_fork(ast, path, env);
-		free_ast(ast);
-		free_env(env);
+		status = do_fork(ast, env, path);
 		free(path);
 		exit (EXIT_FAILURE);
 	}
