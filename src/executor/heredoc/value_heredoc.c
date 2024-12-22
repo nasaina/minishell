@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 08:24:57 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/22 17:04:05 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/22 18:22:06 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,29 @@ char	*expand_heredoc(char *file, char *str, t_env *env)
 	else
 		result = ft_strdup(str);
 	return (result);
+}
+
+int	heredoc_input(char *str, int *i, t_env *env, char **result)
+{
+	char	*name;
+
+	name = NULL;
+	if (str[*i] == '$' && !char_isquote(str[*i + 1]) && str[*i + 1])
+	{
+		if (name_token(str, i, &name))
+		{
+			free(name);
+			return (1);
+		}
+		env_value(result, i, env, name);
+	}
+	free(name);
+	if (str[*i])
+	{
+		*result = join_char(*result, str[*i]);
+		*i += 1;
+	}
+	return (0);
 }
 
 int	quote_count(char *str)

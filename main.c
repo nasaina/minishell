@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/22 18:05:14 by nandrian          #+#    #+#             */
+/*   Updated: 2024/12/22 18:06:07 by nandrian         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <minishell.h>
 
 void	start_signal(int ac, char **av, char **env)
@@ -7,68 +19,78 @@ void	start_signal(int ac, char **av, char **env)
 	signal(SIGQUIT, SIG_IGN);
 }
 
-t_env	*get_t_env(t_env *env)
+int	read_input(char **str, t_env *env)
 {
-	static t_env	*data = NULL;
+	int	heredoc_status;
 
-	if (env == NULL)
-		return (data);
-	data = env;
-	return (data);
+	*str = NULL;
+	*str = ft_readline();
+	if (!*str)
+	{
+		printf("exit\n");
+		unlink(".ms_status");
+		free_env(env);
+		exit(0);
+	}
+	if (is_error(*str) || is_void(*str))
+		return (1);
+	if (one_hd(*str))
+	{
+		heredoc_status = heredoc_built(*str, env);
+		ms_writestatus(heredoc_status);
+		if (heredoc_status)
+			return (1);
+	}
+	return (0);
+}
+
+t_expander	*init_expander(char *str, t_env *env)
+{
+	t_chunk		*chunks;
+	t_expander	*expander;
+
+	chunks = NULL;
+	chunks = lexing(str);
+	free(str);
+	expander = NULL;
+	expander = expand_str(chunks, env);
+	free_chunks(chunks);
+	if (handle_exit(expander, env))
+	{
+		ms_writestatus(1);
+		return (NULL);
+	}
+	return (expander);
+}
+
+void	run_shell(t_expander *expander, t_ast **ast, char **envp, t_env *env)
+{
+	*ast = NULL;
+	*ast = parse_args(expander, 1);
+	free_expander(expander);
+	pipe_check(*ast, env, envp);
+	if (*ast)
+		free_ast(*ast);
 }
 
 int	main(int ac, char **av, char **envp)
 {
-	char	*str;
-	int			heredoc_status;
-	t_chunk	*chunks;
-	t_env	*env = NULL;
+	char		*str;
+	t_env		*env;
 	t_expander	*expander;
 	t_ast		*ast;
 
+	env = NULL;
 	env = ms_envcpy(envp);
 	start_signal(ac, av, envp);
 	ms_readhistory();
 	while (1)
 	{
-		str = NULL;
-		str = ft_readline();
-		if (!str)
-		{
-			printf("exit\n");
-			unlink(".ms_status");
-			free_env(env);
-			exit(0);
-		}
-		if (is_error(str) || is_void(str))
+		if (read_input(&str, env))
 			continue ;
-		if (one_hd(str))
-		{
-			heredoc_status = heredoc_built(str, env);
-			ms_writestatus(heredoc_status);
-			if (heredoc_status)
-				continue ;
-		}
-		chunks = NULL;
-		chunks = lexing(str);
-		free(str);
-		expander = NULL;
-		expander = expand_str(chunks, env);
-		free_chunks(chunks);
+		expander = init_expander(str, env);
 		if (expander)
-		{
-			if (handle_exit(expander, env))
-			{
-				ms_writestatus(1);
-				continue ;
-			}
-			ast = NULL;
-			ast = parse_args(expander, 1);
-			free_expander(expander);
-			pipe_check(ast, env, envp);
-			if (ast)
-				free_ast(ast);
-		}
+			run_shell(expander, &ast, envp, env);
 		else
 			continue ;
 	}

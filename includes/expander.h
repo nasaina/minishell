@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 07:48:44 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/22 14:56:14 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/22 17:31:08 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ void		env_value(char **result, int *i, t_env *env, char *name);
 void		add_expanders_back(t_expander **args, char *str, t_type type);
 void		free_expander(t_expander *expander);
 t_expander	*expand_str(t_chunk *chunks, t_env *env);
-int			split_token(char **result, t_chunk **token, int *status, char **split);
+int			split_token(char **result, t_chunk **token,
+				int *status, char **split);
 int			extract_double(char *str, char **result, int *i);
 int			extract_word(char *str, char **result, int *i, int status);
 int			extract_single(char *str, char **result, int *i);
@@ -67,7 +68,8 @@ int			is_nword(char *str);
 int			token_nword(char *str, t_chunk **token, t_type type);
 void		assemble_token(char *str, char *result, t_chunk **token, int i);
 char		**add_split(char *str, int	*status, int *i, t_chunk **token);
-int			split_all(t_chunk **token, char **result, int *status, char **split);
+int			split_all(t_chunk **token, char **result,
+				int *status, char **split);
 void		init_token(t_chunk **token, t_env *env, int *i, char **result);
 
 #endif

@@ -1,16 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
+/*   ms_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:58:43 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/20 08:19:12 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/22 17:26:05 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+int	check_input(char **args, int i, char *name)
+{
+	if (is_invalidname(name))
+	{
+		ft_putstr_fd("minishell: export: `", 2);
+		ft_putstr_fd(args[i], 2);
+		ft_putstr_fd("': not a valid identifier\n", 2);
+		return (1);
+	}
+	if (double_input(args, i, name))
+		return (1);
+	return (0);
+}
 
 int	add_input(t_env *env, int i, char **args)
 {

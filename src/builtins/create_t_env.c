@@ -45,3 +45,13 @@ void	env_back(t_env **env, char *str)
 	else
 		*env = element;
 }
+
+t_env	*get_t_env(t_env *env)
+{
+	static t_env	*data = NULL;
+
+	if (env == NULL)
+		return (data);
+	data = env;
+	return (data);
+}

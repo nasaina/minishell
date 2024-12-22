@@ -24,9 +24,11 @@ SRC_PARS = $(addprefix src/parser/, parser.c create_redir.c)
 
 SRC_ERR = $(addprefix src/errors/, error.c args_utils.c)
 
-SRC_BUILT = $(addprefix src/builtins/, directory.c builtins.c export.c create_t_env.c export_env.c unset.c utils_echo.c init_builtins.c print_env.c handle_exit.c pwd.c check_export.c)
+SRC_EXPORT = $(addprefix src/builtins/ms_export/, check_export.c ms_export.c print_env.c)
 
-SRC_EXEC = $(addprefix src/executor/, execute.c path_checker.c exec_pipe.c redir.c path_access.c exit_status.c)
+SRC_BUILT = $(addprefix src/builtins/, builtins.c create_t_env.c handle_exit.c ms_cd.c ms_echo.c ms_pwd.c ms_unset.c)
+
+SRC_EXEC = $(addprefix src/executor/, execute.c path_checker.c exec_pipe.c redir.c path_access.c exit_status.c execute_utils.c)
 
 SRC_LEX = $(addprefix src/lexer/, lexer.c get_chunks.c check_op.c quote.c)
 
@@ -56,11 +58,13 @@ OBJ_UTILS = $(SRC_UTILS:%.c=$(OBJ_DIR)/%.o)
 
 OBJ_GNL = $(SRC_GNL:%.c=$(OBJ_DIR)/%.o)
 
+OBJ_EXPORT = $(SRC_EXPORT:%.c=$(OBJ_DIR)/%.o)
+
 OBJ_MAIN = $(MAIN:%.c=$(OBJ_DIR)/%.o)
 
 OBJ_TOKEN = $(SRC_TOKEN:%.c=$(OBJ_DIR)/%.o)
 
-OBJS = $(OBJ_EXEC) $(OBJ_PARS) $(OBJ_UTILS) $(OBJ_LEX) $(OBJ_ERR) $(OBJ_BUILT) $(OBJ_SIG) $(OBJ_EXP) $(OBJ_TOKEN) $(OBJ_HD) $(OBJ_GNL) $(OBJ_MAIN)
+OBJS = $(OBJ_EXEC) $(OBJ_PARS) $(OBJ_UTILS) $(OBJ_LEX) $(OBJ_EXPORT) $(OBJ_ERR) $(OBJ_BUILT) $(OBJ_SIG) $(OBJ_EXP) $(OBJ_TOKEN) $(OBJ_HD) $(OBJ_GNL) $(OBJ_MAIN)
 
 all : $(NAME)
 
@@ -78,10 +82,12 @@ clean :
 	@make fclean -C libft
 	@rm -rf $(OBJ_DIR)
 	@clear
+	@echo "\n\e[1;32mLibrary successfuly deleted\e[0m\n"
 
 fclean : clean
 	@rm -rf $(NAME)
 	@clear
+	@echo "\n\e[1;32mLibrary successfuly deleted\e[0m\n"
 
 re : fclean all
 
