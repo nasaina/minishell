@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:32:07 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/22 10:26:01 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/22 17:13:33 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,6 @@ typedef struct s_lexer
 	char			c;
 	struct s_lexer	*next;
 }	t_lexer;
-
-typedef struct s_heredoc
-{
-	int			fd;
-	char		*name;
-	char		*file;
-	t_env		*env;
-	t_redir		*lst;
-}	t_heredoc;
 
 char		**init_builtins(void);
 char		*check_path(char **pathlist, t_ast *ast);
@@ -63,9 +54,6 @@ char		*var_remove(char *str);
 void		do_redir(t_ast *ast);
 void		remove_env(t_env **env, char *str);
 void		free_ast(t_ast *ast);
-int			get_input(t_heredoc *heredoc, t_redir *tmp);
-int			heredoc_check(t_chunk *chunks);
-t_redir		*expand_hdoc(char *str);
 t_env		*ms_envcpy(char **env);
 void		sort_env(t_env **env);
 void		ft_printenv(t_env *env, int *i);
@@ -76,30 +64,21 @@ int			double_input(char **str, int i, char *args);
 int			is_invalidname(char *str);
 char		*env_name(char *str);
 int			hdoc_oneword(char *str, int i, t_type *type);
-int			hdoc_count(int count, char *str, int i, t_type *type);
+int			hdoc_count(char *str, int i, t_type *type);
 t_chunk		*hdoc_token(char *str);
 int			is_variable(char *str);
-int			heredoc_check(t_chunk *chunks);
 t_redir		*expand_hdoc(char *str);
 char		*join_free(char *s1, char *s2, int status);
 char		*ignore_quote(char	*str);
-void		free_heredoc_data(t_heredoc *heredoc);
-t_heredoc	*get_here_data(t_heredoc *heredoc);
-int			is_status(char *str, int i);
 void		ms_exitstatus(char **result, int *i);
 void		ms_writestatus(int status);
-void		add_quote(char **result);
 t_env		*get_t_env(t_env *export);
 void		ms_writestatus(int status);
 int			check_status(char **args);
-char		*expand_heredoc(char *file, char *str, t_env *env);
 int			quote_count(char *str);
 char		*ignore_quote(char	*str);
 int			is_expandable(char	*str);
 char		*hdoc_expander(char *str, t_env *env);
-int			get_heredoc_value(t_heredoc **heredoc, char *str, t_redir *tmp);
-int			get_input(t_heredoc *heredoc, t_redir *tmp);
-void		free_heredoc_data(t_heredoc *heredoc);
 int			check_args(t_ast *ast);
 void		change_env_pwd(t_env *env);
 void		change_env_oldpwd(t_env *env, char *cwd);

@@ -14,6 +14,8 @@ LIBFT = libft/libft.a
 
 SRC_SIG = $(addprefix src/signals/, handle_signals.c)
 
+SRC_HD = $(addprefix src/executor/heredoc/, build_heredoc.c count_heredoc.c expand_heredoc.c handle_heredoc.c value_heredoc.c)
+
 SRC_TOKEN = $(addprefix src/expander/expand_token/, token_value.c split_token.c ignore_value.c extract_value.c check_token.c token_count.c init_token.c)
 
 SRC_EXP = $(addprefix src/expander/, expander.c get_var.c create_expander.c str_duplicate.c handle_quote.c)
@@ -24,7 +26,7 @@ SRC_ERR = $(addprefix src/errors/, error.c args_utils.c)
 
 SRC_BUILT = $(addprefix src/builtins/, directory.c builtins.c export.c create_t_env.c export_env.c unset.c utils_echo.c init_builtins.c print_env.c handle_exit.c pwd.c check_export.c)
 
-SRC_EXEC = $(addprefix src/executor/, execute.c path_checker.c exec_pipe.c redir.c handle_heredoc.c path_access.c expand_heredoc.c exit_status.c heredoc_value.c)
+SRC_EXEC = $(addprefix src/executor/, execute.c path_checker.c exec_pipe.c redir.c path_access.c exit_status.c)
 
 SRC_LEX = $(addprefix src/lexer/, lexer.c get_chunks.c check_op.c quote.c)
 
@@ -35,6 +37,8 @@ SRC_GNL = $(addprefix src/gnl/, gnl.c gnl_utils.c)
 MAIN = main.c
 
 OBJ_SIG = $(SRC_SIG:%.c=$(OBJ_DIR)/%.o)
+
+OBJ_HD = $(SRC_HD:%.c=$(OBJ_DIR)/%.o)
 
 OBJ_BUILT = $(SRC_BUILT:%.c=$(OBJ_DIR)/%.o)
 
@@ -56,7 +60,7 @@ OBJ_MAIN = $(MAIN:%.c=$(OBJ_DIR)/%.o)
 
 OBJ_TOKEN = $(SRC_TOKEN:%.c=$(OBJ_DIR)/%.o)
 
-OBJS = $(OBJ_EXEC) $(OBJ_PARS) $(OBJ_UTILS) $(OBJ_LEX) $(OBJ_ERR) $(OBJ_BUILT) $(OBJ_SIG) $(OBJ_EXP) $(OBJ_TOKEN) $(OBJ_GNL) $(OBJ_MAIN)
+OBJS = $(OBJ_EXEC) $(OBJ_PARS) $(OBJ_UTILS) $(OBJ_LEX) $(OBJ_ERR) $(OBJ_BUILT) $(OBJ_SIG) $(OBJ_EXP) $(OBJ_TOKEN) $(OBJ_HD) $(OBJ_GNL) $(OBJ_MAIN)
 
 all : $(NAME)
 
