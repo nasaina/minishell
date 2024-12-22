@@ -85,7 +85,7 @@ void		change_env_oldpwd(t_env *env, char *cwd);
 int			is_command(t_ast *ast);
 char		**take_env(t_env *env);
 void		free_tab(char **str);
-void		do_fork(t_ast *ast, t_env *env, char *path);
-void		exec_fork(t_ast *ast, char *path, t_env *env);
+int			do_fork(t_ast *ast, t_env *env, char *path);
+int			exec_fork(t_ast *ast, char *path, t_env *env);
 
 #endif
