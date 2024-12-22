@@ -14,7 +14,9 @@ LIBFT = libft/libft.a
 
 SRC_SIG = $(addprefix src/signals/, handle_signals.c)
 
-SRC_EXP = $(addprefix src/expander/, expander.c get_var.c create_expander.c token_count.c str_duplicate.c handle_quote.c token_value.c split_token.c)
+SRC_TOKEN = $(addprefix src/expander/expand_token/, token_value.c split_token.c ignore_value.c extract_value.c check_token.c token_count.c init_token.c)
+
+SRC_EXP = $(addprefix src/expander/, expander.c get_var.c create_expander.c str_duplicate.c handle_quote.c)
 
 SRC_PARS = $(addprefix src/parser/, parser.c create_redir.c)
 
@@ -52,7 +54,9 @@ OBJ_GNL = $(SRC_GNL:%.c=$(OBJ_DIR)/%.o)
 
 OBJ_MAIN = $(MAIN:%.c=$(OBJ_DIR)/%.o)
 
-OBJS = $(OBJ_EXEC) $(OBJ_PARS) $(OBJ_UTILS) $(OBJ_LEX) $(OBJ_ERR) $(OBJ_BUILT) $(OBJ_SIG) $(OBJ_EXP) $(OBJ_GNL) $(OBJ_MAIN)
+OBJ_TOKEN = $(SRC_TOKEN:%.c=$(OBJ_DIR)/%.o)
+
+OBJS = $(OBJ_EXEC) $(OBJ_PARS) $(OBJ_UTILS) $(OBJ_LEX) $(OBJ_ERR) $(OBJ_BUILT) $(OBJ_SIG) $(OBJ_EXP) $(OBJ_TOKEN) $(OBJ_GNL) $(OBJ_MAIN)
 
 all : $(NAME)
 
