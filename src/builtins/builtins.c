@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 07:15:40 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/20 08:20:21 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/22 17:42:22 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,21 @@ int	ms_env(char **str, t_env *env)
 		}
 	}
 	return (0);
+}
+
+char	**init_builtins(void)
+{
+	static char	*builtins[8];
+
+	builtins[0] = "cd";
+	builtins[1] = "echo";
+	builtins[2] = "env";
+	builtins[3] = "exit";
+	builtins[4] = "export";
+	builtins[5] = "pwd";
+	builtins[6] = "unset";
+	builtins[7] = NULL;
+	return (builtins);
 }
 
 int	ms_builtins(t_ast *ast, t_env *env)

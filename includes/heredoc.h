@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 17:07:59 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/22 17:14:31 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/22 18:23:01 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,6 @@ int			is_variable(char *str);
 char		*expand_heredoc(char *file, char *str, t_env *env);
 int			quote_count(char *str);
 char		*ignore_quote(char	*str);
+int			heredoc_input(char *str, int *i, t_env *env, char **result);
 
 #endif

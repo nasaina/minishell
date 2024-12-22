@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:03:14 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/22 13:53:40 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/22 18:12:13 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,4 @@ int	str_isnum(char *str)
 			return (1);
 	}
 	return (0);
-}
-
-int	table_isnum(char **str)
-{
-	if (!str_isnum(str[1]))
-		return (0);
-	return (1);
 }

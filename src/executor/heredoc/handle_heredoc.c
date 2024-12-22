@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 14:22:23 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/22 16:19:51 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/22 18:21:44 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int	is_expandable(char	*str)
 char	*hdoc_expander(char *str, t_env *env)
 {
 	int		i;
-	char	*name;
 	char	*result;
 
 	i = 0;
@@ -38,17 +37,8 @@ char	*hdoc_expander(char *str, t_env *env)
 		return (NULL);
 	while (str[i])
 	{
-		if (str[i] == '$' && !char_isquote(str[i + 1]) && str[i + 1])
-		{
-			if (name_token(str, &i, &name))
-				continue ;
-			env_value(&result, &i, env, name);
-		}
-		if (str[i])
-		{
-			result = join_char(result, str[i]);
-			i++;
-		}
+		if (heredoc_input(str, &i, env, &result))
+			continue ;
 	}
 	return (result);
 }
