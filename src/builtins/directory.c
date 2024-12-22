@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:55:42 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/22 09:49:05 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/22 14:45:54 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,14 +120,12 @@ int	ms_cd(t_ast *ast, t_env *env)
 	char	*dir;
 	char	*last_directory;
 
-	last_directory = NULL;
+	last_directory = last_dir(env);
 	if (check_args(ast))
 	{
 		ft_putstr_fd("cd: too many arguments\n", 2);
 		return (1);
 	}
-	if (!last_directory)
-		last_directory = last_dir(env);
 	if (ft_strcmp(ast->cmd->args[0], "cd") == 0)
 	{
 		dir = get_cd(ast->cmd->args[1], last_directory, env);

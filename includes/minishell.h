@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:32:07 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/22 10:26:01 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/22 15:00:56 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void		change_env_oldpwd(t_env *env, char *cwd);
 int			is_command(t_ast *ast);
 char		**take_env(t_env *env);
 void		free_tab(char **str);
-void		do_fork(t_ast *ast, t_env *env, char *path);
-void		exec_fork(t_ast *ast, char *path, t_env *env);
+int			do_fork(t_ast *ast, t_env *env, char *path);
+int			exec_fork(t_ast *ast, char *path, t_env *env);
 
 #endif
