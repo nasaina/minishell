@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 08:03:05 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/20 08:03:39 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/22 09:15:45 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,6 @@ void	ms_exitstatus(char **result, int *i)
 	str[len] = 0;
 	*result = join_free(*result, str, 0);
 	free(str);
-	*i += len + 1;
+	*i += 1;
 	close(fd);
 }

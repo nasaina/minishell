@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:17:43 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/21 13:03:14 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/22 08:51:44 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	env_value(char **result, int *i, t_env *env, char *name)
 		return ;
 	}
 	*result = join_free(*result, value, 0);
+	free(value);
 	j = 0;
 	while (j < (int)ft_strlen(name))
 	{

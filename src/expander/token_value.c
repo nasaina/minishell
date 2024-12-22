@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 08:10:25 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/21 15:27:40 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/22 09:27:17 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,68 @@ int	check_split(char **str)
 	return (0);
 }
 
+int	extract_status(char **result, int *i, char *str)
+{
+	if (str[*i] && str[*i] == '$' && str[*i + 1]
+		&& str[*i + 1] == '?')
+	{
+		i++;
+		ms_exitstatus(result, i);
+		return (1);
+	}
+	return (0);
+}
+
+int	ignore_double(char *str, int status, int *i)
+{
+	if (str[*i] && str[*i] == '$' && str[*i + 1]
+		&& str[*i + 1] == '$'  && status != 1)
+	{
+		*i += 2;
+		return (1);
+	}
+	return (0);
+}
+
+int	token_nword(char *str, t_chunk **token, t_type type)
+{
+	if (!is_nword(str))
+	{
+		add_chunks_back(token, str, type);
+		return (1);
+	}
+	return (0);
+}
+
+int	ignore_digit(char *str, int *i)
+{
+	if (str[*i] && str[*i] == '$'
+		&& str[*i + 1] && ft_isdigit(str[*i + 1]))
+	{
+		*i += 2;
+		return (1);
+	}
+	return (0);
+}
+
+void	extract_qvalue(char *str, char **result, int *i, t_env *env)
+{
+	char	*name;
+
+	name = NULL;
+	if (str[*i] && str[*i] == '$' && str[*i + 1])
+	{
+		name_token(str, i, &name);
+		env_value(result, i, env, name);
+		free(name);
+	}
+	else
+	{
+		*result = join_char(*result, str[*i]);
+		*i += 1;
+	}
+}
+
 t_chunk	*expanded2(char *str, t_env *env, t_type type)
 {
 	int		i;
@@ -92,20 +154,14 @@ t_chunk	*expanded2(char *str, t_env *env, t_type type)
 	t_chunk	*token = NULL;
 	char	**split = NULL;
 	int		status;
-	int		d_status;
 	char	*tmp;
 
 	i = 0;
 	result = NULL;
 	i = 0;
-	tmp = NULL;
 	status = 0;
-	d_status = 0;
-	if (!is_nword(str))
-	{
-		add_chunks_back(&token, str, type);
+	if (token_nword(str, &token, type))
 		return (token);
-	}
 	while (str[i])
 	{
 		while (str[i] && (str[i] != '\'' && str[i] != '"' && str[i] != '$' && status != 1))
@@ -113,33 +169,15 @@ t_chunk	*expanded2(char *str, t_env *env, t_type type)
 			result = join_char(result, str[i]);
 			i++;
 		}
-		if (str[i] && str[i] == '$' && str[i + 1] && str[i + 1] == '$'  && status != 1)
-		{
-			result = join_char(result, '$');
-			i += 2;
-			continue ;
-		}
+		ignore_digit(str, &i);
+		ignore_double(str, status, &i);
 		if (str[i] && str[i] == '"' && status != 1)
 		{
 			i++;
+			extract_status(&result, &i, str);
 			while (str[i] && str[i] != '"')
 			{
-				if (str[i] && str[i] == '$' && str[i + 1] && str[i + 1] == '?')
-				{
-					ms_exitstatus(&result, &i);
-					continue ;
-				}
-				else if (str[i] && str[i] == '$' && str[i + 1])
-				{
-					name_token(str, &i, &name);
-					env_value(&result, &i, env, name);
-					free(name);
-				}
-				else
-				{
-					result = join_char(result, str[i]);
-					i++;
-				}
+				extract_qvalue(str, &result, &i, env);
 				if (i > (int)ft_strlen(str))
 					break ;
 			}
@@ -167,12 +205,7 @@ t_chunk	*expanded2(char *str, t_env *env, t_type type)
 		{
 			status = 1;
 			tmp = NULL;
-			if (name_token(str, &i, &name))
-			{
-				free(name);
-				status = 0;
-				continue ;
-			}
+			name_token(str, &i, &name);
 			env_value(&tmp, &i, env, name);
 			if (!tmp)
 			{
@@ -192,25 +225,15 @@ t_chunk	*expanded2(char *str, t_env *env, t_type type)
 		}
 		if (status == 1)
 		{
-			printf("\n0%d\n", status);
-			result = join_free(result, split[0], 0);
-			add_chunks_back(&token, result, WORD);
-			int	j = 1;
-			if (!split[j])
-				continue ;
-			while (split[j + 1])
-			{
-				add_chunks_back(&token, split[j], WORD);
-				free(split[j]);
-				j++;
-			}
-			result = join_free(NULL, split[j], 1);
-			free(split);
-			status = 0;
+			if (split_token(&result, token, &status, split))
+				continue;
 		}
 	}
 	if (!str[i] && status != 1)
+	{
 		add_chunks_back(&token, result, WORD);
+		free(result);
+	}
 	return (token);
 }
 
@@ -238,16 +261,6 @@ t_expander	*expand_str(t_chunk *chunks, t_env *env)
 		}
 		tmp = tmp->next;
 		free_chunks(token);
-		// token = NULL;
-		// token = expanded(tmp->str, tmp->type, env);
-		// temp = token;
-		// while (temp)
-		// {
-		// 	add_expanders_back(&expander, temp->str, temp->type);
-		// 	temp = temp->next;
-		// }
-		// tmp = tmp->next;
-		// free_chunks(token);
 	}
 	return (expander);
 }
