@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 15:12:38 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/21 13:54:14 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/22 10:01:25 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	**path_list(t_env *env)
 {
 	t_env	*tmp;
-	char	*list; 
+	char	*list;
 	char	**pl;
 
 	list = NULL;
