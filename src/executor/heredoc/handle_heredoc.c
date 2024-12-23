@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 14:22:23 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/23 09:11:33 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/23 09:49:30 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	get_heredoc_value(t_heredoc **heredoc, char *str, t_redir *tmp)
 {
 	char	*expander;
 
-	if (!ft_strcmp((*heredoc)->name, str))
+	if (!ft_strcmp((*heredoc)->name, str) || !str)
 	{
 		free((*heredoc)->name);
 		free(str);

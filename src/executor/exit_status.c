@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 08:03:05 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/22 10:41:39 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/23 09:55:46 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,24 @@ void	ms_exitstatus(char **result, int *i)
 	free(str);
 	*i += 1;
 	close(fd);
+}
+
+int	exit_status(void)
+{
+	int		fd;
+	int		status;
+	char	*str;
+
+	fd = open(".ms_status", O_RDONLY);
+	if (fd == -1)
+		return (0);
+	str = get_next_line(fd);
+	if (!str)
+	{
+		close(fd);
+		return (0);
+	}
+	status = ft_atoi(str);
+	free(str);
+	return (status);
 }
