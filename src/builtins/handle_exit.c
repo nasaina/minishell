@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:17:19 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/22 13:54:23 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/23 09:55:08 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	handle_exit(t_expander *expander, t_env *env)
 		free_expander(expander);
 		printf("exit\n");
 		unlink(".ms_status");
-		exit(0);
+		exit(exit_status());
 	}
 	else if (!ft_strcmp(expander->cmd, "exit") && expander->next)
 	{

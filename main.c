@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:05:14 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/23 09:07:04 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/23 10:03:47 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,9 @@ int	read_input(char **str, t_env *env)
 	if (one_hd(*str))
 	{
 		heredoc_status = heredoc_built(*str, env);
-		if (heredoc_status == -2)
-		{
-			ms_writestatus(0);
+		ms_writestatus(heredoc_status);
+		if (heredoc_status)
 			return (1);
-		}
-		else
-		{
-			ms_writestatus(heredoc_status);
-			if (heredoc_status != 0)
-				return (1);
-		}
 	}
 	return (0);
 }
