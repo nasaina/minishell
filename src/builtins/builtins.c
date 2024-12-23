@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 07:15:40 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/22 17:42:22 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/23 11:04:57 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	**init_builtins(void)
 	return (builtins);
 }
 
-int	ms_builtins(t_ast *ast, t_env *env)
+int	ms_builtins(t_ast *ast, t_env *env, int in, int out)
 {
 	int	status;
 
@@ -57,5 +57,7 @@ int	ms_builtins(t_ast *ast, t_env *env)
 	status = ms_env(ast->cmd->args, env);
 	status = ms_printenv(ast, env);
 	status = ms_unset(&env, ast->cmd->args);
+	if (ast && handle_exit(ast, env, in, out))
+		return (1);
 	return (status);
 }

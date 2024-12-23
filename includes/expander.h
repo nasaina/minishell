@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 07:48:44 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/23 08:40:01 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/23 10:40:24 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int			quote_simple(char *str, int i);
 int			quote_double(char *str, int i);
 int			char_isquote(char c);
 int			name_token(char *str, int *i, char **name);
-int			handle_exit(t_expander *expander, t_env *env);
 char		*get_command(char *str);
 char		*str_insert(char *str, int count, int *i);
 char		*join_char(char *str, char c);
