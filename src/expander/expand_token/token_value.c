@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 08:10:25 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/22 15:02:53 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/23 14:49:08 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ t_chunk	*expander(char *str, t_env *env, t_type type)
 		if (split_all(&token, &result, &status, split))
 			continue ;
 	}
+	if (result == NULL)
+		result = ft_strdup("");
 	assemble_token(str, result, &token, i);
 	return (token);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_access.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:16:46 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/23 13:16:55 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/23 11:28:34 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

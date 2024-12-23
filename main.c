@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:05:14 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/23 13:31:29 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/23 16:52:33 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,53 @@ t_expander	*init_expander(char *str, t_env *env)
 
 void	run_shell(t_expander *expander, t_ast **ast, char **envp, t_env *env)
 {
+	pid_t	pid = -1;
+	int		status = 0;
+
 	*ast = NULL;
 	*ast = parse_args(expander, 1);
 	free_expander(expander);
-	pipe_check(*ast, env, envp);
+	if ((*ast)->type != AST_PIPE && isbuiltin(*ast))
+	{
+		int fd_in = dup(STDIN_FILENO);
+		int fd_out = dup(STDOUT_FILENO);
+		if ((*ast)->cmd->redir)
+			do_redir(*ast);
+		status = ms_builtins(*ast, env, fd_in, fd_out);
+		dup2(fd_in, STDIN_FILENO);
+		dup2(fd_out, STDOUT_FILENO);
+		close(fd_in);
+		close(fd_out);
+	}
+	else
+	{
+		pid = fork();
+		if (pid < 0)
+			perror("fork");
+		else if (pid == 0)
+		{
+			status = pipe_check(*ast, env, envp);
+			free_ast(*ast);
+			free_env(env);
+			exit (status);
+		}
+		else
+		{
+			signal(SIGINT, SIG_IGN);
+			waitpid(pid, &status, 0);
+			signal(SIGINT, &global_sigint);
+		}
+	}
+	if ( WIFEXITED(status) )
+		status = WEXITSTATUS(status);
+	if (WIFSIGNALED(status))
+	{
+		status = 128 + WTERMSIG(status);
+		if (status != 131)
+			ft_putstr_fd("\n", 2);
+		else
+			ft_putstr_fd("Quit (core dumped)\n", 2);
+	}
 	if (*ast)
 		free_ast(*ast);
 }

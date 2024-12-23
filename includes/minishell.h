@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:32:07 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/23 13:17:29 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/23 16:51:15 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void		handle_sigquit(int sig);
 void		free_chunks(t_chunk *lst);
 int			exec_pipe(t_ast *ast, t_env *env, char **envp);
 int			pipe_check(t_ast *ast, t_env *env, char **envp);
-void		exec_pipe_left(t_ast *ast, t_env *env,
+int			exec_pipe_left(t_ast *ast, t_env *env,
 				char **envp, int *pipe_fds);
 int			exec_pipe_right(t_ast *ast, t_env *env,
 				char **envp, int *pipe_fds);
@@ -65,6 +65,7 @@ void		free_tab(char **str);
 int			do_fork(t_ast *ast, t_env *env, char *path);
 int			exec_fork(t_ast *ast, char *path, t_env *env);
 int			str_isnum(char *str);
+int			isbuiltin(t_ast *ast);
 void		path_error(t_ast *ast, char *str);
 
 #endif

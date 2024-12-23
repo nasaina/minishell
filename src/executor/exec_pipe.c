@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 13:29:57 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/23 08:54:19 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/23 15:51:11 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	exec_pipe(t_ast *ast, t_env *env, char **envp)
 	pid_t	pid_left;
 	pid_t	pid_right;
 	int		status;
-	int		status_left;
+	int		status_left = -1;
 	int		pipe_fds[2];
 
 	if (pipe(pipe_fds) < 0)
@@ -41,7 +41,7 @@ int	exec_pipe(t_ast *ast, t_env *env, char **envp)
 	if (pid_left < 0)
 		perror("fork(left)");
 	else if (pid_left == 0)
-		exec_pipe_left(ast->left, env, envp, pipe_fds);
+		status_left = exec_pipe_left(ast->left, env, envp, pipe_fds);
 	pid_right = fork();
 	if (pid_right < 0)
 		perror("fork(right)");
@@ -60,20 +60,26 @@ int	exec_pipe(t_ast *ast, t_env *env, char **envp)
 	return (status);
 }
 
-void	exec_pipe_left(t_ast *ast, t_env *env, char **envp, int *pipe_fds)
+int	exec_pipe_left(t_ast *ast, t_env *env, char **envp, int *pipe_fds)
 {
+	int status;
+
 	if (ast)
 	{
 		close(pipe_fds[0]);
 		if (dup2(pipe_fds[1], 1) == -1)
 		{
 			perror("dup2(left)");
+			free_ast(ast);
 			exit(EXIT_FAILURE);
 		}
 		close(pipe_fds[1]);
-		pipe_check(ast, env, envp);
+		status = pipe_check(ast, env, envp);
+		return (status);
+		//free_ast(ast);
 	}
-	exit(EXIT_SUCCESS);
+	return (EXIT_FAILURE);
+	//exit(EXIT_SUCCESS);
 }
 
 int	exec_pipe_right(t_ast *ast, t_env *env, char **envp, int *pipe_fds)
@@ -87,11 +93,13 @@ int	exec_pipe_right(t_ast *ast, t_env *env, char **envp, int *pipe_fds)
 		if (dup2(pipe_fds[0], 0))
 		{
 			perror("dup2(right)");
-			exit(EXIT_FAILURE);
+			//free_ast(ast);
+			return (EXIT_FAILURE);
 		}
 		close(pipe_fds[0]);
 		status = pipe_check(ast, env, envp);
-		exit (status);
+		//free_ast(ast);
+		return (status);
 	}
 	return (EXIT_FAILURE);
 }

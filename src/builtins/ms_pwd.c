@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 11:24:31 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/22 17:33:21 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/23 16:23:06 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	change_env_pwd(t_env *env)
 	is_double(&env, "PWD");
 	new_dir = ft_strjoin("PWD=", cwd);
 	env_back(&env, new_dir);
+	free(new_dir);
 }
 
 void	change_env_oldpwd(t_env *env, char *cwd)
@@ -49,4 +50,5 @@ void	change_env_oldpwd(t_env *env, char *cwd)
 	is_double(&env, "OLDPWD");
 	new_dir = ft_strjoin("OLDPWD=", cwd);
 	env_back(&env, new_dir);
+	free(new_dir);
 }

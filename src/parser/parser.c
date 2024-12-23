@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 11:38:08 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/20 07:59:14 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/23 14:07:56 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ t_redir	*get_redir(t_expander **expander, t_redir *redir)
 
 	type = (*expander)->type;
 	*expander = (*expander)->next;
+	if (*expander == NULL)
+		return (NULL);
 	add_redir_back(&redir, (*expander)->cmd, type);
+	*expander = (*expander)->next;
 	return (redir);
 }
 
@@ -65,11 +68,11 @@ t_cmd	*get_cmd(t_expander **expander)
 		if ((*expander)->type == WORD)
 		{
 			cmd->args[i] = ft_strdup((*expander)->cmd);
+			*expander = (*expander)->next;
 			i++;
 		}
 		else
 			cmd->redir = get_redir(expander, cmd->redir);
-		*expander = (*expander)->next;
 	}
 	if (*expander == NULL)
 		cmd->args[i] = NULL;
