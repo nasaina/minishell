@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 17:00:51 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/22 17:07:24 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/23 09:12:11 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,8 @@ int	one_hd(char *str)
 		}
 		if (str[i] && str[i] == '<' && str[i + 1] == '<' && status == 0)
 			return (1);
-		i++;
+		if (i < (int)ft_strlen(str))
+			i++;
 	}
 	return (0);
 }

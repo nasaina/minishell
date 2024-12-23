@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 07:48:44 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/22 17:31:08 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/23 08:40:01 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ typedef struct s_expander
 
 int			name_token(char *str, int *i, char **name);
 int			ignore_value(char	*str, char **result, int *i, int *status);
-int			insert_char(char **result, char *str, int *status, int *i);
 int			dquote_status(char *str);
 int			no_quote(char *str, int i);
 int			quote_simple(char *str, int i);
@@ -71,5 +70,9 @@ char		**add_split(char *str, int	*status, int *i, t_chunk **token);
 int			split_all(t_chunk **token, char **result,
 				int *status, char **split);
 void		init_token(t_chunk **token, t_env *env, int *i, char **result);
+int			count_cmd(t_expander *expander);
+int			count_token(t_expander *expander);
+t_cmd		*get_cmd(t_expander **expander);
+t_ast		*parse_args(t_expander *expander, int file);
 
 #endif
