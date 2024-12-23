@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_access.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:16:46 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/22 14:49:50 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/23 11:28:34 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	*check_access(t_ast *ast)
 	path = NULL;
 	if (access(command, F_OK) == 0)
 	{
-		path = ast->cmd->args[0];
+		path = ft_strdup(ast->cmd->args[0]);
 		return (path);
 	}
 	else

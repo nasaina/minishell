@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 14:15:32 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/20 07:59:18 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/23 13:35:59 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	add_redir_back(t_redir **redir, char *file, t_type type)
 	t_redir	*element;
 	t_redir	*tmp;
 
+	if (!file)
+		return ;
 	element = create_redir(file, type);
 	if (*redir)
 	{

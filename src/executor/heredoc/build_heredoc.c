@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 17:00:51 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/23 09:12:11 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/23 15:18:39 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int	heredoc_built(char *str, t_env *env)
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	waitpid(hd_pid, &status, 0);
+	signal(SIGINT, &global_sigint);
 	return (check_hdstatus(status, data));
 }
 
