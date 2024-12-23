@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:32:07 by nandrian          #+#    #+#             */
 /*   Updated: 2024/12/23 16:51:15 by nandrian         ###   ########.fr       */
@@ -66,5 +66,6 @@ int			do_fork(t_ast *ast, t_env *env, char *path);
 int			exec_fork(t_ast *ast, char *path, t_env *env);
 int			str_isnum(char *str);
 int			isbuiltin(t_ast *ast);
+void		path_error(t_ast *ast, char *str);
 
 #endif

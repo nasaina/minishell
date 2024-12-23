@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:51:47 by nandrian          #+#    #+#             */
 /*   Updated: 2024/12/23 16:52:13 by nandrian         ###   ########.fr       */
@@ -64,6 +64,7 @@ int	exec_fork(t_ast *ast, char *path, t_env *env)
 		free_tab(envp);
 		return (126);
 	}
+	free(envp);
 	return (0);
 }
 

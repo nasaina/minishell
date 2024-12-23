@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 07:15:40 by nandrian          #+#    #+#             */
 /*   Updated: 2024/12/23 16:04:03 by nandrian         ###   ########.fr       */
@@ -50,8 +50,7 @@ int	ms_builtins(t_ast *ast, t_env *env, int in, int out)
 	int	status;
 
 	status = -1;
-	if (ft_strcmp(ast->cmd->args[0], "cd") == 0)
-		return (ms_cd(ast, env));
+	status = ms_cd(ast, env);
 	status = ms_echo(ast->cmd);
 	status = ms_pwd(ast);
 	status = ms_env(ast->cmd->args, env);
