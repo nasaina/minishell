@@ -37,17 +37,9 @@ int	read_input(char **str, t_env *env)
 	if (one_hd(*str))
 	{
 		heredoc_status = heredoc_built(*str, env);
-		if (heredoc_status == -2)
-		{
-			ms_writestatus(0);
+		ms_writestatus(heredoc_status);
+		if (heredoc_status)
 			return (1);
-		}
-		else
-		{
-			ms_writestatus(heredoc_status);
-			if (heredoc_status != 0)
-				return (1);
-		}
 	}
 	return (0);
 }
@@ -63,11 +55,6 @@ t_expander	*init_expander(char *str, t_env *env)
 	expander = NULL;
 	expander = expand_str(chunks, env);
 	free_chunks(chunks);
-	if (handle_exit(expander, env))
-	{
-		ms_writestatus(1);
-		return (NULL);
-	}
 	return (expander);
 }
 
