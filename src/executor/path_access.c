@@ -6,16 +6,16 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:16:46 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/22 14:49:50 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/23 13:16:55 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	path_error(t_ast *ast)
+void	path_error(t_ast *ast, char *str)
 {
 	ft_putstr_fd(ast->cmd->args[0], 2);
-	ft_putstr_fd(": command not found\n", 2);
+	ft_putstr_fd(str, 2);
 }
 
 void	free_tab(char **str)
@@ -63,7 +63,7 @@ char	*check_path(char **pathlist, t_ast *ast)
 	free_tab(pathlist);
 	free(command);
 	if (ast->cmd->args[0] != NULL)
-		path_error(ast);
+		path_error(ast, ": command not found\n");
 	return (NULL);
 }
 
@@ -76,7 +76,7 @@ char	*check_access(t_ast *ast)
 	path = NULL;
 	if (access(command, F_OK) == 0)
 	{
-		path = ast->cmd->args[0];
+		path = ft_strdup(ast->cmd->args[0]);
 		return (path);
 	}
 	else
