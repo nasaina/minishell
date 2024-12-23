@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:32:07 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/22 18:21:29 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/23 13:17:29 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,6 @@ void		free_tab(char **str);
 int			do_fork(t_ast *ast, t_env *env, char *path);
 int			exec_fork(t_ast *ast, char *path, t_env *env);
 int			str_isnum(char *str);
+void		path_error(t_ast *ast, char *str);
 
 #endif

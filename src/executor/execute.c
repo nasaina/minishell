@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:51:47 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/23 08:54:37 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/23 13:36:13 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int	exec_fork(t_ast *ast, char *path, t_env *env)
 		free_env(env);
 		return (126);
 	}
+	free(envp);
 	return (0);
 }
 
@@ -89,7 +90,7 @@ int	exec_cmd(t_ast *ast, t_env *env)
 		signal(SIGINT, SIG_DFL);
 		status = do_fork(ast, env, path);
 		free(path);
-		exit (EXIT_FAILURE);
+		exit (status);
 	}
 	else
 	{
@@ -102,8 +103,11 @@ int	exec_cmd(t_ast *ast, t_env *env)
         status = WEXITSTATUS(status);
 	if (WIFSIGNALED(status))
 	{
-		ft_putstr_fd("\n", 2);
+		if (status != 131)
+			ft_putstr_fd("\n", 2);
 		status = 128 + WTERMSIG(status);
+		if (status == 131)
+			ft_putstr_fd("Quit (core dumped)\n", 2);
 	}
 	return (status);
 }

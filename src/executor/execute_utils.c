@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 10:19:54 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/23 08:08:49 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/23 13:35:21 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
