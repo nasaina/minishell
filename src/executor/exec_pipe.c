@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 13:29:57 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/22 14:33:50 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/23 08:54:19 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	exec_pipe(t_ast *ast, t_env *env, char **envp)
 	pid_t	pid_left;
 	pid_t	pid_right;
 	int		status;
+	int		status_left;
 	int		pipe_fds[2];
 
 	if (pipe(pipe_fds) < 0)
@@ -48,10 +49,14 @@ int	exec_pipe(t_ast *ast, t_env *env, char **envp)
 		status = exec_pipe_right(ast->right, env, envp, pipe_fds);
 	close(pipe_fds[0]);
 	close(pipe_fds[1]);
-	waitpid(pid_left, &status, 0);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+	waitpid(pid_left, &status_left, 0);
 	waitpid(pid_right, &status, 0);
 	if (WIFEXITED(status))
 		status = WEXITSTATUS(status);
+	if (WIFSIGNALED(status_left))
+		ft_putstr_fd("\n", 2);
 	return (status);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:51:47 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/22 15:06:51 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/23 08:54:37 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ int	exec_fork(t_ast *ast, char *path, t_env *env)
 		free_env(env);
 		return (127);
 	}
+	if (ast->cmd->redir)
+			do_redir(ast);
 	if (execve(path, ast->cmd->args, envp) == -1)
 	{
 		perror((const char *)(ast->cmd->args[0]));
@@ -83,17 +85,26 @@ int	exec_cmd(t_ast *ast, t_env *env)
 		perror("fork");
 	else if (pid == 0)
 	{
+		signal(SIGQUIT, SIG_DFL);
+		signal(SIGINT, SIG_DFL);
 		status = do_fork(ast, env, path);
 		free(path);
 		exit (EXIT_FAILURE);
 	}
 	else
 	{
+		signal(SIGINT, SIG_IGN);
 		free(path);
 		waitpid(pid, &status, 0);
+		signal(SIGINT, &global_sigint);
 	}
 	if ( WIFEXITED(status) )
         status = WEXITSTATUS(status);
+	if (WIFSIGNALED(status))
+	{
+		ft_putstr_fd("\n", 2);
+		status = 128 + WTERMSIG(status);
+	}
 	return (status);
 }
 

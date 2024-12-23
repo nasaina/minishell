@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:05:14 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/22 18:06:07 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/23 09:07:04 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	start_signal(int ac, char **av, char **env)
 {
 	ignore_args(ac, av, env);
-	signal(SIGINT, &handle_sigint);
+	signal(SIGINT, &global_sigint);
 	signal(SIGQUIT, SIG_IGN);
 }
 
@@ -37,9 +37,17 @@ int	read_input(char **str, t_env *env)
 	if (one_hd(*str))
 	{
 		heredoc_status = heredoc_built(*str, env);
-		ms_writestatus(heredoc_status);
-		if (heredoc_status)
+		if (heredoc_status == -2)
+		{
+			ms_writestatus(0);
 			return (1);
+		}
+		else
+		{
+			ms_writestatus(heredoc_status);
+			if (heredoc_status != 0)
+				return (1);
+		}
 	}
 	return (0);
 }
