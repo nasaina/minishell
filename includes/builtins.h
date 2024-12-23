@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 17:24:41 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/22 17:45:10 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/23 10:58:19 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ void	ft_printenv(t_env *env, int *i);
 void	print_env(t_env *env);
 int		ms_env(char **str, t_env *env);
 char	**init_builtins(void);
-int		ms_builtins(t_ast *ast, t_env *env);
+int		ms_builtins(t_ast *ast, t_env *env, int in, int out);
 t_env	*get_env(char *str);
 t_env	*env_last(t_env *env);
 void	env_back(t_env **env, char *str);
-int		ft_exit(t_expander *expander, t_env *env);
-int		handle_exit(t_expander *expander, t_env *env);
+int		ft_exit(t_ast *ast, t_env *env, int in, int out);
+int		handle_exit(t_ast *ast, t_env *env, int in, int out);
 char	*get_home(t_env *env);
 char	*get_cd(char *str, char *last_direcotry, t_env *env);
 char	*last_dir(t_env *env);

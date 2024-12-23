@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:05:14 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/23 10:03:47 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/23 10:44:01 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,6 @@ t_expander	*init_expander(char *str, t_env *env)
 	expander = NULL;
 	expander = expand_str(chunks, env);
 	free_chunks(chunks);
-	if (handle_exit(expander, env))
-	{
-		ms_writestatus(1);
-		return (NULL);
-	}
 	return (expander);
 }
 
