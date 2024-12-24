@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:21:58 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/24 14:40:08 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/24 17:35:16 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	do_redir(t_ast *ast)
 	t_redir		*redir;
 
 	i = 0;
+	status = -1;
 	redir = ast->cmd->redir;
 	while (redir)
 	{

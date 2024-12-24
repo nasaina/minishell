@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 08:34:21 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/24 14:39:36 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/24 17:34:48 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	redir_out(t_ast *ast, t_redir *redir)
 	if (redir->file == NULL || redir->file[0] == 0)
 	{
 		ft_putstr_fd("minishell : No such file or directory\n", 2);
-		return (1);
+		return (-1);
 	}
 	fd = open(redir->file, O_RDONLY | O_WRONLY | O_CREAT
 			| O_TRUNC, 0644);
@@ -64,7 +64,7 @@ int	redir_append(t_ast *ast, t_redir *redir)
 	if (redir->file == NULL || redir->file[0] == 0)
 	{
 		ft_putstr_fd("minishell : No such file or directory\n", 2);
-		return (1);
+		return (-1);
 	}
 	fd = open(redir->file, O_RDONLY | O_WRONLY | O_CREAT | O_APPEND, 0644);
 	dup2(fd, STDOUT_FILENO);

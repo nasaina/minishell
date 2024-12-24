@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:05:14 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/24 15:51:11 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/24 17:40:05 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,9 +132,12 @@ void	run_shell(t_expander *expander, t_ast **ast, char **envp, t_env *env)
 	{
 		int fd_in = dup(STDIN_FILENO);
 		int fd_out = dup(STDOUT_FILENO);
-		if ((*ast)->cmd->redir)
-			do_redir(*ast);
 		status = ms_builtins(*ast, env, fd_in, fd_out);
+		if ((*ast)->cmd->redir)
+		{
+			if (do_redir(*ast) < 0)
+				status = 1;
+		}
 		dup2(fd_in, STDIN_FILENO);
 		dup2(fd_out, STDOUT_FILENO);
 		close(fd_in);
