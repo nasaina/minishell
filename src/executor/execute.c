@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:51:47 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/24 11:16:45 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/24 14:08:50 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*take_path(t_ast *ast, t_env *env)
 	char	*path;
 	
 	path = NULL;
-	if (is_command(ast))
+	if (ast->cmd->args[0][0] == '.')
 		path = check_access(ast);
 	else
 		path = check_path(path_list(env), ast);
@@ -47,6 +47,7 @@ int	exec_fork(t_ast *ast, char *path, t_env *env)
 {
 	char	**envp;
 	int		status;
+	struct	stat st;
 
 	status = -1;
 	envp = take_env(env);
@@ -67,7 +68,12 @@ int	exec_fork(t_ast *ast, char *path, t_env *env)
 	}
 	if (execve(path, ast->cmd->args, envp) == -1)
 	{
-		perror((const char *)(ast->cmd->args[0]));
+		if (stat(path, &st) == -1)
+			perror("stat");
+		if (S_ISDIR(st.st_mode))
+			path_error(ast, " :Is a directory\n");
+		else
+			perror((const char *)(ast->cmd->args[0]));
 		free(path);
 		free_tab(envp);
 		return (126);
@@ -82,6 +88,11 @@ int	exec_cmd(t_ast *ast, t_env *env)
 	char	*path;
 
 	path = NULL;
+	if (ast->cmd->args && ast->cmd->args[0] && !ast->cmd->args[0][0])
+	{
+		printf("minishell : : command not found\n");
+		return (127);
+	}
 	if (ast->cmd->args && ast->cmd->args[0])
 		path = take_path(ast, env);
 	signal(SIGQUIT, SIG_DFL);

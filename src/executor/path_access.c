@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:16:46 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/23 11:28:34 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/24 13:59:14 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	path_error(t_ast *ast, char *str)
 {
+	ft_putstr_fd("minishell :", 2);
 	ft_putstr_fd(ast->cmd->args[0], 2);
 	ft_putstr_fd(str, 2);
 }
