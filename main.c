@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:05:14 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/24 14:42:34 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/24 15:27:48 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ int	check_file(t_expander *expander)
 			if (tmp && tmp->cmd[0] == 0)
 				return (1);
 		}
+		if (!tmp)
+			break ;
 		tmp = tmp->next;
 	}
 	return (0);
@@ -100,6 +102,7 @@ t_expander	*init_expander(char *str, t_env *env)
 
 	chunks = NULL;
 	chunks = lexing(str);
+	
 	if (redir_syntax(chunks))
 		return (NULL);
 	if (heredoc_start(str, chunks, env))

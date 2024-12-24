@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 08:20:55 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/22 14:10:11 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/24 15:27:35 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,12 @@ int	extract_double(char *str, char **result, int *i)
 
 	env = get_t_env(NULL);
 	*i += 1;
+	if ((str[*i] && str[*i] == '"' && !str[*i + 1]) || !str[*i])
+	{
+		if (*result == NULL)
+			*result = ft_strdup("");
+		return (1);
+	}
 	while (str[*i] && str[*i] != '"')
 	{
 		ignore_special(str, result, i);
@@ -52,6 +58,12 @@ int	extract_word(char *str, char **result, int *i, int status)
 int	extract_single(char *str, char **result, int *i)
 {
 	*i += 1;
+	if ((str[*i] && str[*i] == '\'') || !str[*i])
+	{
+		if (*result == NULL)
+			*result = ft_strdup("");
+		return (1);
+	}
 	while (str[*i] && str[*i] != '\'')
 	{
 		*result = join_char(*result, str[*i]);
