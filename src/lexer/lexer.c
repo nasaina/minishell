@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 09:34:29 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/20 08:16:02 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/24 08:58:31 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	count_args(int count, char *str, int i, t_type *type)
 
 void	skip_space(char *str, int *i)
 {
-	while (str[*i] == 32 && str[*i])
+	while ((str[*i] == 32 || str[*i] == '\t') && str[*i])
 		*i += 1;
 }
 

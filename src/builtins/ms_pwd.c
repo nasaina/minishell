@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 11:24:31 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/23 16:23:06 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/24 08:08:18 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	ms_pwd(t_ast *ast)
 {
 	char	pwd[PATH_MAX];
 
-	(void)pwd;
 	if (!ft_strncmp(ast->cmd->args[0], "pwd", 4))
 	{
 		if (getcwd(pwd, PATH_MAX) != NULL)
