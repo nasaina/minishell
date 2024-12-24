@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 13:29:57 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/24 11:18:51 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/24 14:32:44 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,11 @@ int	exec_pipe(t_ast *ast, t_env *env, char **envp)
 	pid_t	pid_left;
 	pid_t	pid_right;
 	int		status;
-	int		status_left = -1;
+	int		status_left;
 	int		pipe_fds[2];
 
+	status = -1;
+	status_left = -1;
 	if (pipe(pipe_fds) < 0)
 	{
 		perror("pipe");
@@ -41,21 +43,31 @@ int	exec_pipe(t_ast *ast, t_env *env, char **envp)
 		perror("fork(left)");
 	else if (pid_left == 0)
 		status_left = exec_pipe_left(ast->left, env, envp, pipe_fds);
-	pid_right = fork();
-	if (pid_right < 0)
-		perror("fork(right)");
-	else if (pid_right == 0)
-		status = exec_pipe_right(ast->right, env, envp, pipe_fds);
+	else
+	{
+		pid_right = fork();
+		if (pid_right < 0)
+			perror("fork(right)");
+		else if (pid_right == 0)
+		{
+			status = exec_pipe_right(ast->right, env, envp, pipe_fds);
+		}
+		else
+		{
+			close(pipe_fds[0]);
+			close(pipe_fds[1]);
+			signal(SIGINT, SIG_IGN);
+			signal(SIGQUIT, SIG_IGN);
+			waitpid(pid_left, &status_left, 0);
+			waitpid(pid_right, &status, 0);
+			if (WIFEXITED(status))
+				status = WEXITSTATUS(status);
+			if (WIFSIGNALED(status_left))
+				ft_putstr_fd("\n", 2);
+		}
+	}
 	close(pipe_fds[0]);
 	close(pipe_fds[1]);
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
-	waitpid(pid_left, &status_left, 0);
-	waitpid(pid_right, &status, 0);
-	if (WIFEXITED(status))
-		status = WEXITSTATUS(status);
-	if (WIFSIGNALED(status_left))
-		ft_putstr_fd("\n", 2);
 	return (status);
 }
 
@@ -65,15 +77,15 @@ int	exec_pipe_left(t_ast *ast, t_env *env, char **envp, int *pipe_fds)
 
 	if (ast)
 	{
-		close(pipe_fds[0]);
 		if (dup2(pipe_fds[1], 1) == -1)
 		{
 			perror("dup2(left)");
 			free_ast(ast);
 			exit(EXIT_FAILURE);
 		}
-		close(pipe_fds[1]);
 		status = pipe_check(ast, env, envp);
+		// close(pipe_fds[0]);
+		close(pipe_fds[1]);
 		return (status);
 	}
 	return (EXIT_FAILURE);
@@ -86,13 +98,13 @@ int	exec_pipe_right(t_ast *ast, t_env *env, char **envp, int *pipe_fds)
 	status = -1;
 	if (ast)
 	{
-		close(pipe_fds[1]);
 		if (dup2(pipe_fds[0], 0))
 		{
 			perror("dup2(right)");
 			return (EXIT_FAILURE);
 		}
 		close(pipe_fds[0]);
+		close(pipe_fds[1]);
 		status = pipe_check(ast, env, envp);
 		return (status);
 	}
