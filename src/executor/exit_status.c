@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 08:03:05 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/23 09:55:46 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/24 08:17:20 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ms_writestatus(int status)
 	int		fd;
 	char	*str;
 
-	fd = open(".ms_status", O_CREAT | O_WRONLY | O_TRUNC, 0777);
+	fd = open("/tmp/.ms_status", O_CREAT | O_WRONLY | O_TRUNC, 0777);
 	if (fd == -1)
 		return ;
 	str = ft_itoa(status);
@@ -32,7 +32,7 @@ void	ms_exitstatus(char **result, int *i)
 	char	*str;
 	int		len;
 
-	fd = open(".ms_status", O_RDONLY);
+	fd = open("/tmp/.ms_status", O_RDONLY);
 	if (fd == -1)
 	{
 		*result = join_free(*result, ft_itoa(0), 2);
@@ -61,7 +61,7 @@ int	exit_status(void)
 	int		status;
 	char	*str;
 
-	fd = open(".ms_status", O_RDONLY);
+	fd = open("/tmp/.ms_status", O_RDONLY);
 	if (fd == -1)
 		return (0);
 	str = get_next_line(fd);
