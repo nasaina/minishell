@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:05:14 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/24 12:29:14 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/24 12:58:20 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,28 @@ int	read_input(char **str, t_env *env)
 	return (0);
 }
 
-t_expander	*init_expander(char *str, t_env *env)
+int	check_file(t_expander *expander)
 {
-	t_chunk		*chunks;
-	t_chunk		*tmp;
-	t_expander	*expander;
-	int			heredoc_status;
+	t_expander *tmp;
 
-	chunks = NULL;
-	chunks = lexing(str);
+	tmp = expander;
+	while (tmp)
+	{
+		if (tmp->type != WORD && tmp->type != PIPE)
+		{
+			tmp = tmp->next;
+			if (tmp && tmp->cmd[0] == 0)
+				return (1);
+		}
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
+int	redir_syntax(t_chunk *chunks)
+{
+	t_chunk *tmp;
+
 	tmp = chunks;
 	while (tmp)
 	{
@@ -52,14 +65,21 @@ t_expander	*init_expander(char *str, t_env *env)
 			tmp = tmp->next;
 			if (tmp && tmp->type != WORD)
 			{
-				ft_putstr_fd("Syntax error\n", 2);
+				ft_putstr_fd("minshell :syntax error\n", 2);
 				ms_writestatus(2);
 				free_chunks(chunks);
-				return (NULL);
+				return (1);
 			}
 		}
 		tmp = tmp->next;
 	}
+	return (0);
+}
+
+int	heredoc_start(char *str, t_chunk *chunks, t_env *env)
+{
+	int	heredoc_status;
+
 	if (one_hd(str))
 	{
 		heredoc_status = heredoc_built(str, env, chunks);
@@ -67,12 +87,33 @@ t_expander	*init_expander(char *str, t_env *env)
 		if (heredoc_status)
 		{
 			free_chunks(chunks);
-			return (NULL);
+			return (1);
 		}
 	}
+	return (0);
+}
+
+t_expander	*init_expander(char *str, t_env *env)
+{
+	t_chunk		*chunks;
+	t_expander	*expander;
+
+	chunks = NULL;
+	chunks = lexing(str);
+	if (redir_syntax(chunks))
+		return (NULL);
+	if (heredoc_start(str, chunks, env))
+		return (NULL);
 	free(str);
 	expander = NULL;
 	expander = expand_str(chunks, env);
+	if (expander && check_file(expander))
+	{
+		ft_putstr_fd("minishell: : No such file or directory\n", 2);
+		ms_writestatus(1);
+		free_expander(expander);
+		return (NULL);
+	}
 	return (expander);
 }
 
@@ -84,19 +125,6 @@ void	run_shell(t_expander *expander, t_ast **ast, char **envp, t_env *env)
 	*ast = NULL;
 	*ast = parse_args(expander, 1);
 	free_expander(expander);
-	// if ((*ast)->cmd->redir)
-	// {
-	// 	while ((*ast)->cmd->redir)
-	// 	{
-	// 		if (((*ast)->cmd->redir->file == NULL || (*ast)->cmd->redir->file[0] == 0) && (*ast)->cmd->redir->type != HEREDOC)
-	// 		{
-	// 			ft_putstr_fd("minishell: : No such file or directory\n", 2);
-	// 			free_ast(*ast);
-	// 			return ;
-	// 		}
-	// 		(*ast)->cmd->redir = (*ast)->cmd->redir->next;
-	// 	}
-	// }
 	if ((*ast)->type != AST_PIPE && isbuiltin(*ast))
 	{
 		int fd_in = dup(STDIN_FILENO);
