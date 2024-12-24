@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 08:34:21 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/24 09:59:43 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/24 14:39:36 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,12 @@ int	redir_out(t_ast *ast, t_redir *redir)
 int	redir_in(t_ast *ast, t_redir *redir)
 {
 	int		fd;
+	int		status;
 
 	fd = open(redir->file, O_RDONLY);
-	redir_error(fd, redir->file, ast);
+	status = redir_error(fd, redir->file, ast);
+	if (status < 0)
+		return (status);
 	dup2(fd, STDIN_FILENO);
 	close(fd);
 	return (1);

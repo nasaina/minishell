@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 17:07:59 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/23 09:13:55 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/24 12:30:08 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef struct s_heredoc
 t_heredoc	*get_here_data(t_heredoc *heredoc);
 void		init_heredoc(t_env *env, t_heredoc **heredoc);
 void		do_heredoc(char *str, t_heredoc *data, int i);
-int			heredoc_built(char *str, t_env *env);
+int			heredoc_built(char *str, t_env *env, t_chunk *chunks);
 int			one_hd(char *str);
 int			hdoc_countsimple(char *str, int i, t_type *type);
 int			hdoc_countdouble(char *str, int i, t_type *type);

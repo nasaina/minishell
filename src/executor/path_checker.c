@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_checker.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 15:12:38 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/22 10:01:25 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/24 11:16:01 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,13 @@ char	**path_list(t_env *env)
 			tmp = tmp->next;
 	}
 	if (!list)
-		return (NULL);
+	{
+		list = ft_strdup("./");
+		pl = malloc(2 * sizeof(char *));
+		pl[0] = list;
+		pl[1] = NULL;
+		return(pl);
+	}
 	pl = ft_split(list + 5, ':');
 	return (pl);
 }

@@ -6,20 +6,21 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:21:58 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/24 09:53:41 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/24 14:40:08 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	redir_error(int fd, char *str, t_ast *ast)
+int	redir_error(int fd, char *str, t_ast *ast)
 {
+	(void)ast;
 	if (fd < 0)
 	{
 		perror(str);
-		free_ast(ast);
-		exit(EXIT_FAILURE);
+		return (-1);
 	}
+	return (0);
 }
 
 int	do_redir(t_ast *ast)
@@ -40,6 +41,8 @@ int	do_redir(t_ast *ast)
 			status = redir_append(ast, redir);
 		else if (redir->type == HEREDOC)
 			status = redir_heredoc(ast);
+		if (status < 0)
+			return (-1);
 		i++;
 		redir = redir->next;
 	}
