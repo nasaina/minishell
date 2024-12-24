@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 17:00:51 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/24 09:55:45 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/24 12:29:49 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	do_heredoc(char *str, t_heredoc *data, int i)
 	free_redir(data->lst);
 }
 
-int	heredoc_built(char *str, t_env *env)
+int	heredoc_built(char *str, t_env *env, t_chunk *chunks)
 {
 	int			i;
 	int			status;
@@ -77,6 +77,7 @@ int	heredoc_built(char *str, t_env *env)
 		do_heredoc(str, data, i);
 		free_env(env);
 		free(data);
+		free_chunks(chunks);
 		exit(0);
 	}
 	signal(SIGINT, SIG_IGN);

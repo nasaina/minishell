@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:05:14 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/24 11:22:59 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/24 12:29:14 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_expander	*init_expander(char *str, t_env *env)
 	}
 	if (one_hd(str))
 	{
-		heredoc_status = heredoc_built(str, env);
+		heredoc_status = heredoc_built(str, env, chunks);
 		ms_writestatus(heredoc_status);
 		if (heredoc_status)
 		{
