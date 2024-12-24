@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:32:07 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/23 16:51:15 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/24 09:53:23 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int			exec_pipe_left(t_ast *ast, t_env *env,
 				char **envp, int *pipe_fds);
 int			exec_pipe_right(t_ast *ast, t_env *env,
 				char **envp, int *pipe_fds);
-void		do_redir(t_ast *ast);
+int			do_redir(t_ast *ast);
 void		free_ast(t_ast *ast);
 int			check_input(char **args, int i, char *name);
 int			double_input(char **str, int i, char *args);

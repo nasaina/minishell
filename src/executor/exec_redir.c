@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 08:34:21 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/23 16:51:01 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/24 09:59:43 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	redir_heredoc(t_ast *ast)
 	int		fd;
 
 	file = NULL;
-	file = join_free("/tmp/.hd_tmp", ft_itoa(ast->file), 1);
+	file = join_free(".hd_tmp", ft_itoa(ast->file), 1);
 	fd = open(file, O_RDONLY);
 	dup2(fd, STDIN_FILENO);
 	close(fd);

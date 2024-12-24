@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:21:58 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/23 16:50:41 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/24 09:53:41 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@ void	redir_error(int fd, char *str, t_ast *ast)
 	}
 }
 
-void	do_redir(t_ast *ast)
+int	do_redir(t_ast *ast)
 {
 	int			i;
+	int			status;
 	t_redir		*redir;
 
 	i = 0;
@@ -32,14 +33,15 @@ void	do_redir(t_ast *ast)
 	while (redir)
 	{
 		if (redir->type == IN)
-			redir_in(ast, redir);
+			status = redir_in(ast, redir);
 		else if (redir->type == OUT)
-			redir_out(ast, redir);
+			status = redir_out(ast, redir);
 		else if (redir->type == APPEND)
-			redir_append(ast, redir);
+			status = redir_append(ast, redir);
 		else if (redir->type == HEREDOC)
-			redir_heredoc(ast);
+			status = redir_heredoc(ast);
 		i++;
 		redir = redir->next;
 	}
+	return (status);
 }
