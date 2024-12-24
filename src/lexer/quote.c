@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 11:04:22 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/13 16:10:57 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/24 08:58:24 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	qword_len(char *str, int i)
 	int	count;
 
 	count = 0;
-	while (str[i] != 32 && str[i] && is_word(str[i]))
+	while (str[i] != 32 && str[i] != '\t' && str[i] && is_word(str[i]))
 	{
 		count++;
 		single_quote(str, &i, &count);

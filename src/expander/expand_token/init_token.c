@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 14:55:26 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/22 15:03:14 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/24 07:48:53 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int	split_all(t_chunk **token, char **result, int *status, char **split)
 		if (split_token(result, token, status, split))
 			return (1);
 	}
+	else
+		free_tab(split);
 	return (0);
 }
 
