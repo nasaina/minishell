@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 13:29:57 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/24 08:07:20 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/24 11:18:51 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int	pipe_check(t_ast *ast, t_env *env, char **envp)
 		status = exec_pipe(ast, env, envp);
 	else
 		status = check_cmd(ast, env);
-	ms_writestatus(status);
 	return (status);
 }
 
@@ -76,10 +75,8 @@ int	exec_pipe_left(t_ast *ast, t_env *env, char **envp, int *pipe_fds)
 		close(pipe_fds[1]);
 		status = pipe_check(ast, env, envp);
 		return (status);
-		//free_ast(ast);
 	}
 	return (EXIT_FAILURE);
-	//exit(EXIT_SUCCESS);
 }
 
 int	exec_pipe_right(t_ast *ast, t_env *env, char **envp, int *pipe_fds)
@@ -93,12 +90,10 @@ int	exec_pipe_right(t_ast *ast, t_env *env, char **envp, int *pipe_fds)
 		if (dup2(pipe_fds[0], 0))
 		{
 			perror("dup2(right)");
-			//free_ast(ast);
 			return (EXIT_FAILURE);
 		}
 		close(pipe_fds[0]);
 		status = pipe_check(ast, env, envp);
-		//free_ast(ast);
 		return (status);
 	}
 	return (EXIT_FAILURE);

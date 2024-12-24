@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:05:14 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/24 09:35:35 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/24 11:22:59 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,18 +83,20 @@ void	run_shell(t_expander *expander, t_ast **ast, char **envp, t_env *env)
 
 	*ast = NULL;
 	*ast = parse_args(expander, 1);
-	while ((*ast)->cmd->redir)
-	{
-		if (((*ast)->cmd->redir->file == NULL || (*ast)->cmd->redir->file[0] == 0) && (*ast)->cmd->redir->type != HEREDOC)
-		{
-			ft_putstr_fd("minishell: : No such file or directory\n", 2);
-			free_expander(expander);
-			free_ast(*ast);
-			return ;
-		}
-		(*ast)->cmd->redir = (*ast)->cmd->redir->next;
-	}
 	free_expander(expander);
+	// if ((*ast)->cmd->redir)
+	// {
+	// 	while ((*ast)->cmd->redir)
+	// 	{
+	// 		if (((*ast)->cmd->redir->file == NULL || (*ast)->cmd->redir->file[0] == 0) && (*ast)->cmd->redir->type != HEREDOC)
+	// 		{
+	// 			ft_putstr_fd("minishell: : No such file or directory\n", 2);
+	// 			free_ast(*ast);
+	// 			return ;
+	// 		}
+	// 		(*ast)->cmd->redir = (*ast)->cmd->redir->next;
+	// 	}
+	// }
 	if ((*ast)->type != AST_PIPE && isbuiltin(*ast))
 	{
 		int fd_in = dup(STDIN_FILENO);
@@ -128,7 +130,7 @@ void	run_shell(t_expander *expander, t_ast **ast, char **envp, t_env *env)
 		}
 		if (WIFEXITED(status))
 			status = WEXITSTATUS(status);
-		if (WIFSIGNALED(status))
+		else 	if (WIFSIGNALED(status))
 		{
 			status = 128 + WTERMSIG(status);
 			if (status != 131)
