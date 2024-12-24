@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 07:48:44 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/23 10:40:24 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/24 09:49:32 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,6 @@ int			count_cmd(t_expander *expander);
 int			count_token(t_expander *expander);
 t_cmd		*get_cmd(t_expander **expander);
 t_ast		*parse_args(t_expander *expander, int file);
+char		**ft_split_tab(char const *s);
 
 #endif
