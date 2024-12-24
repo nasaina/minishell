@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 11:24:31 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/24 08:08:18 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/24 15:58:10 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,29 @@ int	ms_pwd(t_ast *ast)
 	return (0);
 }
 
+int	check_ifexist(t_env *env, char *str)
+{
+	t_env	*tmp;
+	char	*name;
+
+	tmp = env;
+	while (tmp)
+	{
+		name = env_name(tmp->env);
+		if (!ft_strcmp(name, str))
+			return (1);
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
 void	change_env_pwd(t_env *env)
 {
 	char	cwd[PATH_MAX];
 	char	*new_dir;
 
+	if (!check_ifexist(env, "PWD"))
+		return ;
 	getcwd(cwd, PATH_MAX);
 	is_double(&env, "PWD");
 	new_dir = ft_strjoin("PWD=", cwd);
@@ -45,6 +63,8 @@ void	change_env_oldpwd(t_env *env, char *cwd)
 {
 	char	*new_dir;
 
+	if (!check_ifexist(env, "OLDPWD"))
+		return ;
 	new_dir = NULL;
 	is_double(&env, "OLDPWD");
 	new_dir = ft_strjoin("OLDPWD=", cwd);

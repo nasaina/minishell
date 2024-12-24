@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:55:42 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/24 15:09:11 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/24 16:03:06 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,18 +53,16 @@ char	*get_cd(char *str, char *last_direcotry, t_env *env)
 	}
 	else if (str && ft_strncmp(str, "-", 2) == 0)
 	{
-		dir = join_free(NULL, last_direcotry, 1);
-		if (!dir)
+		if (!last_direcotry)
 			ft_putstr_fd("cd: OLDPWD not set\n", 2);
 		else if (getcwd(cwd, PATH_MAX) != NULL)
 		{
-			printf("%s\n", last_direcotry);
-			free(last_direcotry);
+			dir = ft_strdup(last_direcotry);
+			printf("%s\n", dir);
 		}
 	}
 	else
 		dir = ft_strdup(str);
-	free(last_direcotry);
 	return (dir);
 }
 
@@ -102,6 +100,8 @@ int	get_oldpwd(t_ast *ast, char *dir, char *last_directory, t_env *env)
 	new_dir = NULL;
 	if (getcwd(cwd, PATH_MAX) != NULL)
 	{
+		if (!dir)
+			return (1);
 		if (!chdir(dir))
 		{
 			free(dir);
@@ -140,6 +140,7 @@ int	ms_cd(t_ast *ast, t_env *env)
 			return (1);
 		}
 		dir = get_cd(ast->cmd->args[1], last_directory, env);
+		free(last_directory);
 		return (get_oldpwd(ast, dir, NULL, env));
 	}
 	free(last_directory);

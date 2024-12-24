@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:58:43 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/22 17:26:05 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/24 16:15:22 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,22 @@ int	check_input(char **args, int i, char *name)
 	return (0);
 }
 
+int	export_pwd(t_env **env, char *str, int *i)
+{
+	char *pwd;
+	char cwd[PATH_MAX];
+
+	pwd = NULL;
+	getcwd(cwd, PATH_MAX);
+	pwd = ft_strjoin("PWD=", cwd);
+	env_back(env, pwd);
+	free(pwd);
+	*i += 1;
+	if (!str)
+		return (1);
+	return (0);
+}
+
 int	add_input(t_env *env, int i, char **args)
 {
 	t_env	*tmp;
@@ -37,6 +53,12 @@ int	add_input(t_env *env, int i, char **args)
 		{
 			name = NULL;
 			tmp = env;
+			if (!ft_strcmp("PWD", args[i]))
+			{
+				if (export_pwd(&tmp, args[i], &i))
+					break ;
+				continue ;
+			}
 			name = env_name(args[i]);
 			if (check_input(args, i, name))
 			{
