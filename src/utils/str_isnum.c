@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:03:14 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/24 09:52:50 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/24 17:23:41 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,20 @@ int	check_str(char *str, int *i)
 {
 	while (str[*i] && (str[*i] == 32 || str[*i] == '\t'))
 		*i += 1;
-	if (str[*i] && !ft_isdigit(str[*i]))
+	if (str[*i] && str[*i] != '+' && str[*i] != '-' && !ft_isdigit(str[*i]))
 	{
 		print_numerror(str);
 		return (1);
 	}
-	while (str[*i] && str[*i] != 32 && str[*i] != '\t')
+	if (str[*i] && (str[*i] == '+' || str[*i] == '-'))
 		*i += 1;
+	while (str[*i] && str[*i] != 32 && str[*i] != '\t' && ft_isdigit(str[*i]))
+		*i += 1;
+	if (str[*i] && !ft_isdigit(str[*i]) && str[*i] != 32 && str[*i] != '\t')
+	{
+		print_numerror(str);
+		return (1);
+	}
 	while (str[*i] && (str[*i] == 32 || str[*i] == '\t'))
 		*i += 1;
 	return (0);
@@ -38,7 +45,7 @@ int	check_str(char *str, int *i)
 
 int	check_ifalpha(char *str, int *i)
 {
-	if (str[*i] == 32 || str[*i] == '\t')
+	if (str[*i] == 32 || str[*i] == '\t' || ft_isdigit(str[*i]) || str[*i] == '+' || str[*i] == '-')
 	{
 		if (check_str(str, i))
 			return (1);
@@ -50,7 +57,7 @@ int	check_ifalpha(char *str, int *i)
 		else
 			return (0);
 	}
-	else if (!ft_isdigit(str[*i]) && str[*i] != 32 && str[*i] != '\t')
+	else if (!ft_isdigit(str[*i]) && str[*i] != 32 && str[*i] != '\t' && str[*i] != '+' && str[*i] != '-')
 	{
 		print_numerror(str);
 		return (1);

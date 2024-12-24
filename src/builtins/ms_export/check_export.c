@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 08:18:54 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/20 08:19:03 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/24 16:46:03 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,17 @@ int	double_input(char **str, int i, char *args)
 
 int	is_invalidname(char *str)
 {
-	if (!isalpha(str[0]) && str[0] != '_')
+	int	i;
+
+	i = 0;
+	if (!ft_isalpha(str[i]) && str[i] != '_')
 		return (1);
+	while (str[i])
+	{
+		if (str[i] && !ft_isalnum(str[i]) && str[i] != '_')
+			return (1);
+		i++;
+	}
 	return (0);
 }
 

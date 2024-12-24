@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 13:54:57 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/24 09:51:19 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/24 16:27:16 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ int	ignore_digit(char *str, int *i)
 
 void	ignore_single(char *str, int *i, char **result)
 {
-	if (str[*i] && str[*i] == '$' && ((str[*i + 1]
-				&& char_isquote(str[*i + 1])) || !str[*i + 1]))
+	if (str[*i] && str[*i] == '$' && ((str[*i + 1] && (char_isquote(str[*i + 1]) || str[*i + 1] == 32)) || !str[*i + 1]))
 	{
 		*result = join_char(*result, '$');
 		*i += 1;

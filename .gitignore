@@ -7,3 +7,4 @@ readline.supp
 .gitignore
 .ms_history
 .ms_status
+minishell_tester/

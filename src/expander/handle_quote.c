@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 11:38:08 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/22 14:21:03 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/24 16:46:16 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	name_token(char *str, int *i, char **name)
 {
 	*name = get_var_name(str, *i);
 	*i += 1;
-	if (isdigit(*name[0]))
+	if (ft_isdigit(*name[0]))
 	{
 		*i += 1;
 		return (1);
