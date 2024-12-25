@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 08:20:55 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/24 15:27:35 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/25 13:28:19 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	extract_word(char *str, char **result, int *i, int status)
 {
 	if (status == 1)
 		return (0);
-	if (str[*i])
+	if (str[*i] && str[*i] != '\'' && str[*i] != '"' && str[*i] != '$')
 	{
 		while (str[*i] && (str[*i] != '\'' && str[*i] != '"' && str[*i] != '$'))
 		{
@@ -101,7 +101,14 @@ int	split_token(char **result, t_chunk **token, int *status, char **split)
 
 	*result = join_free(*result, split[0], 0);
 	add_chunks_back(token, *result, WORD);
-	free(*result);
+	if (!split[1])
+	{
+		if (*result)
+			free(*result);
+		*result = NULL;
+		free_tab(split);
+		return (0);
+	}
 	j = 1;
 	while (split[j + 1])
 	{
