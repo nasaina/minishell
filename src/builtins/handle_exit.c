@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:17:19 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/24 17:26:39 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/25 09:38:39 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ int	ft_exit(t_ast *ast, t_env *env, int in, int out)
 		i++;
 	if (i > 2)
 	{
-		ft_putendl_fd("exit", 1);
-		ft_putendl_fd("minishell : exit : too many arguments", 1);
+		ft_putendl_fd("exit", 2);
+		ft_putendl_fd("minishell : exit : too many arguments", 2);
 		return (1);
 	}
 	else if (i == 2)

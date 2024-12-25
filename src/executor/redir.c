@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:21:58 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/24 17:35:16 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/25 09:51:42 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int	redir_error(int fd, char *str, t_ast *ast)
 	(void)ast;
 	if (fd < 0)
 	{
-		perror(str);
+		ft_putstr_fd(str, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
 		return (-1);
 	}
 	return (0);

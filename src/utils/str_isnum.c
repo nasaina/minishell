@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:03:14 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/24 17:23:41 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/25 10:58:53 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	print_numerror(char *str)
 {
 	printf("exit\n");
-	ft_putstr_fd("minishell: exit: ", 2);
+	printf("minishell: exit: ");
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd(" : numeric argument required\n", 2);
 }
@@ -45,7 +45,8 @@ int	check_str(char *str, int *i)
 
 int	check_ifalpha(char *str, int *i)
 {
-	if (str[*i] == 32 || str[*i] == '\t' || ft_isdigit(str[*i]) || str[*i] == '+' || str[*i] == '-')
+	if (str[*i] == 32 || str[*i] == '\t' || ft_isdigit(str[*i])
+		|| str[*i] == '+' || str[*i] == '-')
 	{
 		if (check_str(str, i))
 			return (1);
@@ -57,7 +58,8 @@ int	check_ifalpha(char *str, int *i)
 		else
 			return (0);
 	}
-	else if (!ft_isdigit(str[*i]) && str[*i] != 32 && str[*i] != '\t' && str[*i] != '+' && str[*i] != '-')
+	else if (!ft_isdigit(str[*i]) && str[*i] != 32 && str[*i] != '\t'
+		&& str[*i] != '+' && str[*i] != '-')
 	{
 		print_numerror(str);
 		return (1);

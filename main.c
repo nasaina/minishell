@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:05:14 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/24 17:40:05 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/25 10:57:08 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	read_input(char **str, t_env *env)
 	*str = ft_readline();
 	if (!*str)
 	{
-		printf("exit\n");
+		ft_putendl_fd("exit", 1);
 		unlink("/tmp/.ms_status");
 		free_env(env);
 		exit(0);
@@ -120,6 +120,28 @@ t_expander	*init_expander(char *str, t_env *env)
 	return (expander);
 }
 
+int	do_builtins(t_ast *ast, t_env *env)
+{
+	int fd_in;
+	int fd_out;
+	int	status;
+	
+	status = 0;
+	fd_in = dup(STDIN_FILENO);
+	fd_out = dup(STDOUT_FILENO);
+	status = ms_builtins(ast, env, fd_in, fd_out);
+	if (ast->cmd->redir)
+	{
+		if (do_redir(ast) < 0)
+			status = 1;
+	}
+	dup2(fd_in, STDIN_FILENO);
+	dup2(fd_out, STDOUT_FILENO);
+	close(fd_in);
+	close(fd_out);
+	return (status);
+}
+
 void	run_shell(t_expander *expander, t_ast **ast, char **envp, t_env *env)
 {
 	pid_t	pid = -1;
@@ -129,20 +151,7 @@ void	run_shell(t_expander *expander, t_ast **ast, char **envp, t_env *env)
 	*ast = parse_args(expander, 1);
 	free_expander(expander);
 	if ((*ast)->type != AST_PIPE && isbuiltin(*ast))
-	{
-		int fd_in = dup(STDIN_FILENO);
-		int fd_out = dup(STDOUT_FILENO);
-		status = ms_builtins(*ast, env, fd_in, fd_out);
-		if ((*ast)->cmd->redir)
-		{
-			if (do_redir(*ast) < 0)
-				status = 1;
-		}
-		dup2(fd_in, STDIN_FILENO);
-		dup2(fd_out, STDOUT_FILENO);
-		close(fd_in);
-		close(fd_out);
-	}
+		status = do_builtins(*ast, env);
 	else
 	{
 		pid = fork();
@@ -168,9 +177,9 @@ void	run_shell(t_expander *expander, t_ast **ast, char **envp, t_env *env)
 		{
 			status = 128 + WTERMSIG(status);
 			if (status != 131)
-				ft_putstr_fd("\n", 2);
+				ft_putstr_fd("\n", 1);
 			else
-				ft_putstr_fd("Quit (core dumped)\n", 2);
+				ft_putstr_fd("Quit (core dumped)\n", 1);
 		}
 	}
 	ms_writestatus(status);

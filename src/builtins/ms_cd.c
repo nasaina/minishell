@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:55:42 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/24 16:03:06 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/25 09:39:07 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*get_cd(char *str, char *last_direcotry, t_env *env)
 		else if (getcwd(cwd, PATH_MAX) != NULL)
 		{
 			dir = ft_strdup(last_direcotry);
-			printf("%s\n", dir);
+			ft_putendl_fd(dir, 1);
 		}
 	}
 	else

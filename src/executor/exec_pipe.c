@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 13:29:57 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/24 14:39:28 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/25 09:40:00 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	exec_pipe(t_ast *ast, t_env *env, char **envp)
 			if (WIFEXITED(status))
 				status = WEXITSTATUS(status);
 			if (WIFSIGNALED(status_left))
-				ft_putstr_fd("\n", 2);
+				ft_putstr_fd("\n", 1);
 		}
 	}
 	close(pipe_fds[0]);

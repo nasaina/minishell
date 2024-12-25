@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:58:43 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/24 16:32:45 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/25 10:59:13 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	check_input(char **args, int i, char *name)
 {
 	if (is_invalidname(name))
 	{
-		ft_putstr_fd("minishell: export: `", 2);
+		ft_putstr_fd("minishell: export: '", 2);
 		ft_putstr_fd(args[i], 2);
 		ft_putstr_fd("': not a valid identifier\n", 2);
 		return (1);
@@ -28,10 +28,12 @@ int	check_input(char **args, int i, char *name)
 
 int	export_pwd(t_env **env, char *str, int *i)
 {
-	char *pwd;
-	char cwd[PATH_MAX];
+	char	*pwd;
+	char	cwd[PATH_MAX];
+	t_env	*tmp;
 
 	pwd = NULL;
+	tmp = *env;
 	getcwd(cwd, PATH_MAX);
 	pwd = ft_strjoin("PWD=", cwd);
 	env_back(env, pwd);
@@ -39,6 +41,23 @@ int	export_pwd(t_env **env, char *str, int *i)
 	*i += 1;
 	if (!str)
 		return (1);
+	return (0);
+}
+
+int	insert_env(t_env **env, char **args, int *i)
+{
+	char	*name;
+
+	name = NULL;
+	name = env_name(args[*i]);
+	if (check_input(args, *i, name))
+	{
+		i++;
+		return (1);
+	}
+	is_double(env, name);
+	free(name);
+	env_back(env, args[*i]);
 	return (0);
 }
 
@@ -59,15 +78,10 @@ int	add_input(t_env *env, int i, char **args)
 					break ;
 				continue ;
 			}
-			name = env_name(args[i]);
-			if (check_input(args, i, name))
-			{
-				i++;
+			if (insert_env(&tmp, args, &i))
 				continue ;
-			}
-			is_double(&tmp, name);
-			free(name);
-			env_back(&tmp, args[i]);
+			if (!args[i])
+				break ;
 			i++;
 		}
 	}
