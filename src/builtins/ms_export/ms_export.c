@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:58:43 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/25 13:19:48 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/25 18:07:41 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	export_pwd(t_env **env, char *str, int *i)
 	tmp = *env;
 	getcwd(cwd, PATH_MAX);
 	pwd = ft_strjoin("PWD=", cwd);
+	is_double(env, "PWD");
 	env_back(env, pwd);
 	free(pwd);
 	*i += 1;
@@ -76,7 +77,6 @@ int	add_input(t_env *env, int i, char **args)
 			{
 				if (export_pwd(&tmp, args[i], &i))
 					break ;
-				continue ;
 			}
 			else
 			{
@@ -85,7 +85,7 @@ int	add_input(t_env *env, int i, char **args)
 			}
 			if (!args[i])
 				break ;
-			i++;	
+			i++;
 		}
 	}
 	else
