@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:05:14 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/25 10:57:08 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/25 15:03:07 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,35 @@ int	check_file(t_expander *expander)
 	return (0);
 }
 
+int	check_pipe(t_chunk *chunks)
+{
+	t_chunk *tmp;
+
+	tmp = chunks;
+	while (tmp)
+	{
+		if (tmp->type == PIPE)
+		{
+			tmp = tmp->next;
+			if (tmp && tmp->type == PIPE)
+			{
+				ft_putstr_fd("minishell :syntax error\n", 2);
+				ms_writestatus(2);
+				free_chunks(chunks);
+				return (1);
+			}
+		}
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
 int	redir_syntax(t_chunk *chunks)
 {
 	t_chunk *tmp;
 
+	if (check_pipe(chunks))
+		return (1);
 	tmp = chunks;
 	while (tmp)
 	{
@@ -67,7 +92,7 @@ int	redir_syntax(t_chunk *chunks)
 			tmp = tmp->next;
 			if (tmp && tmp->type != WORD)
 			{
-				ft_putstr_fd("minshell :syntax error\n", 2);
+				ft_putstr_fd("minishell :syntax error\n", 2);
 				ms_writestatus(2);
 				free_chunks(chunks);
 				return (1);
