@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:05:14 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/25 16:25:41 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/25 16:37:28 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,13 @@ int	do_builtins(t_ast *ast, t_env *env)
 	if (ast->cmd->redir)
 	{
 		if (do_redir(ast) < 0)
-			status = 1;
+		{
+			dup2(fd_in, STDIN_FILENO);
+			dup2(fd_out, STDOUT_FILENO);
+			close(fd_in);
+			close(fd_out);
+			return (1);
+		}
 	}
 	status = ms_builtins(ast, env, fd_in, fd_out);
 	dup2(fd_in, STDIN_FILENO);
