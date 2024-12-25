@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:16:46 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/25 13:43:26 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/25 17:43:04 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,11 @@ void	free_tab(char **str)
 	free(str);
 }
 
-char	*check_path(char **pathlist, t_ast *ast)
+char	*check_path(char **pathlist, t_ast *ast, int *status)
 {
-	char	*path;
-	char	*command;
+	char		*path;
+	char		*command;
+	struct stat	st;
 
 	path = NULL;
 	command = ft_strjoin("/", ast->cmd->args[0]);
@@ -50,7 +51,16 @@ char	*check_path(char **pathlist, t_ast *ast)
 	free_tab(pathlist);
 	free(command);
 	if (ast->cmd->args[0] != NULL)
-		path_error(ast, ": command not found\n");
+	{
+		stat(ast->cmd->args[0], &st);
+		if (S_ISDIR(st.st_mode))
+		{
+			path_error(ast, ": Is a directory\n");
+			*status = 126;
+		}
+		else
+			path_error(ast, ": command not found\n");
+	}
 	return (path);
 }
 

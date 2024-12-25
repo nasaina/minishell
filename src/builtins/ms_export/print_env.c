@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:55:34 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/22 17:22:05 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/25 16:52:16 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,28 +51,28 @@ void	ft_printenv(t_env *env, int *i)
 {
 	while (env->env[*i] != 61 && env->env[*i])
 	{
-		printf("%c", env->env[*i]);
+		ft_putchar_fd(env->env[*i], 1);
 		*i += 1;
 	}
 	if (env->env[*i] == 61)
 	{
-		printf("%c", env->env[*i]);
+		ft_putchar_fd(env->env[*i], 1);
 		*i += 1;
 		if (env->env[*i] != 34)
-			printf("\"");
+			ft_putstr_fd("\"", 1);
 	}
 	else
 	{
-		printf("\n");
+		ft_putstr_fd("\n", 1);
 		return ;
 	}
 	while (env->env[*i])
 	{
-		printf("%c", env->env[*i]);
+		ft_putchar_fd(env->env[*i], 1);
 		*i += 1;
 	}
 	if (env->env[*i - 1] != 34)
-		printf("\"\n");
+		ft_putstr_fd("\"\n", 1);
 }
 
 void	print_env(t_env *env)
@@ -83,7 +83,7 @@ void	print_env(t_env *env)
 	while (env)
 	{
 		j = 0;
-		printf("declare -x ");
+		ft_putstr_fd("declare -x ", 1);
 		ft_printenv(env, &j);
 		env = env->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 13:29:57 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/25 16:11:43 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/25 17:01:31 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,11 @@ int	exec_pipe(t_ast *ast, t_env *env, char **envp)
 		if (pid_right == 0)
 			status = exec_pipe_right(ast->right, env, envp, pipe_fds);
 		else
-			if (wait_children(pid_left, pid_right, pipe_fds) >= 0)
-				return (wait_children(pid_left, pid_right, pipe_fds));
+		{
+			close_fds(pipe_fds);
+			if (wait_children(pid_left, pid_right, &status, &status_left) >= 0)
+				return (wait_children(pid_left, pid_right, &status, &status_left));
+		}
 	}
 	close_fds(pipe_fds);
 	return (status);

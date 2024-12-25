@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 07:15:40 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/25 12:51:56 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/25 16:48:23 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ms_env(char **str, t_env *env)
 	{
 		if (!env)
 		{
-			printf("\n");
+			ft_putstr_fd("\n", 1);
 			return (1);
 		}
 		while (env)
@@ -42,7 +42,7 @@ int	ms_env(char **str, t_env *env)
 					break ;
 			}
 			if (env)
-				printf("%s\n", env->env);
+				ft_putendl_fd(env->env, 1);
 			env = env->next;
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:32:07 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/25 16:00:14 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/25 17:23:35 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct s_lexer
 	struct s_lexer	*next;
 }	t_lexer;
 
-char		*check_path(char **pathlist, t_ast *ast);
+char		*check_path(char **pathlist, t_ast *ast, int *status);
 char		*check_access(t_ast *ast);
 int			exec_cmd(t_ast *ast, t_env *env);
 int			check_cmd(t_ast *ast, t_env *env);
@@ -74,6 +74,6 @@ char		**create_dir(void);
 void		close_fds(int *pipe_fds);
 int			create_pipe(int *pipe_fds);
 int			create_fork(pid_t *pid, char *str);
-int			wait_children(pid_t pid_left, pid_t pid_right, int *pipe_fds);
+int			wait_children(pid_t pid_left, pid_t pid_right, int *status, int *status_left);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 11:24:31 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/24 15:58:10 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/25 16:49:48 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ms_pwd(t_ast *ast)
 	if (!ft_strncmp(ast->cmd->args[0], "pwd", 4))
 	{
 		if (getcwd(pwd, PATH_MAX) != NULL)
-			printf("%s\n", pwd);
+			ft_putendl_fd(pwd, 1);
 		else
 		{
 			perror("getcwd");

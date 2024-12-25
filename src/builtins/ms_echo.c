@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:54:57 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/24 16:30:39 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/25 16:49:33 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,22 +48,22 @@ void	echo_monitor(char **str, int i)
 			i++;
 		while (str[i])
 		{
-			printf("%s", str[i]);
+			ft_putstr_fd(str[i], 1);
 			i++;
 			if (str[i])
-				printf(" ");
+				ft_putstr_fd(" ", 1);
 		}
 	}
 	else if (str[i])
 	{
 		while (str[i])
 		{
-			printf("%s", str[i]);
+			ft_putstr_fd(str[i], 1);
 			i++;
 			if (str[i])
-				printf(" ");
+				ft_putstr_fd(" ", 1);
 		}
-		printf("\n");
+		ft_putendl_fd("", 1);
 	}
 }
 
@@ -77,7 +77,7 @@ int	ms_echo(t_cmd *cmd)
 		i++;
 		if (!cmd->args[i])
 		{
-			printf("\n");
+			ft_putstr_fd("\n", 1);
 			return (0);
 		}
 		echo_monitor(cmd->args, i);
