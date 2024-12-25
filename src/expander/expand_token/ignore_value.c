@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 13:54:57 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/25 10:58:13 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/25 13:15:41 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,19 +57,12 @@ char	**ignore_split(char *str, int *i, int *status, t_chunk **token)
 	char	**split;
 	char	*tmp;
 
+	(void)token;
 	split = NULL;
 	tmp = extract_noquote(str, status, i);
 	if (tmp == NULL)
 		return (NULL);
 	split = ft_split_tab(tmp);
 	free(tmp);
-	if (check_split(split))
-	{
-		add_chunks_back(token, split[0], WORD);
-		free(split[0]);
-		free(split);
-		*status = 0;
-		return (NULL);
-	}
 	return (split);
 }

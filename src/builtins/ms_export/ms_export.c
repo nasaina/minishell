@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:58:43 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/25 10:59:13 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/25 13:19:48 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	insert_env(t_env **env, char **args, int *i)
 	name = env_name(args[*i]);
 	if (check_input(args, *i, name))
 	{
-		i++;
+		*i += 1;
 		return (1);
 	}
 	is_double(env, name);
@@ -78,11 +78,14 @@ int	add_input(t_env *env, int i, char **args)
 					break ;
 				continue ;
 			}
-			if (insert_env(&tmp, args, &i))
-				continue ;
+			else
+			{
+				if (insert_env(&tmp, args, &i))
+					continue ;
+			}
 			if (!args[i])
 				break ;
-			i++;
+			i++;	
 		}
 	}
 	else

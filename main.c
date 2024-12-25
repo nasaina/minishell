@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:05:14 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/25 10:57:08 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/25 13:46:45 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	read_input(char **str, t_env *env)
 
 int	check_file(t_expander *expander)
 {
-	t_expander *tmp;
+	t_expander	*tmp;
 
 	tmp = expander;
 	while (tmp)
@@ -57,7 +57,7 @@ int	check_file(t_expander *expander)
 
 int	redir_syntax(t_chunk *chunks)
 {
-	t_chunk *tmp;
+	t_chunk	*tmp;
 
 	tmp = chunks;
 	while (tmp)
@@ -102,7 +102,6 @@ t_expander	*init_expander(char *str, t_env *env)
 
 	chunks = NULL;
 	chunks = lexing(str);
-	
 	if (redir_syntax(chunks))
 		return (NULL);
 	if (heredoc_start(str, chunks, env))
@@ -122,19 +121,19 @@ t_expander	*init_expander(char *str, t_env *env)
 
 int	do_builtins(t_ast *ast, t_env *env)
 {
-	int fd_in;
-	int fd_out;
+	int	fd_in;
+	int	fd_out;
 	int	status;
-	
+
 	status = 0;
 	fd_in = dup(STDIN_FILENO);
 	fd_out = dup(STDOUT_FILENO);
-	status = ms_builtins(ast, env, fd_in, fd_out);
 	if (ast->cmd->redir)
 	{
 		if (do_redir(ast) < 0)
 			status = 1;
 	}
+	status = ms_builtins(ast, env, fd_in, fd_out);
 	dup2(fd_in, STDIN_FILENO);
 	dup2(fd_out, STDOUT_FILENO);
 	close(fd_in);
@@ -142,35 +141,46 @@ int	do_builtins(t_ast *ast, t_env *env)
 	return (status);
 }
 
+int	child_process(t_ast *ast, char **envp, t_env *env)
+{
+	pid_t	pid;
+	int		status;
+
+	pid = -1;
+	status = 0;
+	pid = fork();
+	if (pid < 0)
+		perror("fork");
+	else if (pid == 0)
+	{
+		status = 0;
+		status = pipe_check(ast, env, envp);
+		free_ast(ast);
+		free_env(env);
+		exit(status);
+	}
+	else
+	{
+		signal(SIGINT, SIG_IGN);
+		waitpid(pid, &status, 0);
+		signal(SIGINT, &global_sigint);
+	}
+	return (status);
+}
+
 void	run_shell(t_expander *expander, t_ast **ast, char **envp, t_env *env)
 {
-	pid_t	pid = -1;
-	int		status = 0;
+	int		status;
 
 	*ast = NULL;
 	*ast = parse_args(expander, 1);
 	free_expander(expander);
+	status = 0;
 	if ((*ast)->type != AST_PIPE && isbuiltin(*ast))
 		status = do_builtins(*ast, env);
 	else
 	{
-		pid = fork();
-		if (pid < 0)
-			perror("fork");
-		else if (pid == 0)
-		{
-			status = 0;
-			status = pipe_check(*ast, env, envp);
-			free_ast(*ast);
-			free_env(env);
-			exit(status);
-		}
-		else
-		{
-			signal(SIGINT, SIG_IGN);
-			waitpid(pid, &status, 0);
-			signal(SIGINT, &global_sigint);
-		}
+		status = child_process(*ast, envp, env);
 		if (WIFEXITED(status))
 			status = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
