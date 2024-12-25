@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:32:07 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/25 13:31:46 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/25 13:50:16 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,6 @@ void		path_error(t_ast *ast, char *str);
 int			error_command(t_ast *ast, char *path, char **envp);
 char		*takepath_and_free(char *command, char **pathlist);
 void		free_tab(char **str);
+char		**create_dir(void);
 
 #endif

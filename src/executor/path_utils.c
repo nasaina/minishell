@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 13:13:42 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/25 13:44:05 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/25 13:55:33 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,16 @@ char	*takepath_and_free(char *command, char **pathlist)
 		i++;
 	}
 	return (path);
+}
+
+char	**create_dir(void)
+{
+	char	*list;
+	char	**pl;
+
+	list = ft_strdup("./");
+	pl = malloc(2 * sizeof(char *));
+	pl[0] = list;
+	pl[1] = NULL;
+	return (pl);
 }
