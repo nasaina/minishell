@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 13:29:57 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/25 09:40:00 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/25 12:53:05 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	exec_pipe(t_ast *ast, t_env *env, char **envp)
 
 int	exec_pipe_left(t_ast *ast, t_env *env, char **envp, int *pipe_fds)
 {
-	int status;
+	int	status;
 
 	if (ast)
 	{
@@ -84,7 +84,6 @@ int	exec_pipe_left(t_ast *ast, t_env *env, char **envp, int *pipe_fds)
 			exit(EXIT_FAILURE);
 		}
 		status = pipe_check(ast, env, envp);
-		// close(pipe_fds[0]);
 		close(pipe_fds[1]);
 		return (status);
 	}
