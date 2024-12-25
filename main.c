@@ -57,7 +57,7 @@ int	check_file(t_expander *expander)
 
 int	check_pipe(t_chunk *chunks)
 {
-	t_chunk *tmp;
+	t_chunk	*tmp;
 
 	tmp = chunks;
 	while (tmp)
