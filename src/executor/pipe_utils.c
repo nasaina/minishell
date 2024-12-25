@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 16:11:54 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/25 16:14:02 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/25 17:02:15 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,15 @@ int	create_fork(pid_t *pid, char *str)
 	return (0);
 }
 
-int	wait_children(pid_t pid_left, pid_t pid_right, int *pipe_fds)
+int	wait_children(pid_t pid_left, pid_t pid_right, int *status, int *status_left)
 {
-	int	status_left;
-	int	status;
-
-	status = -1;
-	close_fds(pipe_fds);
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
-	waitpid(pid_left, &status_left, 0);
-	waitpid(pid_right, &status, 0);
-	if (WIFEXITED(status))
-		status = WEXITSTATUS(status);
-	if (WIFSIGNALED(status_left))
+	waitpid(pid_left, status_left, 0);
+	waitpid(pid_right, status, 0);
+	if (WIFEXITED(*status))
+		*status = WEXITSTATUS(*status);
+	if (WIFSIGNALED(*status_left))
 		ft_putstr_fd("\n", 1);
-	return (status);
+	return (*status);
 }

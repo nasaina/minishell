@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:51:47 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/25 13:08:03 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/25 17:26:41 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	isbuiltin(t_ast *ast)
 	return (0);
 }
 
-char	*take_path(t_ast *ast, t_env *env)
+char	*take_path(t_ast *ast, t_env *env, int *status)
 {
 	char	*path;
 
@@ -39,7 +39,7 @@ char	*take_path(t_ast *ast, t_env *env)
 	if (ast->cmd->args[0][0] == '.')
 		path = check_access(ast);
 	else
-		path = check_path(path_list(env), ast);
+		path = check_path(path_list(env), ast, status);
 	return (path);
 }
 
@@ -80,13 +80,15 @@ int	exec_cmd(t_ast *ast, t_env *env)
 	status = -1;
 	if (ast->cmd->args && ast->cmd->args[0] && !ast->cmd->args[0][0])
 	{
-		printf("minishell : : command not found\n");
+		ft_putendl_fd("minishell : : command not found", 2);
 		return (127);
 	}
 	if (ast->cmd->args && ast->cmd->args[0])
-		path = take_path(ast, env);
+		path = take_path(ast, env, &status);
 	signal(SIGQUIT, SIG_DFL);
 	signal(SIGINT, SIG_DFL);
+	if (status == 126)
+		return (status);
 	status = do_fork(ast, env, path);
 	return (status);
 }

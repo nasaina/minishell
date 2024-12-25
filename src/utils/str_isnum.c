@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_isnum.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:03:14 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/25 10:58:53 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/25 16:47:31 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	print_numerror(char *str)
 {
-	printf("exit\n");
-	printf("minishell: exit: ");
+	ft_putstr_fd("exit\n", 2);
+	ft_putstr_fd("minishell: exit: ", 2);
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd(" : numeric argument required\n", 2);
 }
