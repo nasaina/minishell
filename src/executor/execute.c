@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:51:47 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/24 17:36:08 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/25 13:08:03 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 int	isbuiltin(t_ast *ast)
 {
-	int			i;
+	int		i;
 	char	**builtins;
 
 	if (!ast)
 		return (0);
-	builtins = init_builtins(); 
+	builtins = init_builtins();
 	i = 0;
 	while (builtins[i])
 	{
@@ -34,7 +34,7 @@ int	isbuiltin(t_ast *ast)
 char	*take_path(t_ast *ast, t_env *env)
 {
 	char	*path;
-	
+
 	path = NULL;
 	if (ast->cmd->args[0][0] == '.')
 		path = check_access(ast);
@@ -45,11 +45,8 @@ char	*take_path(t_ast *ast, t_env *env)
 
 int	exec_fork(t_ast *ast, char *path, t_env *env)
 {
-	char	**envp;
-	int		status;
-	struct	stat st;
+	char		**envp;
 
-	status = -1;
 	envp = take_env(env);
 	if (ast->cmd->redir)
 	{
@@ -68,15 +65,7 @@ int	exec_fork(t_ast *ast, char *path, t_env *env)
 	}
 	if (execve(path, ast->cmd->args, envp) == -1)
 	{
-		if (stat(path, &st) == -1)
-			perror("stat");
-		if (S_ISDIR(st.st_mode))
-			path_error(ast, " :Is a directory\n");
-		else
-			perror((const char *)(ast->cmd->args[0]));
-		free(path);
-		free_tab(envp);
-		return (126);
+		return (error_command(ast, path, envp));
 	}
 	free(envp);
 	return (0);
@@ -84,10 +73,11 @@ int	exec_fork(t_ast *ast, char *path, t_env *env)
 
 int	exec_cmd(t_ast *ast, t_env *env)
 {
-	int		status = -1;
+	int		status;
 	char	*path;
 
 	path = NULL;
+	status = -1;
 	if (ast->cmd->args && ast->cmd->args[0] && !ast->cmd->args[0][0])
 	{
 		printf("minishell : : command not found\n");
@@ -105,8 +95,9 @@ int	check_cmd(t_ast *ast, t_env *env)
 {
 	int	fd_in;
 	int	fd_out;
-	int	status = -1;
+	int	status;
 
+	status = -1;
 	if (isbuiltin(ast))
 	{
 		fd_in = dup(STDIN_FILENO);

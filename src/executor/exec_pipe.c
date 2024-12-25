@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
+/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 13:29:57 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/25 09:40:00 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/25 16:11:43 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,47 +33,27 @@ int	exec_pipe(t_ast *ast, t_env *env, char **envp)
 
 	status = -1;
 	status_left = -1;
-	if (pipe(pipe_fds) < 0)
-	{
-		perror("pipe");
+	if (create_pipe(pipe_fds) || create_fork(&pid_left, "fork (left)"))
 		exit(EXIT_FAILURE);
-	}
-	pid_left = fork();
-	if (pid_left < 0)
-		perror("fork(left)");
-	else if (pid_left == 0)
+	if (pid_left == 0)
 		status_left = exec_pipe_left(ast->left, env, envp, pipe_fds);
 	else
 	{
-		pid_right = fork();
-		if (pid_right < 0)
-			perror("fork(right)");
-		else if (pid_right == 0)
-		{
+		if (create_fork(&pid_right, "fork (right)"))
+			exit(EXIT_FAILURE);
+		if (pid_right == 0)
 			status = exec_pipe_right(ast->right, env, envp, pipe_fds);
-		}
 		else
-		{
-			close(pipe_fds[0]);
-			close(pipe_fds[1]);
-			signal(SIGINT, SIG_IGN);
-			signal(SIGQUIT, SIG_IGN);
-			waitpid(pid_left, &status_left, 0);
-			waitpid(pid_right, &status, 0);
-			if (WIFEXITED(status))
-				status = WEXITSTATUS(status);
-			if (WIFSIGNALED(status_left))
-				ft_putstr_fd("\n", 1);
-		}
+			if (wait_children(pid_left, pid_right, pipe_fds) >= 0)
+				return (wait_children(pid_left, pid_right, pipe_fds));
 	}
-	close(pipe_fds[0]);
-	close(pipe_fds[1]);
+	close_fds(pipe_fds);
 	return (status);
 }
 
 int	exec_pipe_left(t_ast *ast, t_env *env, char **envp, int *pipe_fds)
 {
-	int status;
+	int	status;
 
 	if (ast)
 	{
@@ -84,7 +64,6 @@ int	exec_pipe_left(t_ast *ast, t_env *env, char **envp, int *pipe_fds)
 			exit(EXIT_FAILURE);
 		}
 		status = pipe_check(ast, env, envp);
-		// close(pipe_fds[0]);
 		close(pipe_fds[1]);
 		return (status);
 	}
