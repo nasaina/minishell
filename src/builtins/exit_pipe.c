@@ -6,16 +6,15 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 12:05:08 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/26 12:15:49 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/26 13:38:56 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	ft_exit_pipe(t_ast *ast)
+int	ft_exit_pipe(t_ast *ast, int *status)
 {
 	int			i;
-	int			status;
 
 	i = 0;
 	while (ast->cmd->args[i])
@@ -24,27 +23,35 @@ int	ft_exit_pipe(t_ast *ast)
 	{
 		ft_putendl_fd("exit", 2);
 		ft_putendl_fd("minishell : exit : too many arguments", 2);
-		return (1);
+		*status = 1;
+		return (-1);
 	}
 	else if (i == 2)
 	{
-		status = ft_atoi(ast->cmd->args[1]);
-		return (status);
+		*status = ft_atoi(ast->cmd->args[1]);
+		return (*status);
 	}
 	return (0);
 }
 
-int	handle_exit_pipe(t_ast *ast)
+int	handle_exit_pipe(t_ast *ast, int *status)
 {
 	if (ast->cmd->args[0]
 		&& !ft_strcmp(ast->cmd->args[0], "exit") && !ast->cmd->args[1])
-		return (exit_status());
+	{
+		*status = exit_status();
+		return (*status);
+	}
 	else if (!ft_strcmp(ast->cmd->args[0], "exit") && ast->cmd->args[1])
 	{
 		if (str_isnum(ast->cmd->args[1]))
+		{
+			*status = 2;
 			return (2);
-		if (ft_exit_pipe(ast))
+		}
+		if (ft_exit_pipe(ast, status))
 			return (1);
 	}
+	*status = 0;
 	return (0);
 }
