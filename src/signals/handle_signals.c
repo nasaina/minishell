@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:31:27 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/26 10:58:24 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/26 13:03:57 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,16 @@ void	start_signal(int ac, char **av, char **env)
 void	handle_sigint(int sig)
 {
 	t_heredoc	*heredoc;
+	t_chunk		*chunks;
 
 	if (sig == SIGINT)
 	{
 		ft_putstr_fd("\n", 1);
 		heredoc = get_here_data(NULL);
+		chunks = get_token_data(NULL);
+		close(STDIN_FILENO);
 		close(heredoc->fd);
+		free_chunks(chunks);
 		free_heredoc_data(heredoc);
 		exit(130);
 	}

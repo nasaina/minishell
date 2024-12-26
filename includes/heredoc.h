@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 17:07:59 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/24 12:30:08 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/26 13:02:43 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,14 @@ int			hdoc_countdouble(char *str, int i, t_type *type);
 int			hdoc_oneword(char *str, int i, t_type *type);
 int			hdoc_count(char *str, int i, t_type *type);
 int			check_hdstatus(int status, t_heredoc *data);
+t_chunk		*get_token_data(t_chunk *chunks);
 int			heredoc_check(t_chunk *chunks);
 t_chunk		*hdoc_token(char *str);
 t_redir		*expand_hdoc(char *str);
 int			is_expandable(char	*str);
 char		*hdoc_expander(char *str, t_env *env);
 int			get_heredoc_value(t_heredoc **heredoc, char *str, t_redir *tmp);
-int			get_input(t_heredoc *heredoc, t_redir *tmp);
+void		get_input(t_heredoc *heredoc, t_redir *tmp);
 void		free_heredoc_data(t_heredoc *heredoc);
 int			is_variable(char *str);
 char		*expand_heredoc(char *file, char *str, t_env *env);
