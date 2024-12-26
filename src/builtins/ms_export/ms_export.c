@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:58:43 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/26 08:27:34 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/26 08:39:21 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int	insert_env(t_env **env, char **args, int *i)
 	if (check_input(args, *i, name))
 	{
 		*i += 1;
+		free(name);
 		return (1);
 	}
 	is_double(env, name);
