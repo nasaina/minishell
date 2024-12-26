@@ -2,7 +2,7 @@ NAME = minishell
 
 CFLAGS = -Wall -Werror -Wextra -g
 
-CC = cc
+CC = gcc
 
 OBJ_DIR = objs
 

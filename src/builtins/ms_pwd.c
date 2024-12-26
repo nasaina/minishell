@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 11:24:31 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/25 16:49:48 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/26 07:58:05 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,11 @@ int	check_ifexist(t_env *env, char *str)
 	{
 		name = env_name(tmp->env);
 		if (!ft_strcmp(name, str))
+		{
+			free(name);
 			return (1);
+		}
+		free(name);
 		tmp = tmp->next;
 	}
 	return (0);

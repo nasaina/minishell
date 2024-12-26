@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 11:35:29 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/20 14:08:52 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/26 07:48:59 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,16 @@ char	*join_char(char *str, char c)
 	int		len;
 
 	if (!str)
-		result = ft_strdup(&c);
+	{
+		result = ft_calloc(2, 1);
+		result[0] = c;
+		result[1] = 0;
+		return (result);
+	}
 	else
 	{
 		len = ft_strlen(str);
-		result = malloc(len + 2);
+		result = ft_calloc(len + 2, 1);
 		ft_strlcpy(result, str, len + 1);
 		free(str);
 		result[len] = c;

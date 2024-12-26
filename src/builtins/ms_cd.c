@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:55:42 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/25 09:39:07 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/26 07:34:45 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,8 @@ char	*last_dir(t_env *env)
 int	get_oldpwd(t_ast *ast, char *dir, char *last_directory, t_env *env)
 {
 	char	cwd[PATH_MAX];
-	char	*new_dir;
 
 	(void)last_directory;
-	new_dir = NULL;
 	if (getcwd(cwd, PATH_MAX) != NULL)
 	{
 		if (!dir)

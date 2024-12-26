@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 11:08:53 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/25 13:17:55 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/26 07:38:43 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,6 @@ void	assemble_token(char *str, char *result, t_chunk **token, int i)
 		add_chunks_back(token, result, WORD);
 		if (result)
 			free(result);
+		result = NULL;
 	}
 }

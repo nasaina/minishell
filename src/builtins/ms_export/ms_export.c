@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:58:43 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/25 18:07:41 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/26 07:49:35 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,8 @@ int	export_pwd(t_env **env, char *str, int *i)
 {
 	char	*pwd;
 	char	cwd[PATH_MAX];
-	t_env	*tmp;
 
 	pwd = NULL;
-	tmp = *env;
 	getcwd(cwd, PATH_MAX);
 	pwd = ft_strjoin("PWD=", cwd);
 	is_double(env, "PWD");
@@ -65,13 +63,11 @@ int	insert_env(t_env **env, char **args, int *i)
 int	add_input(t_env *env, int i, char **args)
 {
 	t_env	*tmp;
-	char	*name;
 
 	if (args[i])
 	{
 		while (args[i])
 		{
-			name = NULL;
 			tmp = env;
 			if (!ft_strcmp("PWD", args[i]))
 			{
@@ -96,11 +92,9 @@ int	add_input(t_env *env, int i, char **args)
 int	ms_printenv(t_ast *ast, t_env *env)
 {
 	int			i;
-	char		*name;
 	char		**args;
 
 	i = 0;
-	name = NULL;
 	args = ast->cmd->args;
 	if (!ft_strcmp(args[i], "export"))
 	{
