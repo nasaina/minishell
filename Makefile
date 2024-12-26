@@ -32,7 +32,7 @@ SRC_EXEC = $(addprefix src/executor/, execute.c path_checker.c exec_pipe.c redir
 
 SRC_LEX = $(addprefix src/lexer/, lexer.c get_chunks.c check_op.c quote.c)
 
-SRC_UTILS = $(addprefix src/utils/, free_lst.c str_isnum.c ft_strcmp.c join_and_free.c handle_history.c)
+SRC_UTILS = $(addprefix src/utils/, free_lst.c str_isnum.c ft_strcmp.c join_and_free.c handle_history.c ms_utils.c)
 
 SRC_GNL = $(addprefix src/gnl/, gnl.c gnl_utils.c)
 
