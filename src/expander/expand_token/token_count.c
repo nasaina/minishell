@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 11:31:38 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/22 11:46:27 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/26 11:27:17 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@ char	*get_var_name(char *str, int i)
 	if (str[i] == '$')
 		i++;
 	j = i;
-	while (str[i] != 32 && str[i] != 34
-		&& str[i] != 39 && str[i] && str[i] != '$')
+	if (str[i] == '_')
+		i++;
+	while (str[i] && ft_isalnum(str[i]))
 	{
 		i++;
 		len++;

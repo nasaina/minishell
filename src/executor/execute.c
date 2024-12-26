@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:51:47 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/25 17:26:41 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/26 11:36:27 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*take_path(t_ast *ast, t_env *env, int *status)
 	char	*path;
 
 	path = NULL;
-	if (ast->cmd->args[0][0] == '.')
+	if (ast->cmd->args[0][0] == '.' || ast->cmd->args[0][0] == '/')
 		path = check_access(ast);
 	else
 		path = check_path(path_list(env), ast, status);

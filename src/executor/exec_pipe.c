@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 13:29:57 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/26 09:05:24 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/26 11:41:55 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	exec_pipe_left(t_ast *ast, t_env *env, char **envp, int *pipe_fds)
 
 	if (ast)
 	{
+		close(pipe_fds[0]);
 		if (dup2(pipe_fds[1], 1) == -1)
 		{
 			perror("dup2(left)");

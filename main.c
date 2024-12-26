@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:05:14 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/26 10:57:37 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/26 11:35:30 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,8 @@ int	main(int ac, char **av, char **envp)
 
 	env = NULL;
 	env = ms_envcpy(envp);
+	(void)ac;
+	(void)av;
 	start_signal(ac, av, envp);
 	ms_readhistory();
 	while (1)

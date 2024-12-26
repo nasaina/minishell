@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:31:44 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/26 11:03:16 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/26 11:52:30 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,6 @@ int		check_pipe(t_chunk *chunks);
 int		redir_syntax(t_chunk *chunks);
 int		heredoc_start(char *str, t_chunk *chunks, t_env *env);
 void	start_signal(int ac, char **av, char **env);
+void	restart_result(char **result, char **split);
 
 #endif
