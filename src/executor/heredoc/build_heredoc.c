@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 17:00:51 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/26 12:28:55 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/26 13:03:17 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,23 @@
 
 t_heredoc	*get_here_data(t_heredoc *heredoc)
 {
-	static t_heredoc	*data = NULL;
+	static t_heredoc	*data;
 
 	if (heredoc == NULL)
 		return (data);
-	data = heredoc;
+	else
+		data = heredoc;
+	return (data);
+}
+
+t_chunk	*get_token_data(t_chunk *chunks)
+{
+	static t_chunk	*data;
+
+	if (chunks == NULL)
+		return (data);
+	else
+		data = chunks;
 	return (data);
 }
 
@@ -52,8 +64,7 @@ void	do_heredoc(char *str, t_heredoc *data, int i)
 		}
 		data->file = join_free(".hd_tmp", ft_itoa(i), 1);
 		data->name = ignore_quote(tmp->file);
-		data->fd = get_input(data, tmp);
-		get_here_data(data);
+		get_input(data, tmp);
 		close(data->fd);
 		free(data->file);
 		tmp = tmp->next;
@@ -76,6 +87,7 @@ int	heredoc_built(char *str, t_env *env, t_chunk *chunks)
 		perror("fork");
 	else if (hd_pid == 0)
 	{
+		get_token_data(chunks);
 		do_heredoc(str, data, i);
 		free_env(env);
 		free(data);

@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 14:22:23 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/24 12:25:07 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/26 12:57:07 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,13 @@ int	get_heredoc_value(t_heredoc **heredoc, char *str, t_redir *tmp)
 	return (0);
 }
 
-int	get_input(t_heredoc *heredoc, t_redir *tmp)
+void	get_input(t_heredoc *heredoc, t_redir *tmp)
 {
 	char	*str;
 
 	str = NULL;
 	heredoc->fd = open(heredoc->file, O_CREAT | O_WRONLY | O_TRUNC, 0777);
+	get_here_data(heredoc);
 	while (1)
 	{
 		str = readline("heredoc > ");
@@ -85,7 +86,6 @@ int	get_input(t_heredoc *heredoc, t_redir *tmp)
 		free(str);
 		str = NULL;
 	}
-	return (heredoc->fd);
 }
 
 void	free_heredoc_data(t_heredoc *heredoc)
