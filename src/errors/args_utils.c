@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 15:41:49 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/24 15:28:27 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/26 14:34:28 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	is_error(char *str)
 {
 	if (!check_redirection(str))
 	{
+		ms_writestatus(2);
 		free(str);
 		return (1);
 	}

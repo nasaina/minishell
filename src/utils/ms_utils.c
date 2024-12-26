@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 10:55:31 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/26 10:57:55 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/26 14:33:35 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	check_file(t_expander *expander)
 	tmp = expander;
 	while (tmp)
 	{
-		if (tmp->type != WORD && tmp->type != PIPE)
+		if (tmp->type != WORD && tmp->type != PIPE && tmp->type != HEREDOC)
 		{
 			tmp = tmp->next;
 			if (tmp && tmp->cmd[0] == 0)
