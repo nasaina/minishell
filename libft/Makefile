@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nandrian <nandrian@student.42.fr>          +#+  +:+       +#+         #
+#    By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/24 16:00:20 by nandrian          #+#    #+#              #
-#    Updated: 2024/07/09 09:29:56 by nandrian         ###   ########.fr        #
+#    Updated: 2024/12/26 08:45:39 by nandrian         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 
 NAME	= libft.a
 
-CC		= gcc
+CC		= cc
 
 CFLAGS	= -Wall -Wextra -Werror
 
@@ -31,17 +31,14 @@ SRC		= 	ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c \
 all		: $(NAME)
 
 $(NAME)	: $(OBJ)
-	@make -C ft_printf
 	@ar -rcs $(NAME) $(OBJ)
 %.o : %.c
 	@$(CC) $(CFLAGS) -o $@ -c $<
 
 clean	:
-	@make clean -C ft_printf/
 	@rm -rf *.o
 
 fclean	: clean
-	@make fclean -C ft_printf/
 	@rm -rf $(NAME)
 
 re		: fclean all
