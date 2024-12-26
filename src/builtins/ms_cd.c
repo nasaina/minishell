@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 13:55:42 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/26 07:34:45 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/26 09:39:11 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*get_home(t_env *env)
 	return (addhome);
 }
 
-char	*get_cd(char *str, char *last_direcotry, t_env *env)
+char	*get_cd(char *str, char *last_directory, t_env *env)
 {
 	char	*dir;
 	char	cwd[PATH_MAX];
@@ -53,13 +53,10 @@ char	*get_cd(char *str, char *last_direcotry, t_env *env)
 	}
 	else if (str && ft_strncmp(str, "-", 2) == 0)
 	{
-		if (!last_direcotry)
+		if (!last_directory)
 			ft_putstr_fd("cd: OLDPWD not set\n", 2);
 		else if (getcwd(cwd, PATH_MAX) != NULL)
-		{
-			dir = ft_strdup(last_direcotry);
-			ft_putendl_fd(dir, 1);
-		}
+			dir = get_dir_old(last_directory);
 	}
 	else
 		dir = ft_strdup(str);
@@ -106,12 +103,7 @@ int	get_oldpwd(t_ast *ast, char *dir, char *last_directory, t_env *env)
 			change_env_oldpwd(env, cwd);
 		}
 		else
-		{
-			ft_putstr_fd("cd: ", 1);
-			free(dir);
-			perror(ast->cmd->args[1]);
-			return (1);
-		}
+			return (cd_error(dir, ast));
 		change_env_pwd(env);
 	}
 	else

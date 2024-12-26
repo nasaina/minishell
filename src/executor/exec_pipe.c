@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 13:29:57 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/25 17:01:31 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/26 09:05:24 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,38 +16,37 @@ int	pipe_check(t_ast *ast, t_env *env, char **envp)
 {
 	int	status;
 
+	status = -1;
 	if (ast->type == 1)
-		status = exec_pipe(ast, env, envp);
+		status = exec_pipe(ast, env, envp, status);
 	else
 		status = check_cmd(ast, env);
 	return (status);
 }
 
-int	exec_pipe(t_ast *ast, t_env *env, char **envp)
+int	exec_pipe(t_ast *ast, t_env *env, char **envp, int status)
 {
-	pid_t	pid_left;
+	pid_t	pid_l;
 	pid_t	pid_right;
-	int		status;
 	int		status_left;
 	int		pipe_fds[2];
 
-	status = -1;
 	status_left = -1;
-	if (create_pipe(pipe_fds) || create_fork(&pid_left, "fork (left)"))
-		exit(EXIT_FAILURE);
-	if (pid_left == 0)
+	if (create_pipe(pipe_fds) || create_fork(&pid_l, "fork (left)"))
+		return (EXIT_FAILURE);
+	if (pid_l == 0)
 		status_left = exec_pipe_left(ast->left, env, envp, pipe_fds);
 	else
 	{
 		if (create_fork(&pid_right, "fork (right)"))
-			exit(EXIT_FAILURE);
+			return (EXIT_FAILURE);
 		if (pid_right == 0)
 			status = exec_pipe_right(ast->right, env, envp, pipe_fds);
 		else
 		{
 			close_fds(pipe_fds);
-			if (wait_children(pid_left, pid_right, &status, &status_left) >= 0)
-				return (wait_children(pid_left, pid_right, &status, &status_left));
+			if (wait_children(pid_l, pid_right, &status, &status_left) >= 0)
+				return (wait_children(pid_l, pid_right, &status, &status_left));
 		}
 	}
 	close_fds(pipe_fds);

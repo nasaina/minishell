@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 17:24:41 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/23 10:58:19 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/26 09:38:32 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,7 @@ void	remove_env(t_env **env, char *str);
 int		ms_unset(t_env **env, char **str);
 void	is_double(t_env **env, char *name);
 int		ms_printenv(t_ast *ast, t_env *env);
+char	*get_dir_old(char *last_directory);
+int		cd_error(char *dir, t_ast *ast);
 
 #endif
