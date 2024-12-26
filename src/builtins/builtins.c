@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 07:15:40 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/26 12:16:14 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/26 13:34:33 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,8 @@ int	ms_builtins_pipe(t_ast *ast, t_env *env)
 		status = ms_unset(&env, ast->cmd->args);
 	else if (ft_strcmp(ast->cmd->args[0], "exit") == 0)
 	{
-		if (ast && handle_exit_pipe(ast))
-			return (1);
+		if (ast && handle_exit_pipe(ast, &status))
+			return (status);
 	}
 	return (status);
 }

@@ -14,7 +14,7 @@ LIBFT = libft/libft.a
 
 SRC_SIG = $(addprefix src/signals/, handle_signals.c)
 
-SRC_HD = $(addprefix src/executor/heredoc/, build_heredoc.c count_heredoc.c expand_heredoc.c handle_heredoc.c value_heredoc.c)
+SRC_HD = $(addprefix src/executor/heredoc/, build_heredoc.c count_heredoc.c expand_heredoc.c handle_heredoc.c value_heredoc.c heredoc_utils.c)
 
 SRC_TOKEN = $(addprefix src/expander/expand_token/, token_value.c split_token.c ignore_value.c extract_value.c check_token.c token_count.c init_token.c ft_split_tab.c)
 
