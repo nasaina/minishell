@@ -6,11 +6,19 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 14:56:23 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/20 07:58:48 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/26 11:52:57 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+void	restart_result(char **result, char **split)
+{
+	if (*result)
+		free(*result);
+	*result = NULL;
+	free_tab(split);
+}
 
 int	ft_strcmp(char *s1, char *s2)
 {

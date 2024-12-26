@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 08:34:21 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/26 08:43:45 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/26 11:39:34 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,14 @@ int	redir_append(t_ast *ast, t_redir *redir)
 {
 	int		fd;
 
-	(void)ast;
 	if (redir->file == NULL || redir->file[0] == 0)
 	{
 		ft_putstr_fd("minishell : No such file or directory\n", 2);
 		return (-1);
 	}
 	fd = open(redir->file, O_RDONLY | O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (redir_error(fd, redir->file, ast) == -1)
+		return (-1);
 	dup2(fd, STDOUT_FILENO);
 	close(fd);
 	return (1);
