@@ -3,26 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   handle_signals.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:31:27 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/25 16:51:58 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/26 10:58:24 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	free_split(char **str)
+void	start_signal(int ac, char **av, char **env)
 {
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		free(str[i]);
-		i++;
-	}
-	free(str);
+	ignore_args(ac, av, env);
+	signal(SIGINT, &global_sigint);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 void	handle_sigint(int sig)
