@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:17:19 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/26 12:02:23 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/26 14:40:50 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,17 @@ int	ft_exit(t_ast *ast, t_env *env, int in, int out)
 
 int	handle_exit(t_ast *ast, t_env *env, int in, int out)
 {
+	int	status;
+
+	status = -1;
 	if (ast->cmd->args[0]
 		&& !ft_strcmp(ast->cmd->args[0], "exit") && !ast->cmd->args[1])
 	{
 		free_env(env);
 		free_ast(ast);
+		status = exit_status();
 		close_dup(in, out, 1);
-		exit(exit_status());
+		exit(status);
 	}
 	else if (!ft_strcmp(ast->cmd->args[0], "exit") && ast->cmd->args[1])
 	{
