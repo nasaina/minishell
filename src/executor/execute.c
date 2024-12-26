@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:51:47 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/26 11:36:27 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/26 12:15:20 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int	check_cmd(t_ast *ast, t_env *env)
 			if (do_redir(ast) < 0)
 				return (1);
 		}
-		status = ms_builtins(ast, env, fd_in, fd_out);
+		status = ms_builtins_pipe(ast, env);
 		dup2(fd_in, STDIN_FILENO);
 		dup2(fd_out, STDOUT_FILENO);
 		close(fd_in);

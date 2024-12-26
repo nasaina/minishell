@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 17:00:51 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/25 12:57:07 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/26 12:28:55 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	do_heredoc(char *str, t_heredoc *data, int i)
 		{
 			i++;
 			tmp = tmp->next;
+			if (!tmp)
+				break ;
 		}
 		data->file = join_free(".hd_tmp", ft_itoa(i), 1);
 		data->name = ignore_quote(tmp->file);

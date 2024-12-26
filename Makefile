@@ -26,7 +26,7 @@ SRC_ERR = $(addprefix src/errors/, error.c args_utils.c)
 
 SRC_EXPORT = $(addprefix src/builtins/ms_export/, check_export.c ms_export.c print_env.c)
 
-SRC_BUILT = $(addprefix src/builtins/, builtins.c create_t_env.c handle_exit.c ms_cd.c cd_utils.c ms_echo.c ms_pwd.c ms_unset.c)
+SRC_BUILT = $(addprefix src/builtins/, builtins.c create_t_env.c handle_exit.c ms_cd.c cd_utils.c ms_echo.c ms_pwd.c ms_unset.c exit_pipe.c)
 
 SRC_EXEC = $(addprefix src/executor/, execute.c path_checker.c exec_pipe.c redir.c path_access.c exit_status.c execute_utils.c exec_redir.c path_utils.c pipe_utils.c)
 
