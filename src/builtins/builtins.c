@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 07:15:40 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/25 16:48:23 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/26 12:16:14 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,31 @@ int	ms_builtins(t_ast *ast, t_env *env, int in, int out)
 	else if (ft_strcmp(ast->cmd->args[0], "exit") == 0)
 	{
 		if (ast && handle_exit(ast, env, in, out))
+			return (1);
+	}
+	return (status);
+}
+
+int	ms_builtins_pipe(t_ast *ast, t_env *env)
+{
+	int	status;
+
+	status = -1;
+	if (ft_strcmp(ast->cmd->args[0], "cd") == 0)
+		status = ms_cd(ast, env);
+	else if (ft_strcmp(ast->cmd->args[0], "echo") == 0)
+		status = ms_echo(ast->cmd);
+	else if (ft_strcmp(ast->cmd->args[0], "pwd") == 0)
+		status = ms_pwd(ast);
+	else if (ft_strcmp(ast->cmd->args[0], "env") == 0)
+		status = ms_env(ast->cmd->args, env);
+	else if (ft_strcmp(ast->cmd->args[0], "export") == 0)
+		status = ms_printenv(ast, env);
+	else if (ft_strcmp(ast->cmd->args[0], "unset") == 0)
+		status = ms_unset(&env, ast->cmd->args);
+	else if (ft_strcmp(ast->cmd->args[0], "exit") == 0)
+	{
+		if (ast && handle_exit_pipe(ast))
 			return (1);
 	}
 	return (status);

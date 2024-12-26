@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 08:03:05 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/24 08:17:20 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/26 12:18:13 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int	exit_status(void)
 		close(fd);
 		return (0);
 	}
+	close(fd);
 	status = ft_atoi(str);
 	free(str);
 	return (status);
