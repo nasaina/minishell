@@ -82,16 +82,13 @@ clean :
 	@make fclean -C libft
 	@rm -rf $(OBJ_DIR)
 	@clear
-	@echo "\n\e[1;32mLibrary successfuly deleted\e[0m\n"
+	@echo "\n\e[1;32mObjects successfuly cleaned\e[0m\n"
 
 fclean : clean
 	@rm -rf $(NAME)
 	@clear
-	@echo "\n\e[1;32mLibrary successfuly deleted\e[0m\n"
+	@echo "\n\e[1;32mObjects successfuly cleaned\e[0m\n"
 
 re : fclean all
-
-v:
-	valgrind --suppressions=readline.supp  --leak-check=full --track-fds=yes --show-leak-kinds=all ./minishell
 
 .PHONY : all clean fclean re
