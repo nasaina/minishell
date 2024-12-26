@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:16:46 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/26 08:23:19 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/26 09:15:59 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,7 @@ char	*check_path(char **pathlist, t_ast *ast, int *status)
 {
 	char		*path;
 	char		*command;
-	struct stat	*st;
 
-	st = ft_calloc(sizeof(struct stat), 1);
 	path = NULL;
 	command = ft_strjoin("/", ast->cmd->args[0]);
 	if (!pathlist)
@@ -52,17 +50,7 @@ char	*check_path(char **pathlist, t_ast *ast, int *status)
 	free_tab(pathlist);
 	free(command);
 	if (ast->cmd->args[0] != NULL)
-	{
-		stat(ast->cmd->args[0], st);
-		if (S_ISDIR(st->st_mode))
-		{
-			path_error(ast, ": Is a directory\n");
-			*status = 126;
-		}
-		else
-			path_error(ast, ": command not found\n");
-	}
-	free(st);
+		stat_isdir(ast, status);
 	return (path);
 }
 

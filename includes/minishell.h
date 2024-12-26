@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
+/*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 10:32:07 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/25 17:23:35 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/26 09:43:16 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int			check_cmd(t_ast *ast, t_env *env);
 void		handle_sigint(int sig);
 void		handle_sigquit(int sig);
 void		free_chunks(t_chunk *lst);
-int			exec_pipe(t_ast *ast, t_env *env, char **envp);
+int			exec_pipe(t_ast *ast, t_env *env, char **envp, int status);
 int			pipe_check(t_ast *ast, t_env *env, char **envp);
 int			exec_pipe_left(t_ast *ast, t_env *env,
 				char **envp, int *pipe_fds);
@@ -74,6 +74,6 @@ char		**create_dir(void);
 void		close_fds(int *pipe_fds);
 int			create_pipe(int *pipe_fds);
 int			create_fork(pid_t *pid, char *str);
-int			wait_children(pid_t pid_left, pid_t pid_right, int *status, int *status_left);
+int			wait_children(pid_t pid_l, pid_t pid_r, int *status, int *status_l);
 
 #endif

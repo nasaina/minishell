@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:31:44 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/24 10:53:43 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/26 09:15:16 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@ int		redir_append(t_ast *ast, t_redir *redir);
 int		redir_error(int fd, char *str, t_ast *ast);
 void	global_sigint(int sig);
 int		exit_status(void);
+void	stat_isdir(t_ast *ast, int *status);
 
 #endif
