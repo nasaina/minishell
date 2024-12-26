@@ -6,7 +6,7 @@
 /*   By: nandrian <nandrian@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 09:04:24 by nandrian          #+#    #+#             */
-/*   Updated: 2024/12/22 17:33:33 by nandrian         ###   ########.fr       */
+/*   Updated: 2024/12/26 08:19:15 by nandrian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	remove_env(t_env **env, char *str)
 	if (!ft_strcmp(to_remove, str))
 	{
 		*env = tmp->next;
+		free(tmp->env);
 		free(tmp);
 		free(to_remove);
 	}
